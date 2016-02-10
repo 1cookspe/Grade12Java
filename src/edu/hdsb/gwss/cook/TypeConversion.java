@@ -149,7 +149,7 @@ public class TypeConversion {
         
         // INT TO STRING
         s = Integer.toString(i);
-        System.out.println(i + " --> " + d);
+        System.out.println(i + " --> " + s);
         
     }
     
