@@ -26,10 +26,6 @@ public class ExtraLongFactorials {
         System.out.print("Please input a number: ");
         number = input.nextInt();
         
-//        BigInteger answer = new BigInteger( number );
-//        for (int i = 0; i < number; i++) {
-//            answer *= 
-//        }
         
     }
     
