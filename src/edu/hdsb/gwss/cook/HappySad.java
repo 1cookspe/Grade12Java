@@ -6,7 +6,7 @@
 package edu.hdsb.gwss.cook;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+//import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -15,57 +15,62 @@ import java.util.Scanner;
  */
 public class HappySad {
 
-    static String H = ":-)";
-    static String S = ":-(";
+   public static final String H = ":-)";
+    public static final String S = ":-(";
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main( String[] args ) throws Exception {
 
-        Scanner input = new Scanner(new File("HappySad.txt"));
+        Scanner input = new Scanner( new File( "HappySad.txt" ) );
 
-        while (input.hasNext()) {
-            System.out.println(count(input.nextLine()));
+        while( input.hasNext() ) {
+            System.out.println( count( input.nextLine() ) );
         }
+
     }
 
-    public static int count(String s) {
+    public static String count( String s ) {
         String mood = "";
+        String copyS = s;
 
         // HAPPY
         int happyCount = 0;
-        int index = s.indexOf(H);
-        if (index < 0) {
+        int index = s.indexOf( H );
+        if( index < 0 ) {
             mood = "none";
         } else {
             do {
                 happyCount++;
-                s = s.substring(index + 3);
-                index = s.indexOf(H);
-            } while (index >= 0);
-            System.out.println(happyCount);
+                s = s.substring( index + 3 );
+                index = s.indexOf( H );
+            } while( index >= 0 );
+            //System.out.println( happyCount );
         }
-        
+
         // SAD
+        s = copyS;
         int sadCount = 0;
-        index = s.indexOf(S);
-        if (index < 0) {
+        index = s.indexOf( S );
+        if( index < 0 ) {
             mood = "none";
         } else {
             do {
                 sadCount++;
-                s = s.substring(index + 3);
-                index = s.indexOf(S);
-            } while (index >= 0);
-            System.out.println(sadCount);
+                s = s.substring( index + 3 );
+                index = s.indexOf( S );
+            } while( index >= 0 );
+            //System.out.println( sadCount );
         }
-        
-        if (happyCount == 0 && sadCount == 0) {
+
+        if( happyCount == 0 && sadCount == 0 ) {
+            mood = "none";
+        } else if( happyCount == sadCount ) {
             mood = "unknown";
-        } else if (happyCount == sadCount) {
-            
+        } else if( happyCount > sadCount ) {
+            mood = "happy";
+        } else {
+            mood = "sad";
         }
-            return 7;
+
+        return mood;
     }
 }
