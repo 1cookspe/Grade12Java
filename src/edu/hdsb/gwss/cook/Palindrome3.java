@@ -5,28 +5,26 @@
  */
 package edu.hdsb.gwss.cook;
 
-import java.math.BigInteger;
 import java.util.Scanner;
 
 /**
  *
  * @author 1cookspe
  */
-public class ExtraLongFactorials {
+public class Palindrome3 {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        // VARIABLES
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter a number: ");
-        int factorial = input.nextInt();
+        String phrase = "";
         
-        BigInteger answer = BigInteger.valueOf(1);
-        for (int i = factorial; i > 1; i--) {
-            answer = answer.multiply(BigInteger.valueOf(i));
-        }
-        System.out.println(answer);
+        // INPUT
+        System.out.print("Enter a phrase: ");
+        phrase = input.nextLine().toUpperCase();
+        
         
     }
     
