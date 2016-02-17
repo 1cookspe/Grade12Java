@@ -13,6 +13,8 @@ import java.util.Scanner;
  */
 public class Palindrome {
 
+    public static String backwards = "";
+
     /**
      * @param args the command line arguments
      */
@@ -20,13 +22,13 @@ public class Palindrome {
         // VARIABLES
         Scanner input = new Scanner(System.in);
         String word;
-        
-        
+
         // ASK FOR INPUT
         System.out.print("Enter a word: ");
         word = input.nextLine().toUpperCase();
-       
-        
+        word = word.replaceAll( " ", "" );
+        System.out.println( word );
+
         // CHECK IF TWO WORDS MATCH 
         if (isaPalindrome(word)) {
             System.out.println("Therefore, \"" + word + "\" is a palindrome");
@@ -34,15 +36,15 @@ public class Palindrome {
             System.out.println("Therefore, \"" + word + "\" is not a palindrome");
         }
     }
-    
-    public static boolean isaPalindrome( String word ) {
-        String backwards = "";
+
+    public static boolean isaPalindrome(String word) {
+
         for (int i = word.length(); i > 0; i--) {
             String character = word.substring(i - 1, i);
             //System.out.println(character);
             backwards += character;
         }
-        
+
         // CHECK IF TWO WORDS MATCH 
         if (backwards.equals(word)) {
             System.out.println(word + " backwards is " + backwards);
@@ -51,7 +53,7 @@ public class Palindrome {
             System.out.println(word + " backwards is " + backwards);
             return false;
         }
-        
+
     }
-    
+
 }
