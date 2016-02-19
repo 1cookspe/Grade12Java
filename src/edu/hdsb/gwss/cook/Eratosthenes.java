@@ -15,33 +15,25 @@ public class Eratosthenes {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // VARIABLES
-        boolean numbers[] = new boolean[1000]; 
-        
 
+        for (int i = 2; i < 1000; i++) {
+            if (isPrime(i)) {
+                System.out.print(i + ", ");
+            }
+        }
     }
-    
+
     public static boolean isPrime(int number) {
-        if (number % 2 == 0) {
-            return false;
-        } else if (number % 3 == 0) {
-            return false;
-        } else if (number % 5 == 0) {
-            return false;
-        } else if (number % 7 == 0) {
-            return false;
-        } else if (number % 11 == 0) {
-            return false;
-        } else if (number % 13 == 0) {
-            return false;
-        } else if (number % 17 == 0) {
-            return false;
-        } else if (number % 19 == 0) {
-            return false;
-        } else if (number % 23 == 0) {
-            return false;
+        final int[] POSSIBLE_DIVISORS = {2, 3, 5, 7};
+
+        for (int i = 0; i < POSSIBLE_DIVISORS.length; i++) {
+
+            if ((number % POSSIBLE_DIVISORS[i] == 0) && (number != POSSIBLE_DIVISORS[i])) {
+                return false;
+
+            }
         }
         return true;
     }
-    
+
 }
