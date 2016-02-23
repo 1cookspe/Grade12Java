@@ -16,7 +16,7 @@ public class Solution {
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        int n = input.nextInt();
+        int n = Integer.parseInt(input.nextLine());
         String inputNum = input.nextLine();
         StringTokenizer st = new StringTokenizer(inputNum);
         int[] numbers = new int[n];
@@ -24,6 +24,9 @@ public class Solution {
         int positives = 0;
         int negatives = 0;
         int zeroes = 0;
+        double perPos = 0;
+        double perNeg = 0;
+        double perZer = 0;
         
         while (st.hasMoreTokens()) {
             numbers[index] = Integer.parseInt(st.nextToken());
@@ -40,6 +43,14 @@ public class Solution {
             }
         }
         
+        perPos = (double) positives / (double) index;
+        System.out.println(perPos);
+        
+        perNeg = (double) negatives / (double) index;
+        System.out.println(perNeg);
+        
+        perZer = (double) zeroes / (double) index;
+        System.out.println(perZer);
         
     }
 }
