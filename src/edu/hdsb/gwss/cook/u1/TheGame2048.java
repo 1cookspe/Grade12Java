@@ -43,10 +43,10 @@ public class TheGame2048 extends javax.swing.JFrame {
         // PLACE TWO RANDOM 2'S
         placeRandomTwo();
         placeRandomTwo();
-        
+
         updateDisplay();
     }
-    
+
     private void updateDisplay() {
         for (int r = 0; r < values.length; r++) {
             for (int c = 0; c < values[r].length; c++) {
@@ -55,8 +55,7 @@ public class TheGame2048 extends javax.swing.JFrame {
                 } else {
                     boxes[r][c].setText("" + values[r][c]);
                 }
-                
-                
+
             }
         }
     }
@@ -586,10 +585,48 @@ public class TheGame2048 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rightButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightButtonActionPerformed
+
         // 1. SHIFT NUMBERS TO RIGHT`
-        // 2. COMBINE RIGHT (COLLAPSE)
+        for (int r = 0; r < values.length; r++) {
+            for (int c = 0; c < values[r].length - 1; c++) {
+                if (values[r][c] != 0) {
+                    System.out.println("Not equal to zero!");
+                    int index = 3 - c;
+                    System.out.println("INDEX: " + index);
+                    for (int i = 0; i < index; i++) {
+                        if (values[r][c + 1] == 0) {
+                        // MOVE TO SIDE
+                            System.out.println("should move...");
+                            values[r][c + 1] = values[r][c];
+                            values[r][c] = 0;
+                            //checkCombine(r, c);
+
+                        } else {
+                            System.out.println("checking combine");
+                            if (!checkCombine(r, c)) {
+                                c++;
+                            } 
+                        }
+                    }
+                }
+            }
+        }
+
         // 3. SHIFT RIGHT
+        placeRandomTwo();
+        updateDisplay();
     }//GEN-LAST:event_rightButtonActionPerformed
+
+    private boolean checkCombine(int r, int c) {
+        // 2. COMBINE RIGHT (COLLAPSE)
+        if (values[r][c + 1] == values[r][c]) {
+            values[r][c + 1] *= 2;
+            values[r][c] = 0;
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      * @param args the command line arguments
