@@ -5,6 +5,7 @@
  */
 package edu.hdsb.gwss.cook.u1;
 
+import java.awt.Color;
 import javax.swing.JLabel;
 
 /**
@@ -15,6 +16,25 @@ public class TheGame2048 extends javax.swing.JFrame {
 
     JLabel[][] boxes = new JLabel[4][4];
     int[][] values = new int[4][4];
+    boolean gameOver = false;
+    int score = 0;
+
+    static {
+        Color[] colours = {
+            new Color(60, 186, 84),
+            new Color(60, 186, 84),
+            new Color(60, 186, 84),
+            new Color(60, 186, 84),
+            new Color(60, 186, 84),
+            new Color(60, 186, 84),
+            new Color(60, 186, 84),
+            new Color(60, 186, 84),
+            new Color(60, 186, 84),
+            new Color(60, 186, 84),
+            new Color(60, 186, 84),
+            new Color(60, 186, 84)
+        };
+    }
 
     /**
      * Creates new form TheGame2048
@@ -40,6 +60,8 @@ public class TheGame2048 extends javax.swing.JFrame {
         boxes[3][2] = box32;
         boxes[3][3] = box33;
 
+        winOrLose.setText("");
+
         // PLACE TWO RANDOM 2'S
         placeRandomTwo();
         placeRandomTwo();
@@ -56,16 +78,18 @@ public class TheGame2048 extends javax.swing.JFrame {
                     boxes[r][c].setText("" + values[r][c]);
                 }
 
+                // SET COLOR
             }
         }
+
     }
 
     private void placeRandomTwo() {
-        int randomRow = (int) (Math.random() * 4);
-        int randomColumn = (int) (Math.random() * 4);
         boolean placed = false;
 
         do {
+            int randomRow = (int) (Math.random() * 4);
+            int randomColumn = (int) (Math.random() * 4);
             if (values[randomRow][randomColumn] == 0) {
                 values[randomRow][randomColumn] = 2;
                 placed = true;
@@ -118,6 +142,7 @@ public class TheGame2048 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         scoreLabel = new javax.swing.JLabel();
         rightButton = new javax.swing.JButton();
+        winOrLose = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -553,6 +578,9 @@ public class TheGame2048 extends javax.swing.JFrame {
             }
         });
 
+        winOrLose.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 24)); // NOI18N
+        winOrLose.setText("You Lose!");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -561,13 +589,15 @@ public class TheGame2048 extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(rightButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(rightButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(winOrLose))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -575,7 +605,10 @@ public class TheGame2048 extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rightButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(rightButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(winOrLose)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
@@ -589,38 +622,60 @@ public class TheGame2048 extends javax.swing.JFrame {
         // 1. SHIFT NUMBERS TO RIGHT`
         for (int r = 0; r < values.length; r++) {
             for (int c = 0; c < values[r].length - 1; c++) {
-                if (values[r][c] != 0) {
-                    System.out.println("Not equal to zero!");
-                    int index = 3 - c;
-                    System.out.println("INDEX: " + index);
-                    for (int i = 0; i < index; i++) {
-                        if (values[r][c + 1] == 0) {
+                int index = 3 - c;
+
+                for (int i = 0; i < index; i++) {
+                    if (values[r][c + 1] == 0) {
                         // MOVE TO SIDE
-                            System.out.println("should move...");
-                            values[r][c + 1] = values[r][c];
-                            values[r][c] = 0;
-                            //checkCombine(r, c);
+                        values[r][c + 1] = values[r][c];
+                        values[r][c] = 0;
+                        //checkCombine(r, c);
+
+                    } else {
+                        if (!checkCombine(r, c)) {
+                            c++;
 
                         } else {
-                            System.out.println("checking combine");
-                            if (!checkCombine(r, c)) {
-                                c++;
-                            } 
+
                         }
                     }
+
                 }
             }
         }
 
+        if (!gameOver()) {
+            placeRandomTwo();
+            updateDisplay();
+            scoreLabel.setText("" + score);
+        } else {
+            winOrLose.setText("You're loser!");
+        }
+
         // 3. SHIFT RIGHT
-        placeRandomTwo();
-        updateDisplay();
+
     }//GEN-LAST:event_rightButtonActionPerformed
+
+    private boolean gameOver() {
+        for (int r = 0; r < values.length; r++) {
+            for (int c = 0; c < values.length; c++) {
+                if (values[r][c] == 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
+    }
 
     private boolean checkCombine(int r, int c) {
         // 2. COMBINE RIGHT (COLLAPSE)
         if (values[r][c + 1] == values[r][c]) {
             values[r][c + 1] *= 2;
+            score += values[r][c + 1];
+            if (values[r][c + 1] == 2048) {
+                winOrLose.setText("You're winner!");
+            }
             values[r][c] = 0;
             return true;
         } else {
@@ -700,5 +755,6 @@ public class TheGame2048 extends javax.swing.JFrame {
     private javax.swing.JPanel panel33;
     private javax.swing.JButton rightButton;
     private javax.swing.JLabel scoreLabel;
+    private javax.swing.JLabel winOrLose;
     // End of variables declaration//GEN-END:variables
 }
