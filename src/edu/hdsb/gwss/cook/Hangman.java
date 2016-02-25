@@ -72,8 +72,9 @@ static String solve = "";
             } else {
                 System.out.println("Correct!");
                 lettersLeft -= phraseContains(letter);
+                System.out.println(phraseContains(letter));
             }
-            
+            System.out.println("You have " + lettersLeft + " letters left.");
         }
 
     }

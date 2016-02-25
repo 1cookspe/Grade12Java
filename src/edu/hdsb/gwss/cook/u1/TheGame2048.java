@@ -6,6 +6,7 @@
 package edu.hdsb.gwss.cook.u1;
 
 import java.awt.Color;
+import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 
 /**
@@ -67,6 +68,7 @@ public class TheGame2048 extends javax.swing.JFrame {
         placeRandomTwo();
 
         updateDisplay();
+
     }
 
     private void updateDisplay() {
@@ -142,7 +144,10 @@ public class TheGame2048 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         scoreLabel = new javax.swing.JLabel();
         rightButton = new javax.swing.JButton();
+        downButton = new javax.swing.JButton();
         winOrLose = new javax.swing.JLabel();
+        leftButton = new javax.swing.JButton();
+        upButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -553,23 +558,6 @@ public class TheGame2048 extends javax.swing.JFrame {
         scoreLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         scoreLabel.setText("2048");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(scoreLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(scoreLabel)
-                .addContainerGap())
-        );
-
         rightButton.setFont(new java.awt.Font("Rockwell Condensed", 0, 18)); // NOI18N
         rightButton.setText("Right");
         rightButton.addActionListener(new java.awt.event.ActionListener() {
@@ -578,40 +566,104 @@ public class TheGame2048 extends javax.swing.JFrame {
             }
         });
 
+        downButton.setFont(new java.awt.Font("Rockwell Condensed", 0, 18)); // NOI18N
+        downButton.setText("Down");
+        downButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                downButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(rightButton, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(scoreLabel))
+                    .addComponent(downButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(scoreLabel))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(downButton)
+                        .addGap(22, 22, 22)
+                        .addComponent(rightButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
         winOrLose.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 0, 24)); // NOI18N
         winOrLose.setText("You Lose!");
+
+        leftButton.setFont(new java.awt.Font("Rockwell Condensed", 0, 18)); // NOI18N
+        leftButton.setText("Left");
+        leftButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leftButtonActionPerformed(evt);
+            }
+        });
+
+        upButton.setFont(new java.awt.Font("Rockwell Condensed", 0, 18)); // NOI18N
+        upButton.setText("Up");
+        upButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                upButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(winOrLose)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))
+                        .addGap(18, 28, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(leftButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(rightButton, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(winOrLose))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(upButton)
+                        .addGap(8, 8, 8)))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(rightButton)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(upButton)
                         .addGap(18, 18, 18)
-                        .addComponent(winOrLose)))
-                .addGap(18, 18, 18)
+                        .addComponent(leftButton)
+                        .addGap(34, 34, 34)))
+                .addComponent(winOrLose)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addContainerGap())
         );
 
         pack();
@@ -632,10 +684,8 @@ public class TheGame2048 extends javax.swing.JFrame {
                         //checkCombine(r, c);
 
                     } else {
-                        if (!checkCombine(r, c)) {
+                        if (!checkCombine(r, c, "RIGHT")) {
                             c++;
-
-                        } else {
 
                         }
                     }
@@ -656,6 +706,107 @@ public class TheGame2048 extends javax.swing.JFrame {
 
     }//GEN-LAST:event_rightButtonActionPerformed
 
+
+    private void leftButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leftButtonActionPerformed
+
+        // 1. SHIFT NUMBERS TO LEFT
+        for (int r = 0; r < values.length; r++) {
+            for (int c = values[r].length - 1; c >= 0; c--) {
+                int index = c;
+
+                for (int i = index; i > 0; i--) {
+                    if (values[r][c - 1] == 0) {
+                        // MOVE TO SIDE
+                        values[r][c - 1] = values[r][c];
+                        values[r][c] = 0;
+                        //checkCombine(r, c);
+
+                    } else {
+                        if (!checkCombine(r, c, "LEFT")) {
+                            c--;
+
+                        }
+                    }
+
+                }
+            }
+        }
+
+        if (!gameOver()) {
+            placeRandomTwo();
+            updateDisplay();
+            scoreLabel.setText("" + score);
+        } else {
+            winOrLose.setText("You're loser!");
+        }
+    }//GEN-LAST:event_leftButtonActionPerformed
+
+    private void upButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_upButtonActionPerformed
+        // 1. SHIFT NUMBERS UP
+        for (int pass = 0; pass < 3; pass++) {
+            for (int r = values.length - 1; r > 0; r--) {
+
+                for (int c = 0; c < values[r].length; c++) {
+
+                    if (values[r - 1][c] == 0) {
+                        // MOVE UP
+                        values[r - 1][c] = values[r][c];
+                        values[r][c] = 0;
+                        //checkCombine(r, c);
+
+                    } else {
+                        if (!checkCombine(r, c, "UP")) {
+                            c++;
+
+                        }
+                    }
+
+                }
+            }
+        }
+
+        if (!gameOver()) {
+            placeRandomTwo();
+            updateDisplay();
+            scoreLabel.setText("" + score);
+        } else {
+            winOrLose.setText("You're loser!");
+        }
+    }//GEN-LAST:event_upButtonActionPerformed
+
+    private void downButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_downButtonActionPerformed
+        // 1. SHIFT NUMBERS DOWN
+        for (int pass = 0; pass < 3; pass++) {
+            for (int r = 0; r < values.length - 1; r++) {
+
+                for (int c = 0; c < values[r].length; c++) {
+
+                    if (values[r + 1][c] == 0) {
+                        // MOVE DOWN
+                        values[r + 1][c] = values[r][c];
+                        values[r][c] = 0;
+                        //checkCombine(r, c);
+
+                    } else {
+                        if (!checkCombine(r, c, "DOWN")) {
+                            c++;
+
+                        }
+                    }
+
+                }
+            }
+        }
+
+        if (!gameOver()) {
+            placeRandomTwo();
+            updateDisplay();
+            scoreLabel.setText("" + score);
+        } else {
+            winOrLose.setText("You're loser!");
+        }
+    }//GEN-LAST:event_downButtonActionPerformed
+
     private boolean gameOver() {
         for (int r = 0; r < values.length; r++) {
             for (int c = 0; c < values.length; c++) {
@@ -668,19 +819,60 @@ public class TheGame2048 extends javax.swing.JFrame {
 
     }
 
-    private boolean checkCombine(int r, int c) {
+    private boolean checkCombine(int r, int c, String right) {
         // 2. COMBINE RIGHT (COLLAPSE)
-        if (values[r][c + 1] == values[r][c]) {
-            values[r][c + 1] *= 2;
-            score += values[r][c + 1];
-            if (values[r][c + 1] == 2048) {
-                winOrLose.setText("You're winner!");
+        if (right.equals("RIGHT")) {
+            if (values[r][c + 1] == values[r][c]) {
+                values[r][c + 1] *= 2;
+                score += values[r][c + 1];
+                if (values[r][c + 1] == 2048) {
+                    winOrLose.setText("You're winner!");
+                }
+                values[r][c] = 0;
+                return true;
+            } else {
+                return false;
             }
-            values[r][c] = 0;
-            return true;
+        } else if (right.equals("LEFT")) {
+            if (values[r][c - 1] == values[r][c]) {
+                values[r][c - 1] *= 2;
+                score += values[r][c - 1];
+                if (values[r][c - 1] == 2048) {
+                    winOrLose.setText("You're winner!");
+                }
+                values[r][c] = 0;
+                return true;
+            } else {
+                return false;
+            }
+        } else if (right.equals("UP")) {
+            if (values[r - 1][c] == values[r][c]) {
+                values[r - 1][c] *= 2;
+                score += values[r - 1][c];
+                if (values[r - 1][c] == 2048) {
+                    winOrLose.setText("You're winner!");
+                }
+                values[r][c] = 0;
+                return true;
+            } else {
+                return false;
+            }
+        } else if (right.equals("DOWN")) {
+            if (values[r + 1][c] == values[r][c]) {
+                values[r + 1][c] *= 2;
+                score += values[r + 1][c];
+                if (values[r + 1][c] == 2048) {
+                    winOrLose.setText("You're winner!");
+                }
+                values[r][c] = 0;
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
+
     }
 
     /**
@@ -735,8 +927,10 @@ public class TheGame2048 extends javax.swing.JFrame {
     private javax.swing.JLabel box31;
     private javax.swing.JLabel box32;
     private javax.swing.JLabel box33;
+    private javax.swing.JButton downButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton leftButton;
     private javax.swing.JPanel panel00;
     private javax.swing.JPanel panel01;
     private javax.swing.JPanel panel02;
@@ -755,6 +949,7 @@ public class TheGame2048 extends javax.swing.JFrame {
     private javax.swing.JPanel panel33;
     private javax.swing.JButton rightButton;
     private javax.swing.JLabel scoreLabel;
+    private javax.swing.JButton upButton;
     private javax.swing.JLabel winOrLose;
     // End of variables declaration//GEN-END:variables
 }
