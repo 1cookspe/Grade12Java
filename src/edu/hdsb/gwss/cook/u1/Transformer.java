@@ -4,6 +4,7 @@
 package edu.hdsb.gwss.cook.u1;
 
 import becker.xtras.imageTransformation.ITransformations;
+import java.util.ArrayList;
 
 public class Transformer extends Object implements ITransformations {
 
@@ -156,7 +157,7 @@ public class Transformer extends Object implements ITransformations {
 
         for (int r = 0; r < sourcePixels.length; r++) {
             for (int c = 0; c < sourcePixels[r].length; c++) {
-               
+
             }
         }
 
@@ -168,7 +169,14 @@ public class Transformer extends Object implements ITransformations {
      */
     private int[][] invert(int[][] sourcePixels) {
         // TO DO
-        return new int[1][1];
+        
+        for (int r = 0; r < sourcePixels.length; r++) {
+            for (int c = 0; c < sourcePixels[r].length; c++) {
+                sourcePixels[r][c] = 255 - sourcePixels[r][c];
+            }
+        }
+        
+        return  sourcePixels;
     }
 
     /**
@@ -211,17 +219,14 @@ public class Transformer extends Object implements ITransformations {
     private int[][] rotate(int[][] sourcePixels) {
         // TO DO
 
-        System.out.println("Rotate");
-
-        for (int r = 0; r < sourcePixels.length; r++) {
-            for (int c = 0; c < sourcePixels[r].length; c++) {
-                int temp = sourcePixels[c][r];
-                sourcePixels[c][r] = sourcePixels[r][c];
-                sourcePixels[r][c] = temp;
+        int[][] transformedPixels = new int[sourcePixels[0].length][sourcePixels.length];
+        for (int r = 0; r < transformedPixels.length; r++) {
+            for (int c = 0; c < transformedPixels[r].length; c++) {
+                transformedPixels[r][c] = sourcePixels[c][r];
             }
         }
 
-        return sourcePixels;
+        return transformedPixels;
     }
 
     /**
@@ -229,7 +234,24 @@ public class Transformer extends Object implements ITransformations {
      */
     private int[][] mirror(int[][] sourcePixels) {
         // TO DO
-        return new int[1][1];
+        
+        int[][] doubleArray = new int[sourcePixels.length][sourcePixels[0].length * 2];
+        int[][] flippedSouce = flipX(sourcePixels);
+        
+        for (int r = 0; r < sourcePixels.length; r++) {
+            for (int c = 0; c < sourcePixels[r].length; c++) {
+                doubleArray[r][c] = sourcePixels[r][c];
+                doubleArray[r][c + sourcePixels[r].length] = flippedSouce[r][c];
+            }
+        }
+
+//        for (int r = 0; r < sourcePixels.length; r++) {
+//            for (int c = 0; c < sourcePixels[r].length; c++) {
+//                doubleArray[r][c] = sourcePixels[r][c];
+//            }
+//        }
+
+        return doubleArray;
     }
 
     /**
