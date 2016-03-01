@@ -4,6 +4,7 @@
 package edu.hdsb.gwss.cook.u1;
 
 import becker.xtras.imageTransformation.ITransformations;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
 import java.util.ArrayList;
 
 public class Transformer extends Object implements ITransformations {
@@ -109,7 +110,7 @@ public class Transformer extends Object implements ITransformations {
     public void performTransformation(String transformationName) {
 
         if (DARKEN.equals(transformationName)) {
-            this.picture = changeIntensity(2, this.picture);
+            this.picture = changeIntensity(-2, this.picture);
         } else if (BRIGHTEN.equals(transformationName)) {
             this.picture = changeIntensity(2, this.picture);
         } else if (INVERT.equals(transformationName)) {
@@ -157,8 +158,14 @@ public class Transformer extends Object implements ITransformations {
 
         for (int r = 0; r < sourcePixels.length; r++) {
             for (int c = 0; c < sourcePixels[r].length; c++) {
-                if (sourcePixels[r][c] + (sourcePixels[r][c] * (percent / 100)) < 256) {
-                    sourcePixels[r][c] += (sourcePixels[r][c] * (percent / 100));
+                if (percent == 2) {
+                    if (sourcePixels[r][c] + 10 < 256) {
+                        sourcePixels[r][c] += 10;
+                    }
+                } else {
+                    if (sourcePixels[r][c] - 10 > -1) {
+                        sourcePixels[r][c] -= 10;
+                    }
                 }
             }
         }
@@ -171,14 +178,14 @@ public class Transformer extends Object implements ITransformations {
      */
     private int[][] invert(int[][] sourcePixels) {
         // TO DO
-        
+
         for (int r = 0; r < sourcePixels.length; r++) {
             for (int c = 0; c < sourcePixels[r].length; c++) {
                 sourcePixels[r][c] = 255 - sourcePixels[r][c];
             }
         }
-        
-        return  sourcePixels;
+
+        return sourcePixels;
     }
 
     /**
@@ -236,10 +243,10 @@ public class Transformer extends Object implements ITransformations {
      */
     private int[][] mirror(int[][] sourcePixels) {
         // TO DO
-        
+
         int[][] doubleArray = new int[sourcePixels.length][sourcePixels[0].length * 2];
         int[][] flippedSouce = flipX(sourcePixels);
-        
+
         for (int r = 0; r < sourcePixels.length; r++) {
             for (int c = 0; c < sourcePixels[r].length; c++) {
                 doubleArray[r][c] = sourcePixels[r][c];
@@ -252,7 +259,6 @@ public class Transformer extends Object implements ITransformations {
 //                doubleArray[r][c] = sourcePixels[r][c];
 //            }
 //        }
-
         return doubleArray;
     }
 
@@ -261,7 +267,16 @@ public class Transformer extends Object implements ITransformations {
      */
     private int[][] scale50(int[][] sourcePixels) {
         // TO DO
-        return new int[1][1];
+        
+        int[][] scaledArray = new int[sourcePixels.length / 2][sourcePixels[0].length / 2];
+        
+        for (int r = 0; r < scaledArray.length; r++) {
+            for (int c = 0; c < scaledArray[r].length; c++) {
+                scaledArray[r][c] = sourcePixels[r * 2][c * 2];
+            }
+        }
+        
+        return scaledArray;
     }
 
     /**
@@ -269,7 +284,45 @@ public class Transformer extends Object implements ITransformations {
      */
     private int[][] blur(int[][] sourcePixels) {
         // TO DO
-        return new int[1][1];
+        ArrayList averages = new ArrayList();
+        int row = 0;
+        int col = 0;
+
+        while (row < sourcePixels.length && col < sourcePixels[0].length) {
+            int total = 0;
+            for (int r = row; r < row + 3; r++) {
+                for (int c = col; c < col + 3; c++) {
+                    total += sourcePixels[r][c];
+                }
+                col += 3;
+            }
+            row += 3;
+            averages.add(total / 9);
+        }
+
+        row = 0;
+        col = 0;
+
+        for (int r = 0; r < sourcePixels.length; r++) {
+            
+        }
+        
+//        int index = 0;
+//        int add = 0;
+//        while (row < sourcePixels.length && col < sourcePixels[0].length) {
+//            add = (int) averages.get(index);
+//            for (int r = row; r < row + 3; r++) {
+//                for (int c = col; c < col + 3; c++) {
+//                    sourcePixels[r][c] = add;
+//                    System.out.println(sourcePixels[r][c]);
+//                }
+//                col += 3;
+//            }
+//            row += 3;
+//            index++;
+//        }
+
+        return sourcePixels;
     }
 
     /**
