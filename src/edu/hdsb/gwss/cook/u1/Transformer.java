@@ -157,7 +157,9 @@ public class Transformer extends Object implements ITransformations {
 
         for (int r = 0; r < sourcePixels.length; r++) {
             for (int c = 0; c < sourcePixels[r].length; c++) {
-
+                if (sourcePixels[r][c] + (sourcePixels[r][c] * (percent / 100)) < 256) {
+                    sourcePixels[r][c] += (sourcePixels[r][c] * (percent / 100));
+                }
             }
         }
 
