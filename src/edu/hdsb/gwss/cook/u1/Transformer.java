@@ -267,15 +267,15 @@ public class Transformer extends Object implements ITransformations {
      */
     private int[][] scale50(int[][] sourcePixels) {
         // TO DO
-        
+
         int[][] scaledArray = new int[sourcePixels.length / 2][sourcePixels[0].length / 2];
-        
+
         for (int r = 0; r < scaledArray.length; r++) {
             for (int c = 0; c < scaledArray[r].length; c++) {
                 scaledArray[r][c] = sourcePixels[r * 2][c * 2];
             }
         }
-        
+
         return scaledArray;
     }
 
@@ -284,44 +284,75 @@ public class Transformer extends Object implements ITransformations {
      */
     private int[][] blur(int[][] sourcePixels) {
         // TO DO
-        ArrayList averages = new ArrayList();
-        int row = 0;
-        int col = 0;
 
-        while (row < sourcePixels.length && col < sourcePixels[0].length) {
-            int total = 0;
-            for (int r = row; r < row + 3; r++) {
-                for (int c = col; c < col + 3; c++) {
-                    total += sourcePixels[r][c];
-                }
-                col += 3;
-            }
-            row += 3;
-            averages.add(total / 9);
-        }
+        alternateBlur(sourcePixels);
 
-        row = 0;
-        col = 0;
-
-        for (int r = 0; r < sourcePixels.length; r++) {
-            
-        }
-        
-//        int index = 0;
-//        int add = 0;
+//        ArrayList averages = new ArrayList();
+//        int row = 0;
+//        int col = 0;
+//
 //        while (row < sourcePixels.length && col < sourcePixels[0].length) {
-//            add = (int) averages.get(index);
+//            int total = 0;
 //            for (int r = row; r < row + 3; r++) {
 //                for (int c = col; c < col + 3; c++) {
-//                    sourcePixels[r][c] = add;
-//                    System.out.println(sourcePixels[r][c]);
+//                    total += sourcePixels[r][c];
 //                }
 //                col += 3;
 //            }
 //            row += 3;
-//            index++;
+//            averages.add(total / 9);
 //        }
+//
+//        row = 0;
+//        col = 0;
+//
+//        for (int r = 0; r < sourcePixels.length; r++) {
+//            
+//        }
+//        
+////        int index = 0;
+////        int add = 0;
+////        while (row < sourcePixels.length && col < sourcePixels[0].length) {
+////            add = (int) averages.get(index);
+////            for (int r = row; r < row + 3; r++) {
+////                for (int c = col; c < col + 3; c++) {
+////                    sourcePixels[r][c] = add;
+////                    System.out.println(sourcePixels[r][c]);
+////                }
+////                col += 3;
+////            }
+////            row += 3;
+////            index++;
+////        }
+        return sourcePixels;
+    }
 
+    private int[][] alternateBlur(int[][] sourcePixels) {
+        int total = 0;
+        int average = 0;
+        int rowRemainder = 0;
+        int colRemainder = 0;
+        
+        rowRemainder = sourcePixels.length % 3;
+        System.out.println(rowRemainder);
+        colRemainder = sourcePixels[0].length % 3;
+        System.out.println(colRemainder);
+
+            for (int r = 1; r < sourcePixels.length; r = r + 3) {
+                    for (int c = 1; c < sourcePixels[r].length; c = c + 3) {
+                        total = sourcePixels[r - 1][c - 1] + sourcePixels[r - 1][c] + sourcePixels[r - 1][c + 1] + sourcePixels[r][c - 1] + sourcePixels[r][c] + sourcePixels[r][c + 1] + sourcePixels[r + 1][c - 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c + 1];
+                        average = total / 9;
+                        sourcePixels[r - 1][c - 1] = average;
+                        sourcePixels[r - 1][c] = average;
+                        sourcePixels[r - 1][c + 1] = average;
+                        sourcePixels[r][c - 1] = average;
+                        sourcePixels[r][c] = average;
+                        sourcePixels[r][c + 1] = average;
+                        sourcePixels[r + 1][c - 1] = average;
+                        sourcePixels[r + 1][c] = average;
+                        sourcePixels[r + 1][c + 1] = average;
+                }
+            }
         return sourcePixels;
     }
 
