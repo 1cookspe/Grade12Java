@@ -144,8 +144,14 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] copyArray(int[][] a) {
-        picture = pictureOriginal;
-        a = picture;
+        int[][] copy = new int[pictureOriginal.length][pictureOriginal[0].length];
+        for (int r = 0; r < copy.length; r++) {
+            for (int c = 0; c < copy[r].length; c++) {
+                copy[r][c] = pictureOriginal[r][c];
+            }
+        }
+        
+        a = copy;
         return a;
     }
 
@@ -155,13 +161,12 @@ public class Transformer extends Object implements ITransformations {
     private int[][] undo() {
         undos++;
         
-        if (!actions.isEmpty() && actions.size() != 1) {
-            System.out.println("Here");
+        if (!actions.isEmpty() && actions.size() != 1 && (numberOfActions - undos > 0)) {
             return actions.get(numberOfActions - undos - 1);
+        } else {
+            
         }
         
-        // FIRST STORE IN ARRAYLIST, THEN CONVERT TO 2D NORMAL ARRAY
-        int[][] test = actions.get(numberOfActions - undos - 1);
         
         return pictureOriginal;
     }
@@ -189,7 +194,15 @@ public class Transformer extends Object implements ITransformations {
             }
         }
         
-        actions.add(sourcePixels);
+        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+        for (int r = 0; r < transformedArray.length; r++) {
+            for (int c = 0; c < transformedArray[r].length; c++) {
+                transformedArray[r][c] = sourcePixels[r][c];
+            }
+                
+        }
+        
+        actions.add(transformedArray);
         numberOfActions++;
         
         
@@ -209,7 +222,15 @@ public class Transformer extends Object implements ITransformations {
             }
         }
         
-        actions.add(sourcePixels);
+        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+        for (int r = 0; r < transformedArray.length; r++) {
+            for (int c = 0; c < transformedArray[r].length; c++) {
+                transformedArray[r][c] = sourcePixels[r][c];
+            }
+                
+        }
+        
+        actions.add(transformedArray);
         numberOfActions++;
 
         return sourcePixels;
@@ -230,7 +251,15 @@ public class Transformer extends Object implements ITransformations {
             }
         }
         
-        actions.add(sourcePixels);
+        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+        for (int r = 0; r < transformedArray.length; r++) {
+            for (int c = 0; c < transformedArray[r].length; c++) {
+                transformedArray[r][c] = sourcePixels[r][c];
+            }
+                
+        }
+        
+        actions.add(transformedArray);
         numberOfActions++;
 
         return sourcePixels;
@@ -250,7 +279,15 @@ public class Transformer extends Object implements ITransformations {
             }
         }
         
-        actions.add(sourcePixels);
+        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+        for (int r = 0; r < transformedArray.length; r++) {
+            for (int c = 0; c < transformedArray[r].length; c++) {
+                transformedArray[r][c] = sourcePixels[r][c];
+            }
+                
+        }
+        
+        actions.add(transformedArray);
         numberOfActions++;
         
         return sourcePixels;
@@ -269,7 +306,15 @@ public class Transformer extends Object implements ITransformations {
             }
         }
         
-        actions.add(transformedPixels);
+        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+        for (int r = 0; r < transformedArray.length; r++) {
+            for (int c = 0; c < transformedArray[r].length; c++) {
+                transformedArray[r][c] = sourcePixels[r][c];
+            }
+                
+        }
+        
+        actions.add(transformedArray);
         numberOfActions++;
 
         return transformedPixels;
@@ -282,16 +327,24 @@ public class Transformer extends Object implements ITransformations {
         // TO DO
 
         int[][] doubleArray = new int[sourcePixels.length][sourcePixels[0].length * 2];
-        int[][] flippedSouce = flipX(sourcePixels);
+       
 
         for (int r = 0; r < sourcePixels.length; r++) {
             for (int c = 0; c < sourcePixels[r].length; c++) {
                 doubleArray[r][c] = sourcePixels[r][c];
-                doubleArray[r][c + sourcePixels[r].length] = flippedSouce[r][c];
+                doubleArray[r][c + sourcePixels[0].length] = sourcePixels[r][sourcePixels[0].length - 1 - c];
             }
         }
         
-        actions.add(doubleArray);
+        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+        for (int r = 0; r < transformedArray.length; r++) {
+            for (int c = 0; c < transformedArray[r].length; c++) {
+                transformedArray[r][c] = sourcePixels[r][c];
+            }
+                
+        }
+        
+        actions.add(transformedArray);
         numberOfActions++;
 
 //        for (int r = 0; r < sourcePixels.length; r++) {
@@ -316,7 +369,15 @@ public class Transformer extends Object implements ITransformations {
             }
         }
         
-        actions.add(scaledArray);
+        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+        for (int r = 0; r < transformedArray.length; r++) {
+            for (int c = 0; c < transformedArray[r].length; c++) {
+                transformedArray[r][c] = sourcePixels[r][c];
+            }
+                
+        }
+        
+        actions.add(transformedArray);
         numberOfActions++;
 
         return scaledArray;
@@ -341,7 +402,15 @@ public class Transformer extends Object implements ITransformations {
         
         // ADD CASES FOR END ROWS
 
-        actions.add(blurredPixels);
+        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+        for (int r = 0; r < transformedArray.length; r++) {
+            for (int c = 0; c < transformedArray[r].length; c++) {
+                transformedArray[r][c] = sourcePixels[r][c];
+            }
+                
+        }
+        
+        actions.add(transformedArray);
         numberOfActions++;
         
         return blurredPixels;
