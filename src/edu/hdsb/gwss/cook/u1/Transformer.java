@@ -161,14 +161,13 @@ public class Transformer extends Object implements ITransformations {
     private int[][] undo() {
         undos++;
         
-        if (!actions.isEmpty() && actions.size() != 1 && (numberOfActions - undos > 0)) {
+        if (!actions.isEmpty() && actions.size() != 1 && numberOfActions - undos > 0) {
             return actions.get(numberOfActions - undos - 1);
         } else {
-            
+            return copyArray(pictureOriginal);
         }
         
         
-        return pictureOriginal;
     }
 
     /**
@@ -390,17 +389,21 @@ public class Transformer extends Object implements ITransformations {
         int[][] blurredPixels = new int[sourcePixels.length][sourcePixels[0].length];
         int average = 0;
 
-        for (int r = 0; r < blurredPixels.length; r++) {
-            for (int c = 0; c < blurredPixels[r].length; c++) {
-                if (r > 0 && r < blurredPixels.length - 1 && c > 0 && c < blurredPixels[r].length - 1) {
+        for (int r = 1; r < blurredPixels.length - 1; r++) {
+            for (int c = 1; c < blurredPixels[r].length - 1; c++) {
                     average = (sourcePixels[r - 1][c - 1] + sourcePixels[r - 1][c] + sourcePixels[r - 1][c + 1] + sourcePixels[r][c - 1] + sourcePixels[r][c] + sourcePixels[r][c + 1] + sourcePixels[r + 1][c - 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c + 1]) / 9;
                     
                     blurredPixels[r][c] = average;
-                }
             }
         }
         
         // ADD CASES FOR END ROWS
+        // - For far left and far right row
+        for (int i = 0; i < 2; i++) {
+            for (int r = 0; r < sourcePixels.length; r++) {
+                
+            }
+        }
 
         int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
         for (int r = 0; r < transformedArray.length; r++) {
