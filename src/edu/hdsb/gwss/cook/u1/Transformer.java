@@ -296,28 +296,38 @@ public class Transformer extends Object implements ITransformations {
     private int[][] rotate(int[][] sourcePixels) {
         // TO DO
         rotate++;
+        boolean transformed = false;
+        boolean sourced = false;
 
         int[][] transformedPixels = new int[sourcePixels[0].length][sourcePixels.length];
         for (int r = 0; r < transformedPixels.length; r++) {
             for (int c = 0; c < transformedPixels[r].length; c++) {
-                   // ADD IN TRICK
                     transformedPixels[r][c] = sourcePixels[c][r];
-                
+                    transformed = true;
+                 
             }
         }
+        
+        picture = transformedPixels;
 
         int[][] transformedArray = new int[transformedPixels.length][transformedPixels[0].length];
         for (int r = 0; r < transformedArray.length; r++) {
             for (int c = 0; c < transformedArray[r].length; c++) {
                 transformedArray[r][c] = transformedPixels[r][c];
+                //System.out.println(sourcePixels[c][r]);
             }
 
         }
+        
+        
 
         actions.add(transformedArray);
         numberOfActions++;
 
-        return transformedPixels;
+        
+            return transformedPixels;
+        
+       
     }
 
     /**
