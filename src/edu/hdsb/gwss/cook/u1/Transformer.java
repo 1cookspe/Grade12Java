@@ -302,13 +302,11 @@ public class Transformer extends Object implements ITransformations {
         int[][] transformedPixels = new int[sourcePixels[0].length][sourcePixels.length];
         for (int r = 0; r < transformedPixels.length; r++) {
             for (int c = 0; c < transformedPixels[r].length; c++) {
-                    transformedPixels[r][c] = sourcePixels[c][r];
-                    transformed = true;
-                 
+                transformedPixels[r][c] = sourcePixels[c][r];
+
             }
         }
-        
-        picture = transformedPixels;
+
 
         int[][] transformedArray = new int[transformedPixels.length][transformedPixels[0].length];
         for (int r = 0; r < transformedArray.length; r++) {
@@ -318,16 +316,12 @@ public class Transformer extends Object implements ITransformations {
             }
 
         }
-        
-        
 
         actions.add(transformedArray);
         numberOfActions++;
 
-        
-            return transformedPixels;
-        
-       
+        return flipY(transformedPixels);
+
     }
 
     /**
@@ -367,9 +361,11 @@ public class Transformer extends Object implements ITransformations {
 
         int[][] scaledArray = new int[sourcePixels.length / 2][sourcePixels[0].length / 2];
 
-        for (int r = 0; r < scaledArray.length; r++) {
-            for (int c = 0; c < scaledArray[r].length; c++) {
-                scaledArray[r][c] = sourcePixels[r * 2][c * 2];
+        if (scaledArray.length > 0) {
+            for (int r = 0; r < scaledArray.length; r++) {
+                for (int c = 0; c < scaledArray[r].length; c++) {
+                    scaledArray[r][c] = sourcePixels[r * 2][c * 2];
+                }
             }
         }
 
