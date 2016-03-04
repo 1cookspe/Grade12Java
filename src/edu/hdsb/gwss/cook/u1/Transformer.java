@@ -387,6 +387,7 @@ public class Transformer extends Object implements ITransformations {
             blurredPixels = new int[sourcePixels.length][sourcePixels[0].length];
             normal = true;
         } else {
+            System.out.println("other");
             blurredPixels = new int[sourcePixels[0].length][sourcePixels.length];
             normal = false;
         }
@@ -455,7 +456,7 @@ public class Transformer extends Object implements ITransformations {
                         average = (sourcePixels[sourcePixels.length - 1][c] + sourcePixels[sourcePixels.length - 1][c - 1] + sourcePixels[sourcePixels.length - 1][c + 1] + sourcePixels[sourcePixels.length - 2][c] + sourcePixels[sourcePixels.length - 2][c - 1] + sourcePixels[sourcePixels.length - 2][c + 1]) / 6;
                         blurredPixels[r][c] = average;
                     } else {
-                        average = (sourcePixels[sourcePixels.length - 1][c] + sourcePixels[sourcePixels.length - 1][c - 1] + sourcePixels[sourcePixels.length - 1][c + 1] + sourcePixels[sourcePixels.length - 2][c] + sourcePixels[sourcePixels.length - 2][c - 1] + sourcePixels[sourcePixels.length - 2][c + 1]) / 6;
+                        average = (sourcePixels[c][sourcePixels[0].length - 1] + sourcePixels[c - 1][sourcePixels[0].length - 1] + sourcePixels[c + 1][sourcePixels[0].length - 1] + sourcePixels[c][sourcePixels[0].length - 2] + sourcePixels[c - 1][sourcePixels[0].length - 2] + sourcePixels[c + 1][sourcePixels[0].length - 2]) / 6;
                         blurredPixels[r][c] = average;
                     }
                 }
