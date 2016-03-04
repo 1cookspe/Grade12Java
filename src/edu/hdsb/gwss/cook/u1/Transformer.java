@@ -145,15 +145,14 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] copyArray(int[][] a) {
-        int[][] copy = new int[pictureOriginal.length][pictureOriginal[0].length];
+        int[][] copy = new int[a.length][a[0].length];
         for (int r = 0; r < copy.length; r++) {
             for (int c = 0; c < copy[r].length; c++) {
-                copy[r][c] = pictureOriginal[r][c];
+                copy[r][c] = a[r][c];
             }
         }
 
-        a = copy;
-        return a;
+        return copy;
     }
 
     /**
@@ -219,15 +218,14 @@ public class Transformer extends Object implements ITransformations {
             }
         }
 
-        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
-        for (int r = 0; r < transformedArray.length; r++) {
-            for (int c = 0; c < transformedArray[r].length; c++) {
-                transformedArray[r][c] = sourcePixels[r][c];
-            }
-
-        }
-
-        actions.add(transformedArray);
+//        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+//        for (int r = 0; r < transformedArray.length; r++) {
+//            for (int c = 0; c < transformedArray[r].length; c++) {
+//                transformedArray[r][c] = sourcePixels[r][c];
+//            }
+//
+//        }
+        actions.add(copyArray(sourcePixels));
         numberOfActions++;
 
         return sourcePixels;
@@ -248,15 +246,14 @@ public class Transformer extends Object implements ITransformations {
             }
         }
 
-        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
-        for (int r = 0; r < transformedArray.length; r++) {
-            for (int c = 0; c < transformedArray[r].length; c++) {
-                transformedArray[r][c] = sourcePixels[r][c];
-            }
-
-        }
-
-        actions.add(transformedArray);
+//        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+//        for (int r = 0; r < transformedArray.length; r++) {
+//            for (int c = 0; c < transformedArray[r].length; c++) {
+//                transformedArray[r][c] = sourcePixels[r][c];
+//            }
+//
+//        }
+        actions.add(copyArray(sourcePixels));
         numberOfActions++;
 
         return sourcePixels;
@@ -276,15 +273,14 @@ public class Transformer extends Object implements ITransformations {
             }
         }
 
-        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
-        for (int r = 0; r < transformedArray.length; r++) {
-            for (int c = 0; c < transformedArray[r].length; c++) {
-                transformedArray[r][c] = sourcePixels[r][c];
-            }
-
-        }
-
-        actions.add(transformedArray);
+//        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+//        for (int r = 0; r < transformedArray.length; r++) {
+//            for (int c = 0; c < transformedArray[r].length; c++) {
+//                transformedArray[r][c] = sourcePixels[r][c];
+//            }
+//
+//        }
+        actions.add(copyArray(sourcePixels));
         numberOfActions++;
 
         return sourcePixels;
@@ -307,17 +303,15 @@ public class Transformer extends Object implements ITransformations {
             }
         }
 
-
-        int[][] transformedArray = new int[transformedPixels.length][transformedPixels[0].length];
-        for (int r = 0; r < transformedArray.length; r++) {
-            for (int c = 0; c < transformedArray[r].length; c++) {
-                transformedArray[r][c] = transformedPixels[r][c];
-                //System.out.println(sourcePixels[c][r]);
-            }
-
-        }
-
-        actions.add(transformedArray);
+//        int[][] transformedArray = new int[transformedPixels.length][transformedPixels[0].length];
+//        for (int r = 0; r < transformedArray.length; r++) {
+//            for (int c = 0; c < transformedArray[r].length; c++) {
+//                transformedArray[r][c] = transformedPixels[r][c];
+//                //System.out.println(sourcePixels[c][r]);
+//            }
+//
+//        }
+        actions.add(copyArray(transformedPixels));
         numberOfActions++;
 
         return flipY(transformedPixels);
@@ -339,15 +333,14 @@ public class Transformer extends Object implements ITransformations {
             }
         }
 
-        int[][] transformedArray = new int[doubleArray.length][doubleArray[0].length];
-        for (int r = 0; r < transformedArray.length; r++) {
-            for (int c = 0; c < transformedArray[r].length; c++) {
-                transformedArray[r][c] = doubleArray[r][c];
-            }
-
-        }
-
-        actions.add(transformedArray);
+//        int[][] transformedArray = new int[doubleArray.length][doubleArray[0].length];
+//        for (int r = 0; r < transformedArray.length; r++) {
+//            for (int c = 0; c < transformedArray[r].length; c++) {
+//                transformedArray[r][c] = doubleArray[r][c];
+//            }
+//
+//        }
+        actions.add(copyArray(doubleArray));
         numberOfActions++;
 
         return doubleArray;
@@ -367,38 +360,48 @@ public class Transformer extends Object implements ITransformations {
                     scaledArray[r][c] = sourcePixels[r * 2][c * 2];
                 }
             }
+
+//            int[][] transformedArray = new int[scaledArray.length][scaledArray[0].length];
+//            for (int r = 0; r < transformedArray.length; r++) {
+//                for (int c = 0; c < transformedArray[r].length; c++) {
+//                    transformedArray[r][c] = scaledArray[r][c];
+//                }
+//
+//            }
+            actions.add(copyArray(scaledArray));
+            numberOfActions++;
+            return scaledArray;
         }
 
-        int[][] transformedArray = new int[scaledArray.length][scaledArray[0].length];
-        for (int r = 0; r < transformedArray.length; r++) {
-            for (int c = 0; c < transformedArray[r].length; c++) {
-                transformedArray[r][c] = scaledArray[r][c];
-            }
-
-        }
-
-        actions.add(transformedArray);
-        numberOfActions++;
-
-        return scaledArray;
+        return sourcePixels;
     }
 
     /**
      * TODO: ICS4U - TODO
      */
     private int[][] blur(int[][] sourcePixels) {
-        int[][] blurredPixels = new int[sourcePixels.length][sourcePixels[0].length];
+        int[][] blurredPixels = {};
+        boolean normal;
+
+        if (sourcePixels.length < sourcePixels[0].length) {
+            blurredPixels = new int[sourcePixels.length][sourcePixels[0].length];
+            normal = true;
+        } else {
+            blurredPixels = new int[sourcePixels[0].length][sourcePixels.length];
+            normal = false;
+        }
         int average = 0;
 
         for (int r = 1; r < blurredPixels.length - 1; r++) {
             for (int c = 1; c < blurredPixels[r].length - 1; c++) {
-                average = (sourcePixels[r - 1][c - 1] + sourcePixels[r - 1][c] + sourcePixels[r - 1][c + 1] + sourcePixels[r][c - 1] + sourcePixels[r][c] + sourcePixels[r][c + 1] + sourcePixels[r + 1][c - 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c + 1]) / 9;
-
+                if (normal) {
+                    average = (sourcePixels[r - 1][c - 1] + sourcePixels[r - 1][c] + sourcePixels[r - 1][c + 1] + sourcePixels[r][c - 1] + sourcePixels[r][c] + sourcePixels[r][c + 1] + sourcePixels[r + 1][c - 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c + 1]) / 9;
+                } else {
+                    average = (sourcePixels[c - 1][r - 1] + sourcePixels[c - 1][r] + sourcePixels[c - 1][r + 1] + sourcePixels[c][r - 1] + sourcePixels[c][r] + sourcePixels[c][r + 1] + sourcePixels[c + 1][r - 1] + sourcePixels[c + 1][r] + sourcePixels[c + 1][r + 1]) / 9;
+                }
                 blurredPixels[r][c] = average;
             }
         }
-
-        System.out.println("LENGTH = " + sourcePixels.length);
 
         // ADD CASES FOR END ROWS
         // - For far left and far right row
@@ -407,19 +410,32 @@ public class Transformer extends Object implements ITransformations {
             for (int r = 0; r < sourcePixels.length; r++) {
                 if (c == 0 && r > 0 && r < sourcePixels.length - 1) {
                     average = (sourcePixels[r - 1][0] + sourcePixels[r - 1][1] + sourcePixels[r][1] + sourcePixels[r][0] + sourcePixels[r + 1][1] + sourcePixels[r + 1][0]) / 6;
-                    blurredPixels[r][0] = average;
+                    if (normal) {
+                        blurredPixels[r][0] = average;
+                    } else {
+                        blurredPixels[0][r] = average;
+                    }
                 } else if (c == sourcePixels[0].length - 1 && r > 0 && r < sourcePixels.length - 1) {
                     average = (sourcePixels[r - 1][sourcePixels[0].length - 1] + sourcePixels[r - 1][sourcePixels[0].length - 2] + sourcePixels[r][sourcePixels[0].length - 2] + sourcePixels[r][sourcePixels[0].length - 1] + sourcePixels[r + 1][sourcePixels[0].length - 2] + sourcePixels[r + 1][sourcePixels[0].length - 1]) / 6;
-                    blurredPixels[r][sourcePixels[0].length - 1] = average;
+                    if (normal) {
+                        blurredPixels[r][sourcePixels[0].length - 1] = average;
+                    } else {
+                        blurredPixels[sourcePixels[0].length - 1][r] = average;
+                    }
                 } else if (r == 0 && c == 0) {
                     average = (sourcePixels[r][c] + sourcePixels[r][c + 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c + 1]) / 4;
+
                     blurredPixels[r][c] = average;
                 } else if (r == 0 && c == sourcePixels[0].length - 1) {
                     average = (sourcePixels[r][c] + sourcePixels[r][c - 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c - 1]) / 4;
                     blurredPixels[r][c] = average;
                 } else if (r == (sourcePixels.length - 1) && c == 0) {
                     average = (sourcePixels[r][c] + sourcePixels[r - 1][c] + sourcePixels[r - 1][c + 1] + sourcePixels[r][c + 1]) / 4;
-                    blurredPixels[r][c] = average;
+                    if (normal) {
+                        blurredPixels[r][c] = average;
+                    } else {
+                        blurredPixels[c][r] = average;
+                    }
                 }
             }
         }
@@ -429,40 +445,39 @@ public class Transformer extends Object implements ITransformations {
         for (int r = 0; r < sourcePixels.length; r = r + sourcePixels.length - 1) {
             for (int c = 0; c < sourcePixels.length - 1; c++) {
                 if (c > 0 && r == 0) {
-                    average = (sourcePixels[0][c] + sourcePixels[0][c - 1] + sourcePixels[0][c + 1] + sourcePixels[1][c] + sourcePixels[1][c - 1] + sourcePixels[1][c + 1]) / 6;
+                    if (normal) {
+                        average = (sourcePixels[0][c] + sourcePixels[0][c - 1] + sourcePixels[0][c + 1] + sourcePixels[1][c] + sourcePixels[1][c - 1] + sourcePixels[1][c + 1]) / 6;
+                    }
                     blurredPixels[r][c] = average;
                 } else if (r == sourcePixels.length - 1 && c > 0) {
-                    average = (sourcePixels[sourcePixels.length - 1][c] + sourcePixels[sourcePixels.length - 1][c - 1] + sourcePixels[sourcePixels.length - 1][c + 1] + sourcePixels[sourcePixels.length - 2][c] + sourcePixels[sourcePixels.length - 2][c - 1] + sourcePixels[sourcePixels.length - 2][c + 1]) / 6;
-                    blurredPixels[r][c] = average;
+                    
+                    if (normal) {
+                        average = (sourcePixels[sourcePixels.length - 1][c] + sourcePixels[sourcePixels.length - 1][c - 1] + sourcePixels[sourcePixels.length - 1][c + 1] + sourcePixels[sourcePixels.length - 2][c] + sourcePixels[sourcePixels.length - 2][c - 1] + sourcePixels[sourcePixels.length - 2][c + 1]) / 6;
+                        blurredPixels[r][c] = average;
+                    } else {
+                        average = (sourcePixels[sourcePixels.length - 1][c] + sourcePixels[sourcePixels.length - 1][c - 1] + sourcePixels[sourcePixels.length - 1][c + 1] + sourcePixels[sourcePixels.length - 2][c] + sourcePixels[sourcePixels.length - 2][c - 1] + sourcePixels[sourcePixels.length - 2][c + 1]) / 6;
+                        blurredPixels[r][c] = average;
+                    }
                 }
             }
         }
 
-        int[][] transformedArray = new int[blurredPixels.length][blurredPixels[0].length];
-        for (int r = 0; r < transformedArray.length; r++) {
-            for (int c = 0; c < transformedArray[r].length; c++) {
-                transformedArray[r][c] = blurredPixels[r][c];
-            }
-
-        }
-
-        actions.add(transformedArray);
+        actions.add(copyArray(blurredPixels));
         numberOfActions++;
 
         return blurredPixels;
     }
 
-    private int[][] transformArray(int[][] sourcePixels) {
-        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
-        for (int r = 0; r < transformedArray.length; r++) {
-            for (int c = 0; c < transformedArray[r].length; c++) {
-                transformedArray[r][c] = sourcePixels[r][c];
-            }
-
-        }
-        return transformedArray;
-    }
-
+//    private int[][] transformArray(int[][] sourcePixels) {
+//        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
+//        for (int r = 0; r < transformedArray.length; r++) {
+//            for (int c = 0; c < transformedArray[r].length; c++) {
+//                transformedArray[r][c] = sourcePixels[r][c];
+//            }
+//
+//        }
+//        return transformedArray;
+//    }
     /**
      * TODO: ICS4U - TODO
      */
