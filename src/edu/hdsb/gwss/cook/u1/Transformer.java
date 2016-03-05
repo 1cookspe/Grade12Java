@@ -382,15 +382,32 @@ public class Transformer extends Object implements ITransformations {
     private int[][] blur(int[][] sourcePixels) {
         int[][] blurredPixels = {};
         boolean normal;
+        int[][] flippedPixels = new int[sourcePixels[0].length][sourcePixels.length];
 
         if (sourcePixels.length < sourcePixels[0].length) {
             blurredPixels = new int[sourcePixels.length][sourcePixels[0].length];
+            System.out.println("normal");
             normal = true;
+
+//
         } else {
-            System.out.println("other");
+            System.out.println("rotated");
             blurredPixels = new int[sourcePixels[0].length][sourcePixels.length];
             normal = false;
+
+            for (int r = 0; r < sourcePixels[0].length; r++) {
+                for (int c = 0; c < sourcePixels.length; c++) {
+                    flippedPixels[r][c] = sourcePixels[c][r];
+                }
+            }
+
         }
+
+        System.out.println("rows = " + sourcePixels.length);
+        System.out.println("cols = " + sourcePixels[0].length);
+        System.out.println("rows = " + blurredPixels.length);
+        System.out.println("cols = " + blurredPixels[0].length);
+
         int average = 0;
 
         for (int r = 1; r < blurredPixels.length - 1; r++) {
@@ -398,31 +415,45 @@ public class Transformer extends Object implements ITransformations {
                 if (normal) {
                     average = (sourcePixels[r - 1][c - 1] + sourcePixels[r - 1][c] + sourcePixels[r - 1][c + 1] + sourcePixels[r][c - 1] + sourcePixels[r][c] + sourcePixels[r][c + 1] + sourcePixels[r + 1][c - 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c + 1]) / 9;
                 } else {
-                    average = (sourcePixels[c - 1][r - 1] + sourcePixels[c - 1][r] + sourcePixels[c - 1][r + 1] + sourcePixels[c][r - 1] + sourcePixels[c][r] + sourcePixels[c][r + 1] + sourcePixels[c + 1][r - 1] + sourcePixels[c + 1][r] + sourcePixels[c + 1][r + 1]) / 9;
+                    average = (flippedPixels[r - 1][c - 1] + flippedPixels[r - 1][c] + flippedPixels[r - 1][c + 1] + flippedPixels[r][c - 1] + flippedPixels[r][c] + flippedPixels[r][c + 1] + flippedPixels[r + 1][c - 1] + flippedPixels[r + 1][c] + flippedPixels[r + 1][c + 1]) / 9;
                 }
                 blurredPixels[r][c] = average;
             }
         }
 
-        // ADD CASES FOR END ROWS
-        // - For far left and far right row
-        // - Work from top to bottom
-        for (int c = 0; c < sourcePixels[0].length; c = c + sourcePixels[0].length - 1) {
-            for (int r = 0; r < sourcePixels.length; r++) {
+//         ADD CASES FOR END ROWS
+//         - For far left and far right row
+//         - Work from top to bottom
+        
+        int rowCount = 0;
+        int colCount = 0;
+        
+        if (normal) {
+            colCount = sourcePixels[0].length;
+            rowCount = sourcePixels.length;
+        } else {
+            System.out.println("Different");
+            colCount = sourcePixels.length;
+            rowCount = sourcePixels[0].length;
+        }
+        
+        for (int c = 0; c < colCount; c = c + sourcePixels[0].length - 1) {
+            System.out.println(c);
+            for (int r = 0; r < rowCount; r++) {
+                System.out.println(r);
                 if (c == 0 && r > 0 && r < sourcePixels.length - 1) {
-                    average = (sourcePixels[r - 1][0] + sourcePixels[r - 1][1] + sourcePixels[r][1] + sourcePixels[r][0] + sourcePixels[r + 1][1] + sourcePixels[r + 1][0]) / 6;
                     if (normal) {
-                        blurredPixels[r][0] = average;
+                        average = (sourcePixels[r - 1][0] + sourcePixels[r - 1][1] + sourcePixels[r][1] + sourcePixels[r][0] + sourcePixels[r + 1][1] + sourcePixels[r + 1][0]) / 6;
                     } else {
-                        blurredPixels[0][r] = average;
+                        average = (flippedPixels[0][r - 1] + flippedPixels[1][r - 1] + flippedPixels[1][r] + flippedPixels[0][r] + flippedPixels[1][r + 1] + flippedPixels[0][r + 1]) / 6;
                     }
+                    blurredPixels[r][0] = average;
+
                 } else if (c == sourcePixels[0].length - 1 && r > 0 && r < sourcePixels.length - 1) {
                     average = (sourcePixels[r - 1][sourcePixels[0].length - 1] + sourcePixels[r - 1][sourcePixels[0].length - 2] + sourcePixels[r][sourcePixels[0].length - 2] + sourcePixels[r][sourcePixels[0].length - 1] + sourcePixels[r + 1][sourcePixels[0].length - 2] + sourcePixels[r + 1][sourcePixels[0].length - 1]) / 6;
-                    if (normal) {
-                        blurredPixels[r][sourcePixels[0].length - 1] = average;
-                    } else {
-                        blurredPixels[sourcePixels[0].length - 1][r] = average;
-                    }
+
+                    blurredPixels[r][sourcePixels[0].length - 1] = average;
+
                 } else if (r == 0 && c == 0) {
                     average = (sourcePixels[r][c] + sourcePixels[r][c + 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c + 1]) / 4;
 
@@ -432,42 +463,38 @@ public class Transformer extends Object implements ITransformations {
                     blurredPixels[r][c] = average;
                 } else if (r == (sourcePixels.length - 1) && c == 0) {
                     average = (sourcePixels[r][c] + sourcePixels[r - 1][c] + sourcePixels[r - 1][c + 1] + sourcePixels[r][c + 1]) / 4;
-                    if (normal) {
-                        blurredPixels[r][c] = average;
-                    } else {
-                        blurredPixels[c][r] = average;
-                    }
-                }
-            }
-        }
 
-        // - From top to bottom
-        // - Work from left to right
-        for (int r = 0; r < sourcePixels.length; r = r + sourcePixels.length - 1) {
-            for (int c = 0; c < sourcePixels.length - 1; c++) {
-                if (c > 0 && r == 0) {
-                    if (normal) {
-                        average = (sourcePixels[0][c] + sourcePixels[0][c - 1] + sourcePixels[0][c + 1] + sourcePixels[1][c] + sourcePixels[1][c - 1] + sourcePixels[1][c + 1]) / 6;
-                    }
                     blurredPixels[r][c] = average;
-                } else if (r == sourcePixels.length - 1 && c > 0) {
-                    
-                    if (normal) {
-                        average = (sourcePixels[sourcePixels.length - 1][c] + sourcePixels[sourcePixels.length - 1][c - 1] + sourcePixels[sourcePixels.length - 1][c + 1] + sourcePixels[sourcePixels.length - 2][c] + sourcePixels[sourcePixels.length - 2][c - 1] + sourcePixels[sourcePixels.length - 2][c + 1]) / 6;
-                        blurredPixels[r][c] = average;
-                    } else {
-                        average = (sourcePixels[c][sourcePixels[0].length - 1] + sourcePixels[c - 1][sourcePixels[0].length - 1] + sourcePixels[c + 1][sourcePixels[0].length - 1] + sourcePixels[c][sourcePixels[0].length - 2] + sourcePixels[c - 1][sourcePixels[0].length - 2] + sourcePixels[c + 1][sourcePixels[0].length - 2]) / 6;
-                        blurredPixels[r][c] = average;
-                        // 
-                    }
+
                 }
             }
         }
-
+//
+//        // - From top to bottom
+//        // - Work from left to right
+//        for (int r = 0; r < sourcePixels.length; r = r + sourcePixels.length - 1) {
+//            for (int c = 0; c < sourcePixels.length - 1; c++) {
+//                if (c > 0 && r == 0) {
+//                    average = (sourcePixels[0][c] + sourcePixels[0][c - 1] + sourcePixels[0][c + 1] + sourcePixels[1][c] + sourcePixels[1][c - 1] + sourcePixels[1][c + 1]) / 6;
+//
+//                    blurredPixels[r][c] = average;
+//                } else if (r == sourcePixels.length - 1 && c > 0) {
+//
+//                    average = (sourcePixels[sourcePixels.length - 1][c] + sourcePixels[sourcePixels.length - 1][c - 1] + sourcePixels[sourcePixels.length - 1][c + 1] + sourcePixels[sourcePixels.length - 2][c] + sourcePixels[sourcePixels.length - 2][c - 1] + sourcePixels[sourcePixels.length - 2][c + 1]) / 6;
+//                    blurredPixels[r][c] = average;
+//
+//                    // 
+//                }
+//            }
+//        }
         actions.add(copyArray(blurredPixels));
         numberOfActions++;
 
-        return blurredPixels;
+        if (normal) {
+            return blurredPixels;
+        } else {
+            return flipY(rotate(blurredPixels));
+        }
     }
 
 //    private int[][] transformArray(int[][] sourcePixels) {
