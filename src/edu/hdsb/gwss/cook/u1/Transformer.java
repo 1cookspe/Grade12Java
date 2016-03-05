@@ -31,6 +31,7 @@ public class Transformer extends Object implements ITransformations {
     int numberOfActions = 0;
     int undos = 0;
     int rotate = 0;
+    int order = 0;
 
     /**
      * Construct a Transformer object by setting the possible transformations
@@ -159,13 +160,50 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] undo() {
+//        undos++;
+//        boolean remaining = false;
+//        int[][] array = {};
+//        
+//        if (undos == 1) {
+//            order = 0;
+//        }
+//        
+//        System.out.println("ORDER = " + order);
+//        System.out.println("NUMBER OF ACTIONS "+ numberOfActions);
+//        if (!actions.isEmpty() && actions.size() != 1 && numberOfActions - undos > 0) {
+//            remaining = true;
+//            array = actions.get((numberOfActions - undos - 1) + (order - undos));
+//        } else {
+//            remaining = false;
+//        }
+//        order = 0;
+//        
+//        System.out.println("UNDO = " + undos);
+//        
+//        if (remaining) {
+//            return array;
+//        } else {
+//            return copyArray(pictureOriginal);
+//        }
+
         undos++;
+        int[][] array = {};
 
         if (!actions.isEmpty() && actions.size() != 1 && numberOfActions - undos > 0) {
-            return actions.get(numberOfActions - undos - 1);
+            numberOfActions -= undos;
+            array = actions.get(numberOfActions - 1);
+            if (numberOfActions - undos >= 0) {
+                for (int i = numberOfActions; i > (numberOfActions - undos); i--) {
+                    System.out.println(i);
+                    actions.remove(actions.get(i));
+                }
+            }
+
         } else {
             return copyArray(pictureOriginal);
         }
+
+        return array;
 
     }
 
@@ -202,6 +240,7 @@ public class Transformer extends Object implements ITransformations {
 
         actions.add(transformedArray);
         numberOfActions++;
+        order++;
 
         return sourcePixels;
     }
@@ -227,6 +266,7 @@ public class Transformer extends Object implements ITransformations {
 //        }
         actions.add(copyArray(sourcePixels));
         numberOfActions++;
+        order++;
 
         return sourcePixels;
     }
@@ -255,6 +295,7 @@ public class Transformer extends Object implements ITransformations {
 //        }
         actions.add(copyArray(sourcePixels));
         numberOfActions++;
+        order++;
 
         return sourcePixels;
     }
@@ -282,6 +323,7 @@ public class Transformer extends Object implements ITransformations {
 //        }
         actions.add(copyArray(sourcePixels));
         numberOfActions++;
+        order++;
 
         return sourcePixels;
     }
@@ -313,6 +355,7 @@ public class Transformer extends Object implements ITransformations {
 //        }
         actions.add(copyArray(transformedPixels));
         numberOfActions++;
+        order++;
 
         return flipY(transformedPixels);
 
@@ -342,6 +385,7 @@ public class Transformer extends Object implements ITransformations {
 //        }
         actions.add(copyArray(doubleArray));
         numberOfActions++;
+        order++;
 
         return doubleArray;
     }
@@ -370,6 +414,7 @@ public class Transformer extends Object implements ITransformations {
 //            }
             actions.add(copyArray(scaledArray));
             numberOfActions++;
+            order++;
             return scaledArray;
         }
 
@@ -450,7 +495,7 @@ public class Transformer extends Object implements ITransformations {
 
                 } else if (c == colCount - 1 && r > 0 && r < rowCount - 1) {
                     if (normal) {
-                    average = (sourcePixels[r - 1][sourcePixels[0].length - 1] + sourcePixels[r - 1][sourcePixels[0].length - 2] + sourcePixels[r][sourcePixels[0].length - 2] + sourcePixels[r][sourcePixels[0].length - 1] + sourcePixels[r + 1][sourcePixels[0].length - 2] + sourcePixels[r + 1][sourcePixels[0].length - 1]) / 6;
+                        average = (sourcePixels[r - 1][sourcePixels[0].length - 1] + sourcePixels[r - 1][sourcePixels[0].length - 2] + sourcePixels[r][sourcePixels[0].length - 2] + sourcePixels[r][sourcePixels[0].length - 1] + sourcePixels[r + 1][sourcePixels[0].length - 2] + sourcePixels[r + 1][sourcePixels[0].length - 1]) / 6;
                     } else {
                         average = (sourcePixels[colCount - 1][r - 1] + sourcePixels[colCount - 2][r - 1] + sourcePixels[colCount - 2][r] + sourcePixels[colCount - 1][r] + sourcePixels[colCount - 2][r + 1] + sourcePixels[colCount - 1][r + 1]) / 6;
                     }
@@ -458,14 +503,14 @@ public class Transformer extends Object implements ITransformations {
 
                 } else if (r == 0 && c == 0) {
                     if (normal) {
-                    average = (sourcePixels[r][c] + sourcePixels[r][c + 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c + 1]) / 4;
+                        average = (sourcePixels[r][c] + sourcePixels[r][c + 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c + 1]) / 4;
                     } else {
                         average = (flippedPixels[r][c] + flippedPixels[r][c + 1] + flippedPixels[r + 1][c] + flippedPixels[r + 1][c + 1]) / 4;
                     }
                     blurredPixels[r][c] = average;
                 } else if (r == 0 && c == colCount - 1) {
                     if (normal) {
-                    average = (sourcePixels[r][c] + sourcePixels[r][c - 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c - 1]) / 4;
+                        average = (sourcePixels[r][c] + sourcePixels[r][c - 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c - 1]) / 4;
                     } else {
                         average = (flippedPixels[r][c] + flippedPixels[r][c - 1] + flippedPixels[r + 1][c] + flippedPixels[r + 1][c - 1]) / 4;
                     }
@@ -513,6 +558,7 @@ public class Transformer extends Object implements ITransformations {
         }
         actions.add(copyArray(blurredPixels));
         numberOfActions++;
+        order++;
 
         if (normal) {
             return blurredPixels;
@@ -520,7 +566,6 @@ public class Transformer extends Object implements ITransformations {
             return flipY(rotate(blurredPixels));
         }
     }
-
 
     /**
      * TODO: ICS4U - TODO
