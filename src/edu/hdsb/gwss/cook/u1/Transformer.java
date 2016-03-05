@@ -458,6 +458,7 @@ public class Transformer extends Object implements ITransformations {
                     } else {
                         average = (sourcePixels[c][sourcePixels[0].length - 1] + sourcePixels[c - 1][sourcePixels[0].length - 1] + sourcePixels[c + 1][sourcePixels[0].length - 1] + sourcePixels[c][sourcePixels[0].length - 2] + sourcePixels[c - 1][sourcePixels[0].length - 2] + sourcePixels[c + 1][sourcePixels[0].length - 2]) / 6;
                         blurredPixels[r][c] = average;
+                        // 
                     }
                 }
             }
