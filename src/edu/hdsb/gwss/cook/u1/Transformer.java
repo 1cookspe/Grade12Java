@@ -1,5 +1,7 @@
 /*
- * ICS4U.2015.16.S2
+ * Created by: Spencer Cook
+ Class: ICS4U
+ Date: Friday, March 4, 2016
  */
 package edu.hdsb.gwss.cook.u1;
 
@@ -30,8 +32,6 @@ public class Transformer extends Object implements ITransformations {
     ArrayList<int[][]> actions = new ArrayList<int[][]>();
     int numberOfActions = 0;
     int undos = 0;
-    int rotate = 0;
-    int order = 0;
 
     /**
      * Construct a Transformer object by setting the possible transformations
@@ -134,7 +134,7 @@ public class Transformer extends Object implements ITransformations {
         } else if (BLUR.equals(transformationName)) {
             this.picture = blur(this.picture);
         } else if (RESET.equals(transformationName)) {
-            this.picture = this.copyArray(this.picture);
+            this.picture = this.copyArray(this.pictureOriginal);
         } else if (UNDO.equals(transformationName)) {
             this.picture = this.undo();
         } else {
@@ -146,6 +146,7 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] copyArray(int[][] a) {
+        // Create another copy of array
         int[][] copy = new int[a.length][a[0].length];
         for (int r = 0; r < copy.length; r++) {
             for (int c = 0; c < copy[r].length; c++) {
@@ -160,48 +161,27 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] undo() {
-//        undos++;
-//        boolean remaining = false;
-//        int[][] array = {};
-//        
-//        if (undos == 1) {
-//            order = 0;
-//        }
-//        
-//        System.out.println("ORDER = " + order);
-//        System.out.println("NUMBER OF ACTIONS "+ numberOfActions);
-//        if (!actions.isEmpty() && actions.size() != 1 && numberOfActions - undos > 0) {
-//            remaining = true;
-//            array = actions.get((numberOfActions - undos - 1) + (order - undos));
-//        } else {
-//            remaining = false;
-//        }
-//        order = 0;
-//        
-//        System.out.println("UNDO = " + undos);
-//        
-//        if (remaining) {
-//            return array;
-//        } else {
-//            return copyArray(pictureOriginal);
-//        }
-
-        undos++;
+        // Count how many undo's the user has done and create new array to hold the pixels of the "undone" action
+        
         int[][] array = {};
 
+        // Check if there are actions left in the array
         if (!actions.isEmpty() && actions.size() != 1 && numberOfActions - undos > 0) {
-            numberOfActions -= undos;
-            array = actions.get(numberOfActions - 1);
-            if (numberOfActions - undos >= 0) {
-                for (int i = numberOfActions; i > (numberOfActions - undos); i--) {
+            //numberOfActions -= undos;
+            array = actions.get(numberOfActions - undos - 1);
+            if (numberOfActions - undos >= 0 && numberOfActions > 0) {
+                for (int i = numberOfActions - 1; i > numberOfActions - undos; i--) {
                     System.out.println(i);
-                    actions.remove(actions.get(i));
+                    actions.remove(actions.get(i - 1));
                 }
             }
 
         } else {
+            // Just return orignal photo if all actions have been undone or do not exist
             return copyArray(pictureOriginal);
         }
+        
+        undos++;
 
         return array;
 
@@ -214,15 +194,18 @@ public class Transformer extends Object implements ITransformations {
         // TO DO  
         boolean dark = false;
 
+        // Loop through each pixel
         for (int r = 0; r < sourcePixels.length; r++) {
             for (int c = 0; c < sourcePixels[r].length; c++) {
-                if (percent == 2) {
+                if (percent == 2) { // Darken
+                    // Add 10 to each pixel to darken
                     if (sourcePixels[r][c] + 10 < 256) {
                         sourcePixels[r][c] += 10;
                         dark = true;
                     }
-                } else {
+                } else { // Lighten
                     if (sourcePixels[r][c] - 10 > -1) {
+                        // Subtract 10 from each pixel to lighten
                         sourcePixels[r][c] -= 10;
                         dark = false;
                     }
@@ -230,17 +213,9 @@ public class Transformer extends Object implements ITransformations {
             }
         }
 
-        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
-        for (int r = 0; r < transformedArray.length; r++) {
-            for (int c = 0; c < transformedArray[r].length; c++) {
-                transformedArray[r][c] = sourcePixels[r][c];
-            }
-
-        }
-
-        actions.add(transformedArray);
+        // Add a copy of sourcePixels to actions array
+        actions.add(copyArray(sourcePixels));
         numberOfActions++;
-        order++;
 
         return sourcePixels;
     }
@@ -249,24 +224,18 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] invert(int[][] sourcePixels) {
-        // TO DO
 
+        // Loop through each pixel
         for (int r = 0; r < sourcePixels.length; r++) {
             for (int c = 0; c < sourcePixels[r].length; c++) {
+                // Set pixel value to opposite (by the other spectrum within 255)
                 sourcePixels[r][c] = 255 - sourcePixels[r][c];
             }
         }
 
-//        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
-//        for (int r = 0; r < transformedArray.length; r++) {
-//            for (int c = 0; c < transformedArray[r].length; c++) {
-//                transformedArray[r][c] = sourcePixels[r][c];
-//            }
-//
-//        }
+        // Add copy of sourcePixels to actions array
         actions.add(copyArray(sourcePixels));
         numberOfActions++;
-        order++;
 
         return sourcePixels;
     }
@@ -275,10 +244,11 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] flipX(int[][] sourcePixels) {
-        // TO DO
 
+        // Loop through array
         for (int r = 0; r < sourcePixels.length; r++) {
             for (int c = 0; c < sourcePixels[r].length / 2; c++) {
+                // Swap values on the far column with the current column
                 int temp = sourcePixels[r][sourcePixels[r].length - c - 1];
                 sourcePixels[r][sourcePixels[r].length - c - 1] = sourcePixels[r][c];
                 sourcePixels[r][c] = temp;
@@ -286,16 +256,9 @@ public class Transformer extends Object implements ITransformations {
             }
         }
 
-//        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
-//        for (int r = 0; r < transformedArray.length; r++) {
-//            for (int c = 0; c < transformedArray[r].length; c++) {
-//                transformedArray[r][c] = sourcePixels[r][c];
-//            }
-//
-//        }
+        // Add copy of sourcePixels to actions array
         actions.add(copyArray(sourcePixels));
         numberOfActions++;
-        order++;
 
         return sourcePixels;
     }
@@ -304,26 +267,20 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] flipY(int[][] sourcePixels) {
-        // TO DO
 
+        // Loop through array
         for (int r = 0; r < sourcePixels.length / 2; r++) {
             for (int c = 0; c < sourcePixels[r].length; c++) {
+                // Swap value in opposite row with current row and column
                 int temp = sourcePixels[sourcePixels.length - r - 1][c];
                 sourcePixels[sourcePixels.length - r - 1][c] = sourcePixels[r][c];
                 sourcePixels[r][c] = temp;
             }
         }
 
-//        int[][] transformedArray = new int[sourcePixels.length][sourcePixels[0].length];
-//        for (int r = 0; r < transformedArray.length; r++) {
-//            for (int c = 0; c < transformedArray[r].length; c++) {
-//                transformedArray[r][c] = sourcePixels[r][c];
-//            }
-//
-//        }
+        // Add copy of sourcePixels to array of actions 
         actions.add(copyArray(sourcePixels));
         numberOfActions++;
-        order++;
 
         return sourcePixels;
     }
@@ -332,31 +289,21 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] rotate(int[][] sourcePixels) {
-        // TO DO
-        rotate++;
-        boolean transformed = false;
-        boolean sourced = false;
-
+        // Loop through each pixel
+        // Create new array to hold the rotated image, its size opposite of sourcePixels
         int[][] transformedPixels = new int[sourcePixels[0].length][sourcePixels.length];
         for (int r = 0; r < transformedPixels.length; r++) {
             for (int c = 0; c < transformedPixels[r].length; c++) {
+                // Set value of transformedPixels to that of the opposite orientation of sourcePixels
                 transformedPixels[r][c] = sourcePixels[c][r];
 
             }
         }
 
-//        int[][] transformedArray = new int[transformedPixels.length][transformedPixels[0].length];
-//        for (int r = 0; r < transformedArray.length; r++) {
-//            for (int c = 0; c < transformedArray[r].length; c++) {
-//                transformedArray[r][c] = transformedPixels[r][c];
-//                //System.out.println(sourcePixels[c][r]);
-//            }
-//
-//        }
         actions.add(copyArray(transformedPixels));
         numberOfActions++;
-        order++;
 
+        // Flip transformedPixels in the y orientation in order to properly obtain a 90 degrees rotated image
         return flipY(transformedPixels);
 
     }
@@ -365,27 +312,21 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] mirror(int[][] sourcePixels) {
-        // TO DO
-
+        // Create new array, doubleArray, that is double the width of sourcePixels, in order to hold the doubled mirror image
         int[][] doubleArray = new int[sourcePixels.length][sourcePixels[0].length * 2];
 
+        // Loop through array
         for (int r = 0; r < sourcePixels.length; r++) {
             for (int c = 0; c < sourcePixels[r].length; c++) {
                 doubleArray[r][c] = sourcePixels[r][c];
+                // Set the second half of double array to a flipped version of sourcePixels
                 doubleArray[r][c + sourcePixels[0].length] = sourcePixels[r][sourcePixels[0].length - 1 - c];
             }
         }
 
-//        int[][] transformedArray = new int[doubleArray.length][doubleArray[0].length];
-//        for (int r = 0; r < transformedArray.length; r++) {
-//            for (int c = 0; c < transformedArray[r].length; c++) {
-//                transformedArray[r][c] = doubleArray[r][c];
-//            }
-//
-//        }
+        // Add copy of doubleArray to actions array
         actions.add(copyArray(doubleArray));
         numberOfActions++;
-        order++;
 
         return doubleArray;
     }
@@ -394,27 +335,23 @@ public class Transformer extends Object implements ITransformations {
      * TODO: ICS4U - TODO
      */
     private int[][] scale50(int[][] sourcePixels) {
-        // TO DO
+        // Create new array, scaledArray, to hold half the values of sourcePixels, in order to scale the array by half (50%)
 
         int[][] scaledArray = new int[sourcePixels.length / 2][sourcePixels[0].length / 2];
 
+        // Check that the array still exists in size
         if (scaledArray.length > 0) {
+            // Loop through array
             for (int r = 0; r < scaledArray.length; r++) {
                 for (int c = 0; c < scaledArray[r].length; c++) {
+                    // Set the value of each pixel of scaled array to that of the values at double the index in sourcePixels
                     scaledArray[r][c] = sourcePixels[r * 2][c * 2];
                 }
             }
 
-//            int[][] transformedArray = new int[scaledArray.length][scaledArray[0].length];
-//            for (int r = 0; r < transformedArray.length; r++) {
-//                for (int c = 0; c < transformedArray[r].length; c++) {
-//                    transformedArray[r][c] = scaledArray[r][c];
-//                }
-//
-//            }
+            // add copy of scaledArray to the actions array
             actions.add(copyArray(scaledArray));
             numberOfActions++;
-            order++;
             return scaledArray;
         }
 
@@ -455,6 +392,7 @@ public class Transformer extends Object implements ITransformations {
 
         int average = 0;
 
+        // Calculate average of pixels surrounding each pixel, and then set the value of that pixel to the average (for inside of the outer rows and columns)
         for (int r = 1; r < blurredPixels.length - 1; r++) {
             for (int c = 1; c < blurredPixels[r].length - 1; c++) {
                 if (normal) {
@@ -472,35 +410,42 @@ public class Transformer extends Object implements ITransformations {
         int rowCount = 0;
         int colCount = 0;
 
-        if (normal) {
+        // Set row and column values for both a normal and rotated image, which vary due to their orientation
+        if (normal) { // Normal orientation
             colCount = sourcePixels[0].length;
             rowCount = sourcePixels.length;
-        } else {
+        } else { // Rotated orientation
             System.out.println("Different");
             colCount = sourcePixels.length;
             rowCount = sourcePixels[0].length;
         }
-
+        
+        // Add special cases for first and last column
         for (int c = 0; c < colCount; c = c + colCount - 1) {
             System.out.println(c);
             for (int r = 0; r < rowCount; r++) {
                 System.out.println(r);
+                // Check if pixel is in the first column
                 if (c == 0 && r > 0 && r < rowCount - 1) {
+                    // Use two different if statements for a normal oriented image and rotated image
                     if (normal) {
                         average = (sourcePixels[r - 1][0] + sourcePixels[r - 1][1] + sourcePixels[r][1] + sourcePixels[r][0] + sourcePixels[r + 1][1] + sourcePixels[r + 1][0]) / 6;
                     } else {
                         average = (flippedPixels[0][r - 1] + flippedPixels[1][r - 1] + flippedPixels[1][r] + flippedPixels[0][r] + flippedPixels[1][r + 1] + flippedPixels[0][r + 1]) / 6;
                     }
                     blurredPixels[r][0] = average;
-
+                    
+                    // Check if the pixel is in the last column
                 } else if (c == colCount - 1 && r > 0 && r < rowCount - 1) {
                     if (normal) {
                         average = (sourcePixels[r - 1][sourcePixels[0].length - 1] + sourcePixels[r - 1][sourcePixels[0].length - 2] + sourcePixels[r][sourcePixels[0].length - 2] + sourcePixels[r][sourcePixels[0].length - 1] + sourcePixels[r + 1][sourcePixels[0].length - 2] + sourcePixels[r + 1][sourcePixels[0].length - 1]) / 6;
                     } else {
-                        average = (sourcePixels[colCount - 1][r - 1] + sourcePixels[colCount - 2][r - 1] + sourcePixels[colCount - 2][r] + sourcePixels[colCount - 1][r] + sourcePixels[colCount - 2][r + 1] + sourcePixels[colCount - 1][r + 1]) / 6;
+                        average = (flippedPixels[r - 1][colCount - 1] + flippedPixels[r - 1][colCount - 2] + flippedPixels[r][colCount - 2] + flippedPixels[r][colCount - 1] + flippedPixels[r + 1][colCount - 2] + flippedPixels[r + 1][colCount - 1]) / 6;
+                        System.out.println(average);
                     }
                     blurredPixels[r][colCount - 1] = average;
-
+                    
+                    // check if pixel is in the first row and first column (top left corner)
                 } else if (r == 0 && c == 0) {
                     if (normal) {
                         average = (sourcePixels[r][c] + sourcePixels[r][c + 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c + 1]) / 4;
@@ -508,6 +453,8 @@ public class Transformer extends Object implements ITransformations {
                         average = (flippedPixels[r][c] + flippedPixels[r][c + 1] + flippedPixels[r + 1][c] + flippedPixels[r + 1][c + 1]) / 4;
                     }
                     blurredPixels[r][c] = average;
+                    
+                    // Check if the pixel is in first row and last column (top right corner)
                 } else if (r == 0 && c == colCount - 1) {
                     if (normal) {
                         average = (sourcePixels[r][c] + sourcePixels[r][c - 1] + sourcePixels[r + 1][c] + sourcePixels[r + 1][c - 1]) / 4;
@@ -515,11 +462,24 @@ public class Transformer extends Object implements ITransformations {
                         average = (flippedPixels[r][c] + flippedPixels[r][c - 1] + flippedPixels[r + 1][c] + flippedPixels[r + 1][c - 1]) / 4;
                     }
                     blurredPixels[r][c] = average;
+                    
+                    // Check if the pixel is in the last row and first column (bottom left corner)
                 } else if (r == (rowCount - 1) && c == 0) {
+                    if (normal) {
                     average = (sourcePixels[r][c] + sourcePixels[r - 1][c] + sourcePixels[r - 1][c + 1] + sourcePixels[r][c + 1]) / 4;
-
+                    } else {
+                        average = (flippedPixels[r][c] + flippedPixels[r - 1][c] + flippedPixels[r - 1][c + 1] + flippedPixels[r][c + 1]) / 4;
+                    }
                     blurredPixels[r][c] = average;
-
+                    
+                    // Check if pixel is in last row and last column (bottom right corner)
+                } else if (r == (rowCount - 1) && c == (colCount - 1)) {
+                    if (normal) {
+                    average = (sourcePixels[r][c] + sourcePixels[r - 1][c] + sourcePixels[r - 1][c - 1] + sourcePixels[r][c - 1]) / 4;
+                    } else {
+                        average = (flippedPixels[r][c] + flippedPixels[r - 1][c] + flippedPixels[r - 1][c - 1] + flippedPixels[r][c - 1]) / 4;
+                    }
+                    blurredPixels[r][c] = average;
                 }
             }
         }
@@ -538,6 +498,7 @@ public class Transformer extends Object implements ITransformations {
             increment = sourcePixels[0].length - 1;
         }
 
+        // Add special cases for first and last row
         for (int r = 0; r < rowCount; r = r + increment) {
             for (int c = 0; c < colCount; c++) {
                 if (c > 0 && r == 0 && c < colCount - 1) {
@@ -556,9 +517,9 @@ public class Transformer extends Object implements ITransformations {
                 }
             }
         }
+        // Add copy of blurredPixels to actions array
         actions.add(copyArray(blurredPixels));
         numberOfActions++;
-        order++;
 
         if (normal) {
             return blurredPixels;
