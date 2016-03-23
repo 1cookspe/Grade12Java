@@ -15,29 +15,52 @@ public class PascalsTriangle {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println(term(4, 4));
+        System.out.println(term(4, 2));
         row(7);
     }
-    
+
     public static int term(int row, int col) {
         int number = 1;
-        
-        // Check if value is outside (value of 1)
+
         if (row == col || col == 0) {
             number = 1;
+        } else if (col == 1 || row - col == 1) {
+            number = row;
         } else {
-            //number = term
+            number = term(row - 1, col) + term(row - 1, col - 1);
+        }
+
+        return number;
+    }
+
+    public static void row(int row) {
+        int numbersOnLine = 0;
+        int spaces = 0;
+        String triangle = "";
+        int temp = row;
+
+        if (row > 1) {
+             spaces = temp - row;
+            row(row - 1);
+           
         }
         
-        return number;
+        for (int i = 0; i < spaces; i++) {
+                triangle += " ";
+            }
+
+        for (int col = 0; col < row; col++) {
+            //System.out.print(term(row - 1, col) + " ");
+            
+            triangle += term(row - 1, col) + " ";
+            numbersOnLine++;
+            if (numbersOnLine == row) {
+                //System.out.print("\n");
+                triangle += "\n";
+            }
+        }
+        System.out.print(triangle);
+
     }
-    
-    public static int row(int row) {
-        int number = 1;
-        
-        
-        
-        return number;
-    }
-    
+
 }

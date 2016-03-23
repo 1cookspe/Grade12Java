@@ -45,13 +45,11 @@ public class FiveTerms {
     }
     
     public static double sequenceTwo(double n) {
-        double number = 0;
+        double number = 2;
         
         if (n > 1) {
             number = Math.sqrt(3 * sequenceTwo(n - 1) + 4);
-        } else if (n == 1) {
-            number = 2;
-        }
+        } 
         
         NumberFormat formatter = new DecimalFormat("#0.00");
         return Double.parseDouble(formatter.format(number));
