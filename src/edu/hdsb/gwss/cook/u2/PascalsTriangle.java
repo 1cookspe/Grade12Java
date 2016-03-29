@@ -16,7 +16,7 @@ public class PascalsTriangle {
      */
     public static void main(String[] args) {
         System.out.println(term(4, 2));
-        row(7);
+        row(16);
     }
 
     public static int term(int row, int col) {
@@ -35,31 +35,27 @@ public class PascalsTriangle {
 
     public static void row(int row) {
         int numbersOnLine = 0;
-        int spaces = 0;
-        String triangle = "";
-        int temp = row;
+        int column = 0;
 
         if (row > 1) {
-             spaces = temp - row;
             row(row - 1);
            
         }
         
-        for (int i = 0; i < spaces; i++) {
-                triangle += " ";
-            }
-
         for (int col = 0; col < row; col++) {
-            //System.out.print(term(row - 1, col) + " ");
+            System.out.print(term(row - 1, col) + " ");
             
-            triangle += term(row - 1, col) + " ";
+            //triangle += term(row - 1, col) + " ";
             numbersOnLine++;
             if (numbersOnLine == row) {
-                //System.out.print("\n");
-                triangle += "\n";
+                System.out.print("\n");
+                //triangle += "\n";
             }
         }
-        System.out.print(triangle);
+        
+        
+        
+       // System.out.print(triangle);
 
     }
 
