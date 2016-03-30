@@ -13,6 +13,7 @@ public class LetMeOut {
     private static final char OPEN = '.';
     private static final char TRIED = '-';
     private static final char GOOD_PATH = '+';
+    boolean found = false;
 
     private char[][] maze = {
         {'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W', 'W'},
@@ -29,116 +30,49 @@ public class LetMeOut {
      */
     public boolean findExitFrom(int row, int col) {
         boolean successful = false;
+        displayMaze();
 
-//        if (moveRight(row, col) == '.') {
-//            findExitFrom(row, col + 1);
-//        } else if (moveLeft(row, col) == '.') {
-//            findExitFrom(row, col - 1);
-//        } else if (moveUp(row, col) == '.') {
-//            findExitFrom(row + 1, col);
-//        } else if (moveDown(row, col) == '.') {
-//            findExitFrom(row - 1, col);
-//        } 
-        
         if (maze[row][col] == EXIT) {
             maze[row][col] = GOOD_PATH;
             successful = true;
-        } 
+            return successful;
+        }
 
         maze[row][col] = TRIED;
-        
-        if (maze[row][col + 1] == OPEN || maze[row][col + 1] == EXIT) {
-            successful = findExitFrom(row, col + 1);
+
+        if (maze[row][col + 1] == OPEN || maze[row][col + 1] == EXIT && !successful) {
             System.out.println("right");
-        } else if (maze[row + 1][col] == OPEN || maze[row + 1][col] == EXIT) {
-            successful = findExitFrom(row + 1, col);
+            successful = findExitFrom(row, col + 1);
+        }
+
+        if (maze[row + 1][col] == OPEN || maze[row + 1][col] == EXIT && !successful) {
             System.out.println("down");
-        } else if (maze[row - 1][col] == OPEN || maze[row - 1][col] == EXIT) {
-            successful = findExitFrom(row - 1, col);
+            successful = findExitFrom(row + 1, col);
+        }
+
+        if (maze[row - 1][col] == OPEN || maze[row - 1][col] == EXIT && !successful) {
             System.out.println("up");
-        } else if (maze[row][col - 1] == OPEN || maze[row][col - 1] == EXIT) {
+            successful = findExitFrom(row - 1, col);
+        }
+
+        if (maze[row][col - 1] == OPEN || maze[row][col - 1] == EXIT && !successful) {
             System.out.println("left");
             successful = findExitFrom(row, col - 1);
-        } else { // Cannot move, except for going back to where it was
-            // Recall last move
-            int lastRow = 0;
-            int lastCol = 0;
-            if (maze[row][col + 1] == TRIED) {
-                lastRow = row;
-                lastCol = col;
-            } else if (maze[row + 1][col] == TRIED) {
-                lastRow = row;
-                lastCol = col;
-            } else if (maze[row - 1][col] == TRIED) {
-                lastRow = row;
-                lastCol = col;
-            } else if (maze[row][col - 1] == TRIED) {
-                lastRow = row;
-                lastCol = col;
-            }
-            successful = findExitFrom(lastRow, lastCol);
+
         }
-        
+
         // if exit
         if (successful) {
             maze[row][col] = GOOD_PATH;
+            System.out.println("Found!!");
+            found = true;
         }
-            
-        
+
+//        if (found) {
+//            maze[row][col] = GOOD_PATH;
+//        }
         return successful;
     }
-
-//    public char moveRight(int row, int col) {
-//        char beside = 0;
-//
-//        if (maze[row][col + 1] == '.') {
-//            maze[row][col] = '-';
-//            moveRight(row, col + 1);
-//        }
-//
-//        beside = maze[row][col + 1];
-//
-//        return beside;
-//    }
-//
-//    public char moveLeft(int row, int col) {
-//        char beside = 0;
-//
-//        if (maze[row][col - 1] == '.') {
-//            maze[row][col] = '-';
-//            moveLeft(row, col - 1);
-//        }
-//
-//        beside = maze[row][col - 1];
-//
-//        return beside;
-//    }
-//
-//    public char moveUp(int row, int col) {
-//        char beside = 0;
-//
-//        if (maze[row + 1][col] == '.') {
-//            maze[row][col] = '-';
-//            moveUp(row + 1, col);
-//        }
-//
-//        beside = maze[row + 1][col];
-//
-//        return beside;
-//    }
-//
-//    public char moveDown(int row, int col) {
-//        char beside = 0;
-//
-//        if (maze[row - 1][col] == '.') {
-//            maze[row][col] = '-';
-//            moveDown(row - 1, col);
-//        }
-//
-//        beside = maze[row - 1][col];
-//
-//        return beside;
-//    }
 
     /**
      * Display the current maze.
@@ -155,7 +89,7 @@ public class LetMeOut {
 
         // START!
         System.out.println("START LOCATION: (" + row + "," + col + ")");
-        findExitFrom(5, 10);
+        findExitFrom(row, col);
 
         // SHOW EXIT
         displayMaze();
