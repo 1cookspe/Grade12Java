@@ -32,52 +32,93 @@ public class LetMeOut {
         boolean successful = false;
         displayMaze();
 
+        // CHECK IF SPOT IS EXIT
         if (maze[row][col] == EXIT) {
             maze[row][col] = GOOD_PATH;
             successful = true;
             return successful;
-        }
+        } else { // EXIT HAS NOT BEEN FOUND
+            System.out.println("not found");
 
-        maze[row][col] = TRIED;
-
-        if (maze[row][col + 1] == OPEN || maze[row][col + 1] == EXIT && !successful) {
+            maze[row][col] = TRIED;
+            
+            // IF CAN MOVE RIGHT
+            if (maze[row][col + 1] == OPEN || maze[row][col + 1] == EXIT && successful == false) {
             System.out.println("right");
-            successful = findExitFrom(row, col + 1);
-        }
 
-        if (maze[row + 1][col] == OPEN || maze[row + 1][col] == EXIT && !successful) {
+                successful = findExitFrom(row, col + 1);
+
+                if (successful) {
+                    maze[row][col] = GOOD_PATH;
+                    return successful;
+                }
+
+            }
+            
+            // IF CAN MOVE DOWN
+            if (maze[row][col - 1] == OPEN || maze[row][col - 1] == EXIT && successful == false) {
             System.out.println("down");
-            successful = findExitFrom(row + 1, col);
-        }
 
-        if (maze[row - 1][col] == OPEN || maze[row - 1][col] == EXIT && !successful) {
-            System.out.println("up");
-            successful = findExitFrom(row - 1, col);
-        }
+                successful = findExitFrom(row, col - 1);
 
-        if (maze[row][col - 1] == OPEN || maze[row][col - 1] == EXIT && !successful) {
-            System.out.println("left");
-            successful = findExitFrom(row, col - 1);
+                if (successful) {
+                    maze[row][col] = GOOD_PATH;
+                    return successful;
+                }
 
-        }
+            }
+            
+            // IF CAN MOVE UP
+            if (maze[row - 1][col] == OPEN || maze[row - 1][col] == EXIT && successful == false) {
+                System.out.println("up");
+
+                successful = findExitFrom(row - 1, col);
+
+                if (successful) {
+                    maze[row][col] = GOOD_PATH;
+                    return successful;
+                }
+
+            }
+            
+            // IF CAN MOVE LEFT
+            if (maze[row + 1][col] == OPEN || maze[row + 1][col] == EXIT && successful == false) {
+                System.out.println("left");
+
+                successful = findExitFrom(row + 1, col);
+
+                if (successful) {
+                    maze[row][col] = GOOD_PATH;
+                    return successful;
+                }
+
+            }
 
         // if exit
-        if (successful) {
-            maze[row][col] = GOOD_PATH;
-            System.out.println("Found!!");
-            found = true;
-        }
-
+            // if (successful) {
+            //     maze[row][col] = GOOD_PATH;
+            //     // System.out.println("Found!!");
+            //     // found = true;
+            // }
 //        if (found) {
 //            maze[row][col] = GOOD_PATH;
 //        }
+        }
+
+        // EXIT IS FOUND, SET AS GOOD PATH
+        if (successful) {
+            maze[row][col] = GOOD_PATH;
+            System.out.println("found");
+        }
+
         return successful;
     }
 
-    /**
-     * Display the current maze.
-     */
-    public void solve() {
+
+/**
+ * Display the current maze.
+ */
+public void solve() {
 
         // FIND RANDOM START LOCATION
         int row;
