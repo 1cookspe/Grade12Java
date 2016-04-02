@@ -39,12 +39,12 @@ public class PascalsTriangle {
 
         if (row > 1) {
             row(row - 1);
-           
+
         }
-        
+
         for (int col = 0; col < row; col++) {
             System.out.print(term(row - 1, col) + " ");
-            
+
             //triangle += term(row - 1, col) + " ";
             numbersOnLine++;
             if (numbersOnLine == row) {
@@ -52,11 +52,8 @@ public class PascalsTriangle {
                 //triangle += "\n";
             }
         }
-        
-        
-        
-       // System.out.print(triangle);
 
+       // System.out.print(triangle);
     }
 
 }
