@@ -3,14 +3,16 @@ public void setup() {
   background(0);
   stroke(255);
   line(width / 2, height, width / 2, height / 2);
-  drawTree(width / 2, height / 2, height / 4);
+  drawTree(width / 2, height / 2, height / 4, 0);
 }
 
-public void drawTree(int x1, int y1, int length) {
+public void drawTree(int x1, int y1, int length, int angle) {
   System.out.println(x1);
   System.out.println(length);
-  line(x1, y1, x1 + length * (int) cos(0.785398), y1 + length * (int) sin(0.785398));
+  System.out.println(x1 + length * (int) cos(0.785398));
+  System.out.println( "DRAW LINE" );
+  line(x1, y1, (x1 + length * (int) cos(angle / (180 / 3.14))), (y1 + length * (int) sin(angle / (180 / 3.14))));
   if (length > 1) {
-   drawTree(x1 + length * (int) cos(0.785398), y1 + length * (int) sin(0.785398), length / 2);
+   drawTree((x1 + length * (int) cos(angle / (180 / 3.14))), (y1 + length * (int) sin(angle / (180 / 3.14))), length / 2, angle + 45);
   }
 }
