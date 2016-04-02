@@ -40,69 +40,73 @@ public class LetMeOut {
         } else { // EXIT HAS NOT BEEN FOUND
             System.out.println("not found");
 
+            // SET SPOT AS TRIED TO SHOW YOU HAVE ALREADY CHECKED THAT AREA
             maze[row][col] = TRIED;
-            
-            // IF CAN MOVE RIGHT
-            if (maze[row][col + 1] == OPEN || maze[row][col + 1] == EXIT && successful == false) {
-            System.out.println("right");
 
+            // IF CAN MOVE RIGHT
+            if (maze[row][col + 1] == OPEN || maze[row][col + 1] == EXIT && !successful) {
+                System.out.println("right");
+
+                // SEE IF AN EXIT CAN BE FOUND FROM THE SPOT TO THE RIGHT
                 successful = findExitFrom(row, col + 1);
 
+                // CHECK IF EXIT CAN BE FOUND
                 if (successful) {
+                    // SET SPOT AS GOOD PATH TO SAVE THE PATH TO THE EXIT
                     maze[row][col] = GOOD_PATH;
                     return successful;
                 }
 
             }
-            
-            // IF CAN MOVE DOWN
-            if (maze[row][col - 1] == OPEN || maze[row][col - 1] == EXIT && successful == false) {
-            System.out.println("down");
 
+            // IF CAN MOVE DOWN
+            if (maze[row][col - 1] == OPEN || maze[row][col - 1] == EXIT && !successful) {
+                System.out.println("down");
+
+                // SEE IF AN EXIT CAN BE FOUND FROM THE SPOT DOWN
                 successful = findExitFrom(row, col - 1);
 
+                // CHECK IF EXIT CAN BE FOUND
                 if (successful) {
+                    // SET SPOT AS GOOD PATH TO SAVE THE PATH TO THE EXIT
                     maze[row][col] = GOOD_PATH;
                     return successful;
                 }
 
             }
-            
+
             // IF CAN MOVE UP
-            if (maze[row - 1][col] == OPEN || maze[row - 1][col] == EXIT && successful == false) {
+            if (maze[row - 1][col] == OPEN || maze[row - 1][col] == EXIT && !successful) {
                 System.out.println("up");
 
+                // SEE IF AN EXIT CAN BE FOUND FROM THE SPOT UP
                 successful = findExitFrom(row - 1, col);
 
+                // CHECK IF EXIT CAN BE FOUND
                 if (successful) {
+                    // SET SPOT AS GOOD PATH TO SAVE THE PATH TO THE EXIT
                     maze[row][col] = GOOD_PATH;
                     return successful;
                 }
 
             }
-            
+
             // IF CAN MOVE LEFT
-            if (maze[row + 1][col] == OPEN || maze[row + 1][col] == EXIT && successful == false) {
+            if (maze[row + 1][col] == OPEN || maze[row + 1][col] == EXIT && !successful) {
                 System.out.println("left");
 
+                // SEE IF AN EXIT CAN BE FOUND FROM THE SPOT TO THE LEFT
                 successful = findExitFrom(row + 1, col);
 
+                // CHECK IF EXIT CAN BE FOUND
                 if (successful) {
+                    // SET SPOT AS GOOD PATH TO SAVE PATH TO EXIT
                     maze[row][col] = GOOD_PATH;
                     return successful;
                 }
 
             }
 
-        // if exit
-            // if (successful) {
-            //     maze[row][col] = GOOD_PATH;
-            //     // System.out.println("Found!!");
-            //     // found = true;
-            // }
-//        if (found) {
-//            maze[row][col] = GOOD_PATH;
-//        }
         }
 
         // EXIT IS FOUND, SET AS GOOD PATH
@@ -114,11 +118,10 @@ public class LetMeOut {
         return successful;
     }
 
-
-/**
- * Display the current maze.
- */
-public void solve() {
+    /**
+     * Display the current maze.
+     */
+    public void solve() {
 
         // FIND RANDOM START LOCATION
         int row;

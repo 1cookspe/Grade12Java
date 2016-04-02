@@ -30,10 +30,13 @@ public class RecursiveFunctions {
         int number = 0;
         
         if (x < y) {
+            // If X is less than Y, f is inversed and its parameters are switched
             number = -1 * sequenceOne(y, x);
         } else if (x > y) {
+            // If x is greater than y, 1 is added to f and its x parameter is subtracted by 1
             number = 1 + sequenceOne(x - 1, y);
         } else if (x == y) {
+            // If x is equal to y, the result of f is simply 0
             number = 0; 
         }
         
