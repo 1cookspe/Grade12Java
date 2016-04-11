@@ -7,12 +7,12 @@ class Pacman {
   static final char DIR_DOWN = 'd';
 
   // Instance variables
-  int xLoc;
-  int yLoc;
-  boolean alive;
-  int score;
-  char direction;
-  boolean openMouth;
+  private int xLoc;
+  private int yLoc;
+  private boolean alive;
+  private int score;
+  private char direction;
+  private boolean openMouth;
 
   // Constructor
   public Pacman(int xLoc, int yLoc, boolean alive, int score, char direction, boolean openMouth) {
@@ -42,10 +42,10 @@ class Pacman {
   public void setYLoc(int yLoc) {
     switch (this.direction) {    
     case DIR_UP:
-      this.yLoc = yLoc + 10;
+      this.yLoc = yLoc - 10;
       break;
     case DIR_DOWN:
-      this.yLoc = yLoc - 10;
+      this.yLoc = yLoc + 10;
       break;
     default:
       break;
@@ -54,7 +54,7 @@ class Pacman {
 
   public void move() {
     switch (this.direction) {
-    case 'r':
+    case DIR_RIGHT:
       if (this.xLoc < width) {
         setXLoc(this.xLoc);
       } else {
@@ -70,12 +70,17 @@ class Pacman {
       break;
     case DIR_UP:
       if (this.yLoc > 0) {
-        setXLoc(this.xLoc);
+        setYLoc(this.yLoc);
       } else {
         noLoop();
       } 
       break;
     case DIR_DOWN:
+      if (this.yLoc < height) {
+        setYLoc(this.yLoc);
+      } else {
+        noLoop();
+      } 
       break;
     default:
       break;
@@ -84,9 +89,29 @@ class Pacman {
   } 
 
   public void display() {
+    noStroke();
     fill(color(255, 255, 0));
+    openOrClosed();
+  }
+
+  public void openOrClosed() {
     if (this.openMouth) {
-      arc(this.xLoc, this.yLoc, 60, 60, 0, (PI+HALF_PI) + (PI / 8), PIE);
+      switch (this.direction) {
+      case DIR_RIGHT:
+        arc(this.xLoc, this.yLoc, 60, 60, radians(30), radians(330));
+        break;
+      case DIR_LEFT:
+        arc(this.xLoc, this.yLoc, 60, 60, radians(210), radians(510));
+        break;
+      case DIR_UP:
+        arc(this.xLoc, this.yLoc, 60, 60, radians(300), radians(600));
+        break;
+      case DIR_DOWN:
+        arc(this.xLoc, this.yLoc, 60, 60, radians(120), radians(420));
+        break;
+      default:
+        break;
+      }
     } else {
       ellipse(this.xLoc, this.yLoc, 60, 60);
     }
