@@ -1,18 +1,18 @@
 class Ghost {
   
-  // Class variable
-  private float directionGhost = 0;
   
   // Instance variables
   private int xLoc;
   private int yLoc;
   private boolean alive;
+  private int direction;
   
   // Constructor
-  public Ghost(int xLoc, int yLoc, boolean alive) {
+  public Ghost(int xLoc, int yLoc, boolean alive, int direction) {
     this.xLoc = xLoc;
     this.yLoc = yLoc;
     this.alive = alive;
+    this.direction = direction;
   }
   
   public void setXLoc(int xLoc) {
@@ -24,12 +24,12 @@ class Ghost {
   }  
   
   public void move() {
-    this.directionGhost = random(1 , 4);
-    if (this.directionGhost == 1) { // MOVE RIGHT
+    System.out.println(this.direction);
+    if (this.direction == 1) { // MOVE RIGHT
       setXLoc(this.xLoc - 10);
-    } else if (this.directionGhost == 2) { // MOVE LEFT
+    } else if (this.direction == 2) { // MOVE LEFT
       setXLoc(this.xLoc + 10);
-    } else if (this.directionGhost == 3) { // MOVE UP
+    } else if (this.direction == 3) { // MOVE UP
       setYLoc(this.yLoc - 10);
     } else { // MOVE DOWN
       setYLoc(this.yLoc + 10);

@@ -1,9 +1,11 @@
 Pacman p1 = new Pacman(50, 50, true, 0, Pacman.DIR_RIGHT, true);
-Ghost ghost1 = new Ghost(200, 200, true);
+Ghost ghost1 = new Ghost(200, 200, true, 1);
 
 void setup() {
   size(800, 800);
 }
+
+int counter = 0;
 
 void draw() {
   delay(100);
@@ -16,6 +18,11 @@ void draw() {
   }
 
   p1.move();
+  // change direction every 10 loops
+  if (counter % 10 == 0) {
+    ghost1.direction = (int) random(1, 5);
+  }
+  counter++;
   ghost1.move();
 }
 
