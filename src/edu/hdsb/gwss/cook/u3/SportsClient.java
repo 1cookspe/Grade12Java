@@ -9,11 +9,15 @@ package edu.hdsb.gwss.cook.u3;
  *
  * @author 1cookspe
  */
-public class NationalHockeyLeague {
-    // Class variables
-    int numberOf;
-    
-    public NationalHockeyLeague() {
+public class SportsClient {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        League nhl = new League();
+        Teams capitals = new Teams();
+        nhl.add(capitals);
     }
     
 }
