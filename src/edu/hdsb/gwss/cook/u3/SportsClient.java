@@ -15,9 +15,15 @@ public class SportsClient {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        League nhl = new League();
-        Teams capitals = new Teams();
-        nhl.add(capitals);
+        Team blueJays = new Team("Toronto", "Blue Jays");
+        Player joshDonaldson = new Player("Josh", "Donaldson");
+        joshDonaldson.setId(4323);
+        joshDonaldson.setAge(30.4);
+        joshDonaldson.setNationality("American");
+        joshDonaldson.setTeam(blueJays);
+        
+        blueJays.add(joshDonaldson);
+        
     }
     
 }
