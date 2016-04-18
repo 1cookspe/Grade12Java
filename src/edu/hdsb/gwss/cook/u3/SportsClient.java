@@ -16,13 +16,14 @@ public class SportsClient {
      */
     public static void main(String[] args) {
         Team blueJays = new Team("Toronto", "Blue Jays");
-        Player joshDonaldson = new Player("Josh", "Donaldson");
+        Player joshDonaldson = new Player("Josh", "Donaldsondsjfklasdjflkasdfjal;sdfas");
         joshDonaldson.setId(4323);
         joshDonaldson.setAge(30.4);
         joshDonaldson.setNationality("American");
         joshDonaldson.setTeam(blueJays);
         
         blueJays.add(joshDonaldson);
+        System.out.println(joshDonaldson.getLastName());
         
     }
     

@@ -12,6 +12,10 @@ import java.util.Objects;
  * @author 1cookspe
  */
 public class Player {
+
+    // Class variables
+    private static int lastID = 0;
+
     // Instance variables
     private String firstName; // SECONDARY KEY
     private String lastName; // SECONDARY KEY
@@ -21,28 +25,42 @@ public class Player {
     private int id; // PRIMARY KEY
     private String nationality;
     private String position;
-    
+
     // DEFAULT CONSTRUCTOR
     public Player() {
+        this.id = ++lastID;
+        this.team = new Team();
     }
-    
+
     // PRIMARY CONSTRUCTOR
     public Player(int id) {
+        this();
         this.id = id;
     }
-    
+
     // SECONDARY CONSTRUCTOR
     public Player(String firstName, String lastName) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if (firstName.length() > 1 && firstName.length() < 10) {
+            this.firstName = firstName;
+        } else {
+            this.firstName = firstName.substring(0, 1);
+        }
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if (lastName.length() > 1 && lastName.length() < 10) {
+            this.lastName = lastName;
+            System.out.println("Yes");
+        } else {
+            this.lastName = lastName.substring(0, 1);
+            System.out.println("No");
+        }
     }
 
     public void setAge(double age) {
@@ -101,7 +119,6 @@ public class Player {
         return position;
     }
 
-
     @Override
     public boolean equals(Object obj) {
         boolean doesEqual = false;
@@ -123,7 +140,5 @@ public class Player {
         }
         return doesEqual;
     }
-    
-    
-    
+
 }
