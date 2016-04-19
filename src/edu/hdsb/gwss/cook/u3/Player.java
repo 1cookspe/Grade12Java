@@ -5,6 +5,7 @@
  */
 package edu.hdsb.gwss.cook.u3;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -41,8 +42,8 @@ public class Player {
     // SECONDARY CONSTRUCTOR
     public Player(String firstName, String lastName) {
         this();
-        this.firstName = firstName;
-        this.lastName = lastName;
+        setFirstName(firstName);
+        setLastName(lastName);
     }
 
     public void setFirstName(String firstName) {
@@ -56,15 +57,18 @@ public class Player {
     public void setLastName(String lastName) {
         if (lastName.length() > 1 && lastName.length() < 10) {
             this.lastName = lastName;
-            System.out.println("Yes");
         } else {
             this.lastName = lastName.substring(0, 1);
-            System.out.println("No");
         }
     }
 
     public void setAge(double age) {
-        this.age = age;
+        if (age > 0 && age < 150) {
+            this.age = age;
+        } else {
+            DecimalFormat f = new DecimalFormat("##.00");
+            this.age = Double.parseDouble(f.format(Math.random() * 120 + 10));
+        }
     }
 
     public void setActive(boolean active) {
@@ -72,7 +76,11 @@ public class Player {
     }
 
     public void setTeam(Team team) {
-        this.team = team;
+        if (team != null) {
+            this.team = team;
+        } else {
+            this.team = new Team();
+        }
     }
 
     public void setId(int id) {
@@ -80,7 +88,11 @@ public class Player {
     }
 
     public void setNationality(String nationality) {
-        this.nationality = nationality;
+        if (nationality.length() > 1 && nationality.length() < 10) {
+            this.nationality = nationality;
+        } else {
+            this.nationality = nationality.substring(0, 3);
+        }
     }
 
     public void setPosition(String position) {
@@ -119,6 +131,14 @@ public class Player {
         return position;
     }
 
+    public boolean isValid() {
+        boolean isValid = false;
+        if (this.id > 0 && this.firstName != null && this.lastName != null) {
+            isValid = true;
+        }
+        return isValid;
+    }
+
     @Override
     public boolean equals(Object obj) {
         boolean doesEqual = false;
@@ -139,6 +159,24 @@ public class Player {
             doesEqual = true;
         }
         return doesEqual;
+    }
+
+    @Override
+    public String toString() {
+        String output = "";
+        if (isValid()) {
+            String isActive = "";
+            if (this.active) {
+                isActive = " active ";
+            } else {
+                isActive = " retired ";
+            }
+
+            output = this.firstName + " " + this.lastName + " is a" + isActive + this.nationality + " " + this.team.getSport() + " player" + " who plays " + this.position + " for the " + this.team.getCity() + " " + this.team.getName();
+        } else {
+            System.out.println("This player is not valid");
+        }
+        return output;
     }
 
 }

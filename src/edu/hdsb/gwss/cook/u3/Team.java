@@ -5,6 +5,7 @@
  */
 package edu.hdsb.gwss.cook.u3;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -13,9 +14,10 @@ import java.util.Objects;
  * @author 1cookspe
  */
 public class Team {
+
     // CLASS CONSTANTS
     private static int lastID = 0;
-    
+
     // Instance variables
     private String city; // SECONDARY KEY
     private String name; // SECONDARY KEY
@@ -24,34 +26,38 @@ public class Team {
     private String sport;
     private boolean active;
     private double age;
-    
+
     // DEFAULT CONSTRUCTOR
     public Team() {
         this.players = new ArrayList<Player>();
         this.id = ++lastID;
     }
-    
+
     // PRIMARY KEY CONSTRUCTOR
-    public Team(int id) {  
+    public Team(int id) {
         this();
         this.id = id;
     }
-    
+
     // SECONDARY KEY CONSTRUCTOR
     public Team(String city, String name) {
         this();
-        this.city = city;
+        setCity(city);
         this.name = name;
     }
 
     public void setCity(String city) {
-        this.city = city;
+        if (city.length() > 1 && city.length() < 10) {
+            this.city = city;
+        } else {
+            this.city = city.substring(0, 3);
+        }
     }
 
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }
@@ -65,7 +71,12 @@ public class Team {
     }
 
     public void setAge(double age) {
-        this.age = age;
+        if (age > 0 && age < 150) {
+            this.age = age;
+        } else {
+            DecimalFormat f = new DecimalFormat("##.00");
+            this.age = Double.parseDouble(f.format(Math.random() * 120 + 10));
+        }
     }
 
     public String getCity() {
@@ -91,9 +102,49 @@ public class Team {
     public double getAge() {
         return age;
     }
-    
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
     public void add(Player player) {
-        this.players.add(player);
+        if (player.isValid() && !this.players.contains(player)) {
+            this.players.add(player);
+            System.out.println(player.getFirstName() + " " + player.getLastName() + " successfully added to the " + this.name);
+        } else {
+            System.out.println(player.getFirstName() + " " + player.getLastName() + " cannot be added because they are already on the roster");
+        }
+
+//        for (int i = 0; i < players.size(); i++) {
+//            System.out.println("Yo " + players.get(i) + " babab");
+//        }
+    }
+
+    public void remove(Player player) {
+        if (player.isValid() && this.players.contains(player)) {
+            this.players.remove(player);
+            System.out.println(player.getFirstName() + " " + player.getLastName() + " successfully removed from the " + this.name);
+        } else {
+            System.out.println(player.getFirstName() + " " + player.getLastName() + " cannot be removed because they are not on the roster");
+        }
+    }
+
+    public Player get(Player player) {
+        if (player.isValid() && this.players.contains(player)) {
+            int index = this.players.indexOf(player);
+            return this.players.get(index);
+        } else {
+            System.out.println(this.name + " does not contain " + player.getFirstName() + " " + player.getLastName());
+        }
+        return null;
+    }
+    
+    public boolean isValid() {
+        boolean isValid = false;
+        if (this.id != 0 && this.city != null && this.name != null && this.sport != null) {
+            isValid = true;
+        }
+        return isValid;
     }
 
     @Override
@@ -116,6 +167,16 @@ public class Team {
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        String output = "";
+        if (isValid()) {
+        output = "The " + this.city + " " + this.name + " are an active " + this.sport + " team, and they are " + this.age + " years old.";
+        } else {
+           output = "This team is not valid."; 
+        }
+        return output;
+    }
+
 }
