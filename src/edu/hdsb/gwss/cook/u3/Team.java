@@ -49,6 +49,7 @@ public class Team {
     public void setCity(String city) {
         if (city.length() > 1 && city.length() < 10) {
             this.city = city;
+            System.out.println(this.city);
         } else {
             this.city = city.substring(0, 3);
         }
@@ -129,7 +130,7 @@ public class Team {
         }
     }
 
-    public Player get(Player player) {
+    public Player get(Player player) { // CHANGE TO NAME OR PLAYER ID
         if (player.isValid() && this.players.contains(player)) {
             int index = this.players.indexOf(player);
             return this.players.get(index);

@@ -1,4 +1,4 @@
-class Pacman {
+class Pacman extends PacmanCharacter {
 
   // CLASS CONSTANTS
   static final char DIR_RIGHT = 'r';
@@ -7,21 +7,17 @@ class Pacman {
   static final char DIR_DOWN = 'd';
 
   // Instance variables
-  private int xLoc;
-  private int yLoc;
-  private boolean alive;
   private int score;
-  private char direction;
   private boolean openMouth;
 
-  // Constructor
-  public Pacman(int xLoc, int yLoc, boolean alive, int score, char direction, boolean openMouth) {
-    this.xLoc = xLoc;
-    this.yLoc = yLoc;
-    this.alive = alive;
-    this.score = score;
-    this.direction = direction;
-    this.openMouth = openMouth;
+  // Primary Constructor 
+  public Pacman() {
+    super();
+  }
+
+  // Secondary key Constructor
+  public Pacman(int xLoc, int yLoc, int direction) {
+    super(xLoc, yLoc, direction);
   }
 
   // Set xLoc
@@ -52,41 +48,41 @@ class Pacman {
     }
   }
 
-  public void move() {
-    switch (this.direction) {
-    case DIR_RIGHT:
-      if (this.xLoc < width) {
-        setXLoc(this.xLoc);
-      } else {
-        noLoop();
-      }  
-      break;
-    case DIR_LEFT:
-      if (this.xLoc > 0) {
-        setXLoc(this.xLoc);
-      } else {
-        noLoop();
-      } 
-      break;
-    case DIR_UP:
-      if (this.yLoc > 0) {
-        setYLoc(this.yLoc);
-      } else {
-        noLoop();
-      } 
-      break;
-    case DIR_DOWN:
-      if (this.yLoc < height) {
-        setYLoc(this.yLoc);
-      } else {
-        noLoop();
-      } 
-      break;
-    default:
-      break;
-    }
-    display();
-  } 
+  //public void move() {
+  //  switch (this.direction) {
+  //  case DIR_RIGHT:
+  //    if (this.xLoc < width) {
+  //      setXLoc(this.xLoc);
+  //    } else {
+  //      noLoop();
+  //    }  
+  //    break;
+  //  case DIR_LEFT:
+  //    if (this.xLoc > 0) {
+  //      setXLoc(this.xLoc);
+  //    } else {
+  //      noLoop();
+  //    } 
+  //    break;
+  //  case DIR_UP:
+  //    if (this.yLoc > 0) {
+  //      setYLoc(this.yLoc);
+  //    } else {
+  //      noLoop();
+  //    } 
+  //    break;
+  //  case DIR_DOWN:
+  //    if (this.yLoc < height) {
+  //      setYLoc(this.yLoc);
+  //    } else {
+  //      noLoop();
+  //    } 
+  //    break;
+  //  default:
+  //    break;
+  //  }
+  //  display();
+  //} 
 
   public void display() {
     noStroke();

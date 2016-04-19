@@ -1,18 +1,13 @@
-class Ghost {
+class Ghost extends PacmanCharacter {
   
-  
-  // Instance variables
-  private int xLoc;
-  private int yLoc;
-  private boolean alive;
-  private int direction;
+  // Primary Constructor
+  public Ghost() {
+    super();
+  }
   
   // Constructor
-  public Ghost(int xLoc, int yLoc, boolean alive, int direction) {
-    this.xLoc = xLoc;
-    this.yLoc = yLoc;
-    this.alive = alive;
-    this.direction = direction;
+  public Ghost(int xLoc, int yLoc, int direction) {
+    super(xLoc, yLoc, direction);
   }
   
   public void setXLoc(int xLoc) {
