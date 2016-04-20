@@ -47,16 +47,18 @@ public class Team {
     }
 
     public void setCity(String city) {
-        if (city.length() > 1 && city.length() < 10) {
+        if (city.length() > 1 && city.length() < 15) {
             this.city = city;
             System.out.println(this.city);
         } else {
-            this.city = city.substring(0, 3);
+            this.city = city.substring(0, 3).toUpperCase();
+            System.out.println(this.city);
         }
     }
 
     public void setName(String name) {
         this.name = name;
+        System.out.println(this.name);
     }
 
     public void setId(int id) {
@@ -81,7 +83,7 @@ public class Team {
     }
 
     public String getCity() {
-        return city;
+        return this.city;
     }
 
     public String getName() {
@@ -130,16 +132,23 @@ public class Team {
         }
     }
 
-    public Player get(Player player) { // CHANGE TO NAME OR PLAYER ID
-        if (player.isValid() && this.players.contains(player)) {
-            int index = this.players.indexOf(player);
+    public Player get(String lastName) { // CHANGE TO NAME OR PLAYER ID
+        int index = 0;
+        boolean found = false;
+        for (int i = 0; i < this.players.size(); i++) {
+            if (this.players.get(i).getLastName().equals(lastName)) {
+                index = i;
+                found = true;
+                i = this.players.size();
+            }
+        }
+        if (found) {
             return this.players.get(index);
         } else {
-            System.out.println(this.name + " does not contain " + player.getFirstName() + " " + player.getLastName());
+            return null;
         }
-        return null;
     }
-    
+
     public boolean isValid() {
         boolean isValid = false;
         if (this.id != 0 && this.city != null && this.name != null && this.sport != null) {
@@ -173,9 +182,9 @@ public class Team {
     public String toString() {
         String output = "";
         if (isValid()) {
-        output = "The " + this.city + " " + this.name + " are an active " + this.sport + " team, and they are " + this.age + " years old.";
+            output = "The " + this.city + " " + this.name + " are an active " + this.sport + " team, and they are " + this.age + " years old.";
         } else {
-           output = "This team is not valid."; 
+            output = "This team is not valid.";
         }
         return output;
     }

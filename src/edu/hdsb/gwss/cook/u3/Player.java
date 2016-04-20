@@ -47,7 +47,7 @@ public class Player {
     }
 
     public void setFirstName(String firstName) {
-        if (firstName.length() > 1 && firstName.length() < 10) {
+        if (firstName.length() > 1 && firstName.length() < 15) {
             this.firstName = firstName;
         } else {
             this.firstName = firstName.substring(0, 1);
@@ -55,7 +55,7 @@ public class Player {
     }
 
     public void setLastName(String lastName) {
-        if (lastName.length() > 1 && lastName.length() < 10) {
+        if (lastName.length() > 1 && lastName.length() < 15) {
             this.lastName = lastName;
         } else {
             this.lastName = lastName.substring(0, 1);
@@ -88,7 +88,7 @@ public class Player {
     }
 
     public void setNationality(String nationality) {
-        if (nationality.length() > 1 && nationality.length() < 10) {
+        if (nationality.length() > 1 && nationality.length() < 15) {
             this.nationality = nationality;
         } else {
             this.nationality = nationality.substring(0, 3);

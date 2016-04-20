@@ -27,8 +27,8 @@ public class SportsClient {
         System.out.println("POST-CONDITION:");
         penguins.setCity("Pittsburgh");
         penguins.setName("Penguins");
-        String hey = penguins.getCity();
-        //assert(penguins.getCity() == "Pittsburgh");
+        System.out.println("Printing... " + penguins.getCity());
+        assert(penguins.getCity() == "Pittsburgh");
         assert(penguins.getName() == "Penguins");
         
         System.out.println( "-------------------" );
@@ -37,6 +37,8 @@ public class SportsClient {
         assert(penguins.isValid() == false);
         penguins.setId(314725);
         System.out.println("POST-CONDITION:");
+        assert(!penguins.isValid());
+        penguins.setSport("hockey");
         assert(penguins.isValid());
         
         System.out.println( "-------------------" );
@@ -62,6 +64,7 @@ public class SportsClient {
         
         System.out.println( "-------------------" );
         System.out.println( "Test #3 - remove(..) invalid Player" );
+        System.out.println("PRE-CONDITION:");
         Player joshDonaldson = new Player(518626);
         blueJays.remove(joshDonaldson);
         assert(blueJays.getPlayers().size() == 0);
@@ -69,11 +72,23 @@ public class SportsClient {
         joshDonaldson.setLastName("Donaldson");
         blueJays.add(joshDonaldson);
         blueJays.add(joshDonaldson);
+        System.out.println("POST-CONDITION:");
         assert(blueJays.getPlayers().size() == 1);
         blueJays.remove(joshDonaldson);
         assert(blueJays.getPlayers().size() == 0);
         blueJays.add(sidneyCrosby);
-        assert(blueJays.get(sidneyCrosby) == sidneyCrosby);
+        blueJays.add(joshDonaldson);
+        assert(blueJays.getPlayers().size() == 2);
+        assert(blueJays.get("Crosby") == sidneyCrosby);
+        blueJays.remove(sidneyCrosby);
+        assert(blueJays.get("Crosby") == null);
+        
+        System.out.println( "-------------------" );
+        System.out.println( "Test #3 - remove(..) inequal Players" );
+        assert(sidneyCrosby.equals(joshDonaldson) == false);
+        Player joseBautistsa = new Player("Josh", "Donaldson");
+        joseBautistsa.setId(518626);
+        assert(joseBautistsa.equals(joshDonaldson));
         
     }
     
