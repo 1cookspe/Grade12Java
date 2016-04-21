@@ -80,6 +80,7 @@ public class Player {
             this.team = team;
         } else {
             this.team = new Team();
+            System.out.println("Player cannot be added to a null team");
         }
     }
 
@@ -91,7 +92,7 @@ public class Player {
         if (nationality.length() > 1 && nationality.length() < 15) {
             this.nationality = nationality;
         } else {
-            this.nationality = nationality.substring(0, 3);
+            this.nationality = (nationality.substring(0, 3)).toUpperCase();
         }
     }
 
@@ -124,7 +125,7 @@ public class Player {
     }
 
     public String getNationality() {
-        return nationality;
+        return this.nationality;
     }
 
     public String getPosition() {
