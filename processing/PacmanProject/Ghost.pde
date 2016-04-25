@@ -18,20 +18,20 @@ class Ghost extends PacmanCharacter {
     this.yLoc = yLoc;
   }  
   
-  public void move() {
-    System.out.println(this.direction);
-    if (this.direction == 1) { // MOVE RIGHT
-      setXLoc(this.xLoc - 10);
-    } else if (this.direction == 2) { // MOVE LEFT
-      setXLoc(this.xLoc + 10);
-    } else if (this.direction == 3) { // MOVE UP
-      setYLoc(this.yLoc - 10);
-    } else { // MOVE DOWN
-      setYLoc(this.yLoc + 10);
-    }  
+  //public void move() {
+  //  System.out.println(this.direction);
+  //  if (this.direction == 1) { // MOVE RIGHT
+  //    setXLoc(this.xLoc - 10);
+  //  } else if (this.direction == 2) { // MOVE LEFT
+  //    setXLoc(this.xLoc + 10);
+  //  } else if (this.direction == 3) { // MOVE UP
+  //    setYLoc(this.yLoc - 10);
+  //  } else { // MOVE DOWN
+  //    setYLoc(this.yLoc + 10);
+  //  }  
     
-    display();
-  }
+  //  display();
+  //}
   
  public void display() {
     noStroke();

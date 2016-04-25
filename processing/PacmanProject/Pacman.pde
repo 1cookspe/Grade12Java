@@ -1,11 +1,4 @@
 class Pacman extends PacmanCharacter {
-
-  // CLASS CONSTANTS
-  static final char DIR_RIGHT = 'r';
-  static final char DIR_LEFT = 'l';
-  static final char DIR_UP = 'u';
-  static final char DIR_DOWN = 'd';
-
   // Instance variables
   private int score;
   private boolean openMouth;
@@ -19,34 +12,42 @@ class Pacman extends PacmanCharacter {
   public Pacman(int xLoc, int yLoc, int direction) {
     super(xLoc, yLoc, direction);
   }
-
-  // Set xLoc
-  public void setXLoc(int xLoc) {
-    switch (this.direction) {
-    case DIR_RIGHT:
-      this.xLoc = xLoc + 10;
-      break;
-    case DIR_LEFT:
-      this.xLoc = xLoc - 10;
-      break;
-    default:
-      break;
-    }
+  
+  public void setOpenMouth(boolean openMouth) {
+    this.openMouth = openMouth;
+  }
+  
+  public boolean getOpenMouth() {
+    return this.openMouth;
   }
 
-  // Set yLoc
-  public void setYLoc(int yLoc) {
-    switch (this.direction) {    
-    case DIR_UP:
-      this.yLoc = yLoc - 10;
-      break;
-    case DIR_DOWN:
-      this.yLoc = yLoc + 10;
-      break;
-    default:
-      break;
-    }
-  }
+  //// Set xLoc
+  //public void setXLoc(int xLoc) {
+  //  switch (this.direction) {
+  //  case DIR_RIGHT:
+  //    this.xLoc = xLoc + 10;
+  //    break;
+  //  case DIR_LEFT:
+  //    this.xLoc = xLoc - 10;
+  //    break;
+  //  default:
+  //    break;
+  //  }
+  //}
+
+  //// Set yLoc
+  //public void setYLoc(int yLoc) {
+  //  switch (this.direction) {    
+  //  case DIR_UP:
+  //    this.yLoc = yLoc - 10;
+  //    break;
+  //  case DIR_DOWN:
+  //    this.yLoc = yLoc + 10;
+  //    break;
+  //  default:
+  //    break;
+  //  }
+  //}
 
   //public void move() {
   //  switch (this.direction) {
