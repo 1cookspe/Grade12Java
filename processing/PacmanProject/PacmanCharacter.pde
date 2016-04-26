@@ -65,24 +65,41 @@ public abstract class PacmanCharacter {
   public boolean getAlive() {
     return this.alive;
   }
+  
+  public String getDirectionString() {
+    String directionString = "";
+    switch(this.direction) {
+    case DIR_RIGHT:
+    directionString = "right";
+    break;
+    case DIR_LEFT:
+    directionString = "left";
+    break;
+    case DIR_UP:
+    directionString = "up";
+    break;
+    case DIR_DOWN:
+    directionString = "down";
+    break;
+    default:
+    break;
+    }
+    return directionString;
+  }
 
   public void move() {
     switch (this.direction) {
     case DIR_RIGHT:
       setXLoc(this.xLoc + 10);
-      System.out.println("RIGHT");
       break;
     case DIR_LEFT:
       setXLoc(this.xLoc - 10);
-      System.out.println("LEFT");
       break;
     case DIR_UP:
       setYLoc(this.yLoc - 10);
-      System.out.println("UP");
       break;
     case DIR_DOWN:
       setYLoc(this.yLoc + 10);
-      System.out.println("DOWN");
       break;
     default:
       break;
@@ -91,6 +108,10 @@ public abstract class PacmanCharacter {
     display();
   }
   
+  
+  
   public abstract void display();
+  
+  public abstract String toString();
   
 }

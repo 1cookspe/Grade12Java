@@ -1,5 +1,5 @@
 Pacman p1 = new Pacman(50, 50, 67);
-Ghost ghost1 = new Ghost(200, 200, 1);
+Ghost ghost1 = new Ghost(400, 400, 1);
 
 void setup() {
   size(800, 800); 
@@ -24,6 +24,9 @@ void draw() {
   }
   counter++;
   ghost1.move();
+  
+  System.out.println(ghost1.toString());
+  System.out.println(p1.toString());
 }
 
 void keyPressed() {
