@@ -1,8 +1,9 @@
 Pacman p1 = new Pacman(50, 50, 67);
-Ghost ghost1 = new Ghost(400, 400, 1);
+Ghost ghost1 = new Ghost(400, 400, 1, "Pinky", color(255, 192, 203));
+Ghost ghost2 = new Ghost();
 
 void setup() {
-  size(800, 800); 
+  size(800, 800);
 }
 
 int counter = 0;
@@ -20,12 +21,15 @@ void draw() {
   p1.move();
   // change direction every 10 loops
   if (counter % 10 == 0) {
-    ghost1.setDirection((int) random(1, 5)); 
+    ghost1.setDirection((int) random(1, 5));
+    ghost2.setDirection((int) random(1, 5));
   }
   counter++;
   ghost1.move();
-  
+  ghost2.move();
+
   System.out.println(ghost1.toString());
+  System.out.println(ghost2.toString());
   System.out.println(p1.toString());
 }
 

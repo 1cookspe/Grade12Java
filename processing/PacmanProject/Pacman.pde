@@ -20,6 +20,14 @@ class Pacman extends PacmanCharacter {
   public boolean getOpenMouth() {
     return this.openMouth;
   }
+  
+  public void setScore(int score) {
+    this.score = score;
+  }
+  
+  public int getScore() {
+    return this.score;
+  }
 
   public void display() {
     noStroke();

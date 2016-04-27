@@ -1,22 +1,42 @@
 class Ghost extends PacmanCharacter {
 
   private String name;
+  private color ghostCol;
   
-  // Primary Constructor
+  // Default constructor
   public Ghost() {
     super();
+    configureGhostSettings();
   }
 
-  // Constructor
-  public Ghost(int xLoc, int yLoc, int direction) {
+  // Primary Constructor
+  public Ghost(int xLoc, int yLoc, int direction, String name, color ghostCol) {
     super(xLoc, yLoc, direction);
+    this.name = name;
+    this.ghostCol = ghostCol;
   }
   
+  
+  public void setName(String name) {
+    this.name = name;
+  }
+  
+  public String getName() {
+    return this.name;
+  }
+  
+  public void setGhostCol(color ghostCol) {
+    this.ghostCol = ghostCol;
+  }
+  
+  public color getGhostCol() {
+    return this.ghostCol;
+  }
   
 
   public void display() {
     noStroke();
-    fill(color(random(1, 255), random(1, 255), random(1, 255)));
+    fill(this.ghostCol);
     ellipse(this.xLoc, this.yLoc, 70, 70);
     fill(color(255, 255, 255));
     ellipse(this.xLoc - 10, this.yLoc - 10, 20, 20);
@@ -44,7 +64,27 @@ class Ghost extends PacmanCharacter {
     }
   }
   
+  public void configureGhostSettings() {
+    int style = (int) random(1,4);
+    switch (style) {
+      case 1:
+        this.ghostCol = color(255, 192, 203);
+        this.name = "Pinky";
+      break;
+      case 2:
+        this.ghostCol = color(160, 32, 240);
+        this.name = "Blinky";
+      break;
+      case 3:
+        this.ghostCol = color(205, 92, 92);
+        this.name = "Stinky";
+      break;
+      default:
+      break;
+    }
+  }
+  
   public String toString() {
-    return "The Ghost is at (" + this.xLoc + ", " + this.yLoc + ") and is moving in the " + getDirectionString() + " direction";
+    return this.name + " is at (" + this.xLoc + ", " + this.yLoc + ") and is moving in the " + getDirectionString() + " direction";
   }
 }
