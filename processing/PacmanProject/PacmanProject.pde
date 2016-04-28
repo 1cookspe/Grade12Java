@@ -1,3 +1,5 @@
+import processing.sound.*;
+
 Pacman p1 = new Pacman(50, 50, 67);
 Ghost ghost1 = new Ghost(400, 400, 1, "Pinky", color(255, 192, 203));
 Ghost ghost2 = new Ghost();
@@ -28,10 +30,18 @@ void draw() {
   ghost1.move();
   ghost2.move();
 
-  System.out.println(ghost1.toString());
-  System.out.println(ghost2.toString());
-  System.out.println(p1.toString());
+  textSize(20);
+  fill(255, 255, 255, 255);
+  text("Lives: " + p1.getLives(), 700, 100);
+
+  //System.out.println(ghost1.toString());
+  //System.out.println(ghost2.toString());
+  //System.out.println(p1.toString());
+  if (didCollide()) {
+    p1.die();
+  }
 }
+
 
 void keyPressed() {
   if (keyCode == UP) {
@@ -43,4 +53,23 @@ void keyPressed() {
   } else if (keyCode == RIGHT) {
     p1.setDirection(PacmanCharacter.DIR_RIGHT);
   }
+}
+
+public boolean didCollide() {
+  ellipse(p1.getXLoc(), p1.getYLoc(), 10, 10);
+  ellipse(ghost1.xLoc, ghost1.yLoc, 10, 10);
+  if (p1.getXLoc() == ghost1.getXLoc() || p1.getXLoc() == ghost2.getXLoc()) { // ADD FOR Y VALUES TOO 
+    return true;
+  }
+  return false;
+}
+
+public void endGame() {
+  noLoop();
+  background(0);
+  textSize(60);
+  fill(color(255, 255, 255));
+  text("Game Over!", width / 2, height / 2);
+  
+  
 }

@@ -1,32 +1,45 @@
+import processing.sound.*;
+
 class Pacman extends PacmanCharacter {
   // Instance variables
   private int score;
   private boolean openMouth;
+  private int lives;
 
   // Primary Constructor 
   public Pacman() {
     super();
+    this.lives = 3;
   }
 
   // Secondary key Constructor
   public Pacman(int xLoc, int yLoc, int direction) {
     super(xLoc, yLoc, direction);
+    this.lives = 3;
   }
-  
+
   public void setOpenMouth(boolean openMouth) {
     this.openMouth = openMouth;
   }
-  
+
   public boolean getOpenMouth() {
     return this.openMouth;
   }
-  
+
   public void setScore(int score) {
     this.score = score;
   }
-  
+
   public int getScore() {
     return this.score;
+  }
+
+  public int getLives() {
+    return this.lives;
+  }
+
+  public void setLives(int lives) {
+    this.lives = lives;
   }
 
   public void display() {
@@ -57,7 +70,19 @@ class Pacman extends PacmanCharacter {
       ellipse(this.xLoc, this.yLoc, 80, 80);
     }
   }
-  
+
+  public void die() {
+    this.lives--;
+    if (this.lives == 0) {
+      endGame();
+      
+    }
+    this.xLoc = 50;
+    this.yLoc = 50;
+    delay(500);
+    
+  }
+
   public String toString() {
     return "Pacman is at (" + this.xLoc + ", " + this.yLoc + ") and is moving in the " + getDirectionString() + " direction";
   }
