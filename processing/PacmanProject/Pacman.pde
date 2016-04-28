@@ -72,12 +72,13 @@ class Pacman extends PacmanCharacter {
 
   public void die() {
     this.lives--;
+    System.out.println(lives);
     if (this.lives == 0) {
       endGame();
       
     }
-    this.xLoc = 50;
-    this.yLoc = 50;
+    this.xLoc = 600;
+    this.yLoc = 600;
     delay(500);
     
   }

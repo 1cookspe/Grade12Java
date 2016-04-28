@@ -10,15 +10,20 @@ package edu.hdsb.gwss.cook.u3;
  * @author spencercook
  */
 public class MasterLock extends Lock {
+    
     public MasterLock() {
-       this.max = 39;
-    }
-
-    @Override
-    public int[] generateRandomCombo(int max) {
-        
+       super(39, 3);
+       this.fixed = true;
     }
     
+    public MasterLock(int serialNumber) {
+        this();
+        this.serialNumber = serialNumber;
+    }
 
+    public MasterLock(int[] combo) {
+        this();
+        this.combo = combo;
+    }
     
 }
