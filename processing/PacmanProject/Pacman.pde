@@ -1,4 +1,3 @@
-import processing.sound.*;
 
 class Pacman extends PacmanCharacter {
   // Instance variables

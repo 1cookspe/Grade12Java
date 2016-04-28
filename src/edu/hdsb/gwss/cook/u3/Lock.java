@@ -11,11 +11,12 @@ package edu.hdsb.gwss.cook.u3;
  */
 public abstract class Lock {
     // Instance variables
-    private boolean isOpen;
-    private int[] combo;
-    private int serialNumber; // Primary Key
-    private int failedAttempts;
-    private int max;
+    protected boolean isOpen;
+    protected int[] combo;
+    protected int serialNumber; // Primary Key
+    protected int failedAttempts;
+    protected int max;
+    protected boolean isConfigurable;
 
     public Lock() {
         this.serialNumber = (int) Math.random() * 200000 + 1;
@@ -59,12 +60,7 @@ public abstract class Lock {
         this.failedAttempts = failedAttempts;
     }
     
-    public int[] generateRandomCombo(int max) {
-        for (int i = 0; i < this.combo.length; i++) {
-            this.combo[i] = (int) Math.random() * max + 1;
-        }
-        return this.combo;
-    }
+    public abstract int[] generateRandomCombo(int max);
     
     
     

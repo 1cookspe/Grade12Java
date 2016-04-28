@@ -11,8 +11,14 @@ package edu.hdsb.gwss.cook.u3;
  */
 public class MasterLock extends Lock {
     public MasterLock() {
-       // super(39, generateRandomCombo(39));
+       this.max = 39;
+    }
+
+    @Override
+    public int[] generateRandomCombo(int max) {
+        
     }
     
+
     
 }

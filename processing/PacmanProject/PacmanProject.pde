@@ -1,4 +1,3 @@
-import processing.sound.*;
 
 Pacman p1 = new Pacman(50, 50, 67);
 Ghost ghost1 = new Ghost(400, 400, 1, "Pinky", color(255, 192, 203));
@@ -58,7 +57,7 @@ void keyPressed() {
 public boolean didCollide() {
   ellipse(p1.getXLoc(), p1.getYLoc(), 10, 10);
   ellipse(ghost1.xLoc, ghost1.yLoc, 10, 10);
-  if (p1.getXLoc() == ghost1.getXLoc() || p1.getXLoc() == ghost2.getXLoc()) { // ADD FOR Y VALUES TOO 
+  if ((p1.getXLoc() == ghost1.getXLoc() && p1.getYLoc() == ghost1.getYLoc()) || p1.getXLoc() == ghost2.getXLoc()) { // ADD FOR Y VALUES TOO 
     return true;
   }
   return false;
