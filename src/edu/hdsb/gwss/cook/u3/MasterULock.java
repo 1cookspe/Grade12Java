@@ -9,8 +9,8 @@ package edu.hdsb.gwss.cook.u3;
  *
  * @author spencercook
  */
-public class MasterULock {
+public class MasterULock extends Lock {
     public MasterULock() {
-        
+        super(9, 4);
     }
 }

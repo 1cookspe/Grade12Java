@@ -10,20 +10,13 @@ package edu.hdsb.gwss.cook.u3;
  * @author spencercook
  */
 public class MasterLock extends Lock {
+    // Class constants
+    private static final int MAX = 39;
+    private static final int NUM = 3;
     
     public MasterLock() {
-       super(39, 3);
+       super(MAX, NUM);
        this.fixed = true;
     }
-    
-    public MasterLock(int serialNumber) {
-        this();
-        this.serialNumber = serialNumber;
-    }
-
-    public MasterLock(int[] combo) {
-        this();
-        this.combo = combo;
-    }
-    
+   
 }

@@ -19,12 +19,12 @@ public class LockClient {
         for (int i = 0; i < master.combo.length; i++) {
             System.out.println(master.combo[i]);
         }
+        while (!master.openLock() && !master.isBricked()) {
         if (master.openLock()) {
             System.out.println("Opened!");
         }
-        if (master.openLock()) {
-            System.out.println("Opened!");
         }
+        
        
     }
     

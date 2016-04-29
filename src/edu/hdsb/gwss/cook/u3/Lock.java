@@ -15,7 +15,7 @@ public abstract class Lock {
 
     // Class variables
     public static int lastID = 0;
-    private Scanner input;
+    private static Scanner input;
 
     // Instance variables
     protected boolean isOpen;
@@ -27,7 +27,7 @@ public abstract class Lock {
     protected int numOfNumbers;
 
     public Lock() {
-        this.serialNumber = (int) Math.random() * 200000 + 1;
+        this.serialNumber = ++lastID;
         input = new Scanner(System.in);
     }
 
@@ -44,10 +44,6 @@ public abstract class Lock {
         return isOpen;
     }
 
-    public void setOpen(boolean isOpen) {
-        this.isOpen = isOpen;
-    }
-
     public int[] getCombo() {
         return combo;
     }
@@ -60,31 +56,24 @@ public abstract class Lock {
         return serialNumber;
     }
 
-    public void setSerialNumber(int serialNumber) {
-        this.serialNumber = serialNumber;
-    }
-
     public int getFailedAttempts() {
         return failedAttempts;
     }
 
-    public void setFailedAttempts(int failedAttempts) {
-        this.failedAttempts = failedAttempts;
-    }
-
-    public int[] generateRandomCombo() {
+    protected int[] generateRandomCombo() {
         for (int i = 0; i < this.combo.length; i++) {
             this.combo[i] = (int) (Math.random() * this.max + 1);
         }
         return this.combo;
     }
 
-    public boolean openLock() {
-        if (!this.isOpen) {
+    public boolean openLock( ) {
+        if (!this.isOpen && !isBricked()) {
             for (int i = 0; i < this.combo.length; i++) {
                 System.out.print("Enter number: ");
                 if (input.nextInt() != this.combo[i]) {
                     System.out.println("Combination incorrect!");
+                    this.failedAttempts++;
                     return false;
                 }
             }
@@ -96,7 +85,7 @@ public abstract class Lock {
     }
 
     public boolean isBricked() {
-        if (this.failedAttempts == 3) {
+        if (this.failedAttempts >= 3) {
             return true;
         }
         return false;
