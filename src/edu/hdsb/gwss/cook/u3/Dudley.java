@@ -9,15 +9,15 @@ package edu.hdsb.gwss.cook.u3;
  *
  * @author spencercook
  */
-public class MasterLock extends Lock {
+public class Dudley extends Lock {
     // Class constants
-    private static final int MAX = 39;
+    private static final int MAX = 59;
     private static final int NUM = 3;
     
-    public MasterLock() {
-       super(MAX, NUM);
-       this.fixed = true;
-       this.type = "Master";
+    public Dudley() {
+        super(MAX, NUM);
+        this.fixed = true;
+        this.type = "Dudley";
     }
-   
+    
 }

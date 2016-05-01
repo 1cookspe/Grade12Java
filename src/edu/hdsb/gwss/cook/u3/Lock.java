@@ -5,8 +5,6 @@
  */
 package edu.hdsb.gwss.cook.u3;
 
-import java.util.Scanner;
-
 /**
  *
  * @author spencercook
@@ -15,7 +13,6 @@ public abstract class Lock {
 
     // Class variables
     public static int lastID = 0;
-    private static Scanner input;
 
     // Instance variables
     protected boolean isOpen;
@@ -25,10 +22,11 @@ public abstract class Lock {
     protected int max;
     protected boolean fixed;
     protected int numOfNumbers;
+    private boolean comboSeen;
+    protected String type;
 
     public Lock() {
         this.serialNumber = ++lastID;
-        input = new Scanner(System.in);
     }
 
     // PRIMARY CONSTRUCTOR
@@ -45,11 +43,28 @@ public abstract class Lock {
     }
 
     public int[] getCombo() {
-        return combo;
+        System.out.println("Attempting to get combination...");
+        
+        if (!this.comboSeen) {
+            System.out.println("The combination is... ");
+            this.comboSeen = true;
+            return combo;
+        }
+        System.out.println("Sorry, you cannot see the combination at this time");
+        return null;
     }
 
-    public void setCombo(int[] combo) {
-        this.combo = combo;
+    public void setCombo(int[] combo)   {
+        System.out.println("Attempting to change combination...");
+        if (!this.fixed || this.combo == null) {
+            this.combo = combo;
+            System.out.println("Combination successfully changed to: ");
+            for (int i = 0; i < combo.length; i++) {
+                System.out.print(combo[i] + ", ");
+            }
+        } else {
+            System.out.println("Sorry, the combination cannot be changed");
+        }
     }
 
     public int getSerialNumber() {
@@ -67,12 +82,10 @@ public abstract class Lock {
         return this.combo;
     }
 
-    public boolean openLock( ) {
+    public boolean openLock(int combo[]) {
         if (!this.isOpen && !isBricked()) {
             for (int i = 0; i < this.combo.length; i++) {
-                System.out.print("Enter number: ");
-                if (input.nextInt() != this.combo[i]) {
-                    System.out.println("Combination incorrect!");
+                if (combo[i] != this.combo[i]) {
                     this.failedAttempts++;
                     return false;
                 }
@@ -90,9 +103,27 @@ public abstract class Lock {
         }
         return false;
     }
-    
+
     public void lock() {
         this.isOpen = false;
+        System.out.println("This " + this.type + " lock is locked");
+    }
+    
+    public String toString() {
+        String isOpen = "";
+        if (this.isOpen) {
+            isOpen = "open";
+        } else {
+            isOpen = "closed";
+        }
+        
+        String isFixed = "";
+        if (this.fixed) {
+            isFixed = "fixed";
+        } else {
+            isFixed = "configurable";
+        }
+        return "This " + this.type + " lock has a serial number of " + this.serialNumber + " and it is currently " + isOpen + ", with a " + isFixed + " combo. It has a maximum number of " + this.max + " with " + this.numOfNumbers + " possible numbers";
     }
 
 }
