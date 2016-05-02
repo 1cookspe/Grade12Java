@@ -9,7 +9,7 @@ package edu.hdsb.gwss.cook.u3;
  *
  * @author spencercook
  */
-public abstract class Lock {
+public abstract class Lock implements LockInterface {
 
     // Class variables
     public static int lastID = 0;
@@ -44,7 +44,7 @@ public abstract class Lock {
 
     public int[] getCombo() {
         System.out.println("Attempting to get combination...");
-        
+
         if (!this.comboSeen) {
             System.out.println("The combination is... ");
             this.comboSeen = true;
@@ -54,16 +54,16 @@ public abstract class Lock {
         return null;
     }
 
-    public void setCombo(int[] combo)   {
+    public void setCombo(int[] combo) {
         System.out.println("Attempting to change combination...");
-        if (!this.fixed || this.combo == null) {
+        if ((!this.fixed && this.isOpen) || this.combo == null) {
             this.combo = combo;
-            System.out.println("Combination successfully changed to: ");
+            System.out.print("Combination successfully changed to: ");
             for (int i = 0; i < combo.length; i++) {
                 System.out.print(combo[i] + ", ");
             }
         } else {
-            System.out.println("Sorry, the combination cannot be changed");
+            System.out.println("Sorry, the combination cannot be changed. ");
         }
     }
 
@@ -75,11 +75,18 @@ public abstract class Lock {
         return failedAttempts;
     }
 
-    protected int[] generateRandomCombo() {
-        for (int i = 0; i < this.combo.length; i++) {
-            this.combo[i] = (int) (Math.random() * this.max + 1);
+    public String getType() {
+        return this.type;
+    }
+
+    public int[] generateRandomCombo() {
+        if (!this.comboSeen) {
+            for (int i = 0; i < this.combo.length; i++) {
+                this.combo[i] = (int) (Math.random() * this.max + 1);
+            }
         }
         return this.combo;
+
     }
 
     public boolean openLock(int combo[]) {
@@ -108,7 +115,25 @@ public abstract class Lock {
         this.isOpen = false;
         System.out.println("This " + this.type + " lock is locked");
     }
-    
+
+    public boolean equals(Lock lock) {
+        if (lock == null) {
+            return false;
+        } else if (this.serialNumber == lock.getSerialNumber() && this.type.equals(lock.getType())) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isValid() {
+        if (this.serialNumber > 0) {
+            return true;
+        } else if (this.combo.length == 0) {
+            return false;
+        }
+        return false;
+    }
+
     public String toString() {
         String isOpen = "";
         if (this.isOpen) {
@@ -116,7 +141,7 @@ public abstract class Lock {
         } else {
             isOpen = "closed";
         }
-        
+
         String isFixed = "";
         if (this.fixed) {
             isFixed = "fixed";
