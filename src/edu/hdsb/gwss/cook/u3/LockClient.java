@@ -110,18 +110,21 @@ public class LockClient {
     public static void testAndroid() {
         assert (android.getSerialNumber() == 4);
         assert(android.max == 9);
+        
+        int[] wrongCombo = {64, 32, 53, 22};
 
         printCombo(android);
 
         android.lock();
-
-        int[] userCombo = getInputCombo(android.combo);
-
-        checkCombo(android, userCombo);
+        
+        checkCombo(android, wrongCombo);
+        checkCombo(android, wrongCombo);
+        checkCombo(android, wrongCombo);
+        
+        assert(android.isBricked());
 
         System.out.println("Enter new combination: ");
         System.out.println(android.isOpen);
-        android.setCombo(getInputCombo(userCombo));
         
         assert(android.isValid());
 

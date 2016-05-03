@@ -11,15 +11,15 @@ package edu.hdsb.gwss.cook.u4;
  */
 public class Stack implements StackInterface {
 
+    private static final int DEFAULT_SIZE = 15;
+
     private int[] stack;
     private int top;
 
     public Stack() {
-        int length = (int) Math.random() * 10 + 1;
-        this.stack = new int[length];
-        this.top = -1;
+        this(DEFAULT_SIZE);
     }
-    
+
     public Stack(int length) {
         this.stack = new int[length];
         this.top = -1;
@@ -35,7 +35,7 @@ public class Stack implements StackInterface {
 
     @Override
     public boolean isFull() {
-        if (top == capacity()) {
+        if (size() == capacity()) {
             return true;
         }
         return false;
@@ -53,31 +53,46 @@ public class Stack implements StackInterface {
 
     @Override
     public void makeEmpty() {
-        for (int i = 0; i < this.stack.length; i++) {
-            this.stack[i] = 0;
-            top = -1;
+        top = -1;
+    }
+
+    @Override
+    public int pop() {
+        int value = -1;
+        if (!this.isEmpty()) {
+            value = this.stack[top];
+            top--;
+        } else {
+            System.out.println("This stack cannot be popped because it is empty.");
+        }
+        return value;
+    }
+
+    @Override
+    public void push(int value) {
+        if (!this.isFull()) {
+            stack[top + 1] = value;
+            top++;
+        } else {
+            System.out.println("A value cannot be pushed to this stack because it is full.");
         }
     }
 
     @Override
-    public void pop(int value) {
-        stack[top] = 0;
-        top--;
-    }
-    
-    @Override
-    public void push(int value) {
-        stack[top + 1] = value;
-        top++;
-    }
-    
-    @Override
     public String toString() {
         String outputStack = "";
-        for (int i = 0; i < this.stack.length; i++) {
-            outputStack += this.stack[i] + ", ";
+        for (int i = 0; i <= this.top; i++) {
+            outputStack += this.stack[i] + " ";
         }
         return outputStack;
+    }
+
+    @Override
+    public int top() {
+        if (!this.isEmpty()) {
+            return this.stack[top];
+        } 
+        return -1;
     }
 
 }

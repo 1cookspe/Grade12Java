@@ -10,19 +10,21 @@ package edu.hdsb.gwss.cook.u4;
  * @author 1cookspe
  */
 public interface StackInterface {
-    public boolean isEmpty();
-    
-    public boolean isFull();
-    
+
+    public int top();
+
+    public int pop();
+
+    public void push( int value );
+
     public int size();
     
     public int capacity();
+
+    public boolean isEmpty();
     
+    public boolean isFull();
+
     public void makeEmpty();
-    
-    public void pop(int value);
-    
-    public void push(int value);
-    
-    public String toString();
+
 }
