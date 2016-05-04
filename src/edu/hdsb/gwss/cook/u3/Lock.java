@@ -5,6 +5,8 @@
  */
 package edu.hdsb.gwss.cook.u3;
 
+import java.util.Arrays;
+
 /**
  *
  * @author spencercook
@@ -48,7 +50,8 @@ public abstract class Lock implements LockInterface {
         if (!this.comboSeen) {
             System.out.println("The combination is... ");
             this.comboSeen = true;
-            return combo;
+            int[] aCopy = Arrays.copyOf(this.combo, this.combo.length);
+            return aCopy;
         }
         System.out.println("Sorry, you cannot see the combination at this time");
         return null;
