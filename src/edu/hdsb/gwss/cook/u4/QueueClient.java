@@ -16,8 +16,12 @@ public class QueueClient {
      */
     public static void main(String[] args) {
         Queue queue = new Queue(6);
+        assert(queue.size() == 0);
+        assert(queue.capacity() == 6);
         queue.enqueue(4);
-        System.out.println(queue.toString());
+
+        queue.dequeue();
+
     }
     
 }
