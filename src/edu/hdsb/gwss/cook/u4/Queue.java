@@ -29,11 +29,13 @@ public class Queue implements QueueInterface {
 
     @Override
     public int front() {
+        if( isEmpty() ) return -1;
         return this.queue[this.front];
     }
 
     @Override
     public int back() {
+        if( isEmpty() ) return -1;
         return this.queue[this.back];
     }
 
@@ -71,14 +73,18 @@ public class Queue implements QueueInterface {
 
     @Override
     public int size() {
-        if (this.front < this.back) {
-            return (this.back + 1) - this.front;
-        } else if (this.front > this.back) {
-            return (this.front) + (this.back % capacity());
-        } else if (this.front == this.back && this.front != -1) {
-            return 1;
+        int size = -1;
+        // EMPTY
+        if( this.front == -1 && this.back == -1 )
+            size = 0;
+        else if( this.front == this.back )
+            size = 1;        
+        else if (this.front < this.back) {
+            size = this.back + 1 - this.front;
+        } else {
+            size = (this.back + capacity()) + 1 - this.front;
         }
-        return 0;
+        return size;
     }
 
     @Override
@@ -114,7 +120,20 @@ public class Queue implements QueueInterface {
         String outputString = "";
         System.out.println("Back: " + this.back);
         System.out.println("Front: " + this.front);
-        for (int i = this.front; i <= this.back; i++) {
+        int startingPoint = 0;
+        int endPoint = 0;
+        if (front <= back) {
+            if (front >= 0) {
+                startingPoint = this.front;
+            }
+            endPoint = this.back;
+        } else {
+            if (back >= 0) {
+                startingPoint = this.back;
+            }
+            endPoint = this.front;
+        }
+        for (int i = startingPoint; i <= endPoint; i++) {
             outputString += this.queue[i] + " ";
         }
         return outputString;
