@@ -91,9 +91,15 @@ public class QueueClient {
             System.out.println( q.size() + " vs " + q.capacity() );
             assert (q.size() == q.capacity() );
             assert (q.capacity() == 10);
-            assert (!q.isEmpty());
         }
         
+        System.out.println(q.toString());
+        q.dequeue();
+        System.out.println(q.toString());
+        q.enqueue(47);
+        System.out.println(q.toString());
+        q.dequeue();
+        System.out.println(q.toString());
     }
 
 }

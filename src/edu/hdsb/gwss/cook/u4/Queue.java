@@ -29,23 +29,29 @@ public class Queue implements QueueInterface {
 
     @Override
     public int front() {
-        if( isEmpty() ) return -1;
+        if (isEmpty()) {
+            return -1;
+        }
         return this.queue[this.front];
     }
 
     @Override
     public int back() {
-        if( isEmpty() ) return -1;
+        if (isEmpty()) {
+            return -1;
+        }
         return this.queue[this.back];
     }
 
     @Override
     public void enqueue(int value) {
         if (isEmpty()) {
+            System.out.println("It's empty!");
             this.front = 0;
             this.back = 0;
             this.queue[this.front] = value;
         } else if (!isFull()) {
+            System.out.println("It's not full!");
             this.back++;
             this.back = this.back % capacity();
             this.queue[this.back] = value;
@@ -75,11 +81,11 @@ public class Queue implements QueueInterface {
     public int size() {
         int size = -1;
         // EMPTY
-        if( this.front == -1 && this.back == -1 )
+        if (this.front == -1 && this.back == -1) {
             size = 0;
-        else if( this.front == this.back )
-            size = 1;        
-        else if (this.front < this.back) {
+        } else if (this.front == this.back) {
+            size = 1;
+        } else if (this.front < this.back) {
             size = this.back + 1 - this.front;
         } else {
             size = (this.back + capacity()) + 1 - this.front;
@@ -120,22 +126,40 @@ public class Queue implements QueueInterface {
         String outputString = "";
         System.out.println("Back: " + this.back);
         System.out.println("Front: " + this.front);
-        int startingPoint = 0;
-        int endPoint = 0;
-        if (front <= back) {
-            if (front >= 0) {
-                startingPoint = this.front;
+        if (!this.isEmpty()) {
+            if (this.front <= this.back) {
+                for (int i = this.front; i <= this.back; i++) {
+                    outputString += this.queue[i] + " ";
+                }
+            } else if (this.front > this.back) {
+                for (int i = this.front; i < capacity(); i++) {
+                    outputString += this.queue[i] + " ";
+                }
+                for (int i = 0; i <= this.back; i++) { 
+                    outputString += this.queue[i] + " ";
+                }
             }
-            endPoint = this.back;
+
         } else {
-            if (back >= 0) {
-                startingPoint = this.back;
-            }
-            endPoint = this.front;
+            System.out.println("Empty");
         }
-        for (int i = startingPoint; i <= endPoint; i++) {
-            outputString += this.queue[i] + " ";
-        }
+
+//        int startingPoint = 0;
+//        int endPoint = 0;
+//        if (front <= back) {
+//            if (front >= 0) {
+//                startingPoint = this.front;
+//            }
+//            endPoint = this.back;
+//        } else {
+//            if (back >= 0) {
+//                startingPoint = this.back;
+//            }
+//            endPoint = this.front;
+//        }
+//        for (int i = startingPoint; i <= endPoint; i++) {
+//            outputString += this.queue[i] + " ";
+//        }
         return outputString;
     }
 
