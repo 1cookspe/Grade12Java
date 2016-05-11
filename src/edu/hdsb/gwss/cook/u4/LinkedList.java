@@ -11,29 +11,36 @@ package edu.hdsb.gwss.cook.u4;
  */
 public class LinkedList implements LinkListInterface {
 
-    Node node;
+    Node tail;
+    Node head;
 
     public LinkedList() {
-
+        this.tail = null;
+        this.head = null;
     }
 
     @Override
     public int size() {
         int size = 0;
-        while (node.getNext() != null) {
-            size++;
+        if (!isEmpty()) {
+            Node node = this.head;
+            while (node.getNext() != null) {
+                size++;
+                node = node.getNext();
+            }
         }
         return size;
     }
 
     @Override
     public void makeEmpty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.head = null;
+        this.tail = null;
     }
 
     @Override
     public boolean isEmpty() {
-        if (size() == 0) {
+        if (this.head == null && this.tail == null) {
             return true;
         }
         return false;
@@ -41,27 +48,63 @@ public class LinkedList implements LinkListInterface {
 
     @Override
     public void addAtFront(String str) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Node newNode = new Node(str);
+        if (!isEmpty()) {
+            newNode.setNext(this.head);
+            this.head = newNode;
+        } else {
+            this.head = newNode;
+            this.tail = newNode;
+        }
     }
 
     @Override
     public void addAtEnd(String str) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Node newNode = new Node(str);
+        if (!isEmpty()) {
+            this.tail.setNext(newNode);
+            this.tail = newNode;
+        } else {
+            this.head = newNode;
+            this.tail = newNode;
+        }
     }
 
     @Override
     public void remove(String str) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Node newNode = this.head;
+        String removedValue = "";
+        do {
+            
+        } while (!newNode.getNext().getData().equals(str));
     }
 
     @Override
     public String removeFromEnd() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String removedValue = "";
+//        if (node.getNext().getNext() != null) {
+//            node.setNext(null);
+//        } else {
+//            removeFromEnd();
+//        }
+        return removedValue;
     }
 
     @Override
     public String removeFromFront() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String toString() {
+        return "";
+    }
+
+    public void loopForward() {
+        Node node = this.head;
+        while(node.getNext() != null) {
+            node = node.getNext();
+        }
     }
 
 }

@@ -16,6 +16,11 @@ public class LinkedListClient {
      */
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
+        assert(list.size() == 0);
+        list.addAtEnd("Hello");
+        list.addAtEnd("Hi");
+        list.addAtEnd("5");
+        System.out.println(list.size());
     }
     
 }
