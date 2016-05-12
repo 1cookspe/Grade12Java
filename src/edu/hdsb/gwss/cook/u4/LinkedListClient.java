@@ -16,11 +16,20 @@ public class LinkedListClient {
      */
     public static void main(String[] args) {
         LinkedList list = new LinkedList();
+        // WHEN EMPTY
         assert(list.size() == 0);
+        assert(list.head().equals(""));
+        assert(list.tail().equals(""));
+        assert(list.isEmpty());
         list.addAtEnd("Hello");
         list.addAtEnd("Hi");
         list.addAtEnd("5");
-        System.out.println(list.size());
+        assert(list.size() == 3);
+        assert(list.removeFromEnd().equals("5"));
+        assert(list.removeFromFront().equals("Hello"));
+        assert(list.size() == 1);
+        System.out.println(list.head.getData());
+        
     }
     
 }

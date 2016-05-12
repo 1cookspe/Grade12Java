@@ -40,6 +40,9 @@ public interface LinkListInterface {
     public String removeFromEnd();
     public String removeFromFront();
     
+    public String head();
+    public String tail();
+    
     /**
      * Creates a string that lists the nodes of the linked list.
      *
@@ -47,5 +50,6 @@ public interface LinkListInterface {
      */
     @Override
     public String toString( );
+    
 
 }
