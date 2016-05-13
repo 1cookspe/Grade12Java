@@ -10,6 +10,7 @@ package edu.hdsb.gwss.cook.u4;
  * @author 1cookspe
  */
 public class LinkedList implements LinkListInterface {
+
     // Object variables
     Node tail;
     Node head;
@@ -74,34 +75,31 @@ public class LinkedList implements LinkListInterface {
 
     @Override
     public void remove(String str) {
-        
-        if( !isEmpty() ) {
-            if( size() == 1 ) {
+
+        if (!isEmpty()) {
+            if (size() == 1) {
                 this.head = null;
                 this.tail = null;
-            }
-            else {
-                Node nodeBefore = nodeBefore( this.head, str );
-                if( nodeBefore == null ) {
+            } else {
+                Node nodeBefore = nodeBefore(this.head, str);
+                if (nodeBefore == null) {
                     // DNE
                     System.out.println("This data does not exist in the linked list.");
-                }
-                else {
+                } else {
                     // REMOVE
                     nodeBefore.setNext(nodeBefore.getNext().getNext());
                     nodeBefore.getNext().setNext(null);
                 }
             }
         }
-        
 
     }
 
     @Override
     public String removeFromEnd() {
-        
+
         String removedValue = "";
-        
+
         if (!isEmpty()) {
             if (size() == 1) {
                 removedValue = this.head.getData();
@@ -109,7 +107,6 @@ public class LinkedList implements LinkListInterface {
                 this.tail = null;
             } else {
                 Node nodeBefore = nodeBefore(this.head, this.tail.getData());
-                System.out.println( "NODE BEFORE:" + nodeBefore.toString() );
                 removedValue = this.tail.getData();
                 this.tail = nodeBefore;
                 nodeBefore.setNext(null);
@@ -118,11 +115,16 @@ public class LinkedList implements LinkListInterface {
 
         return removedValue;
     }
-    
-    public Node nodeBefore( Node n, String str  ) {
-        if( n == null || n.getNext() == null ) return null;
-        if( n.getNext().getData().equals(str) ) return n;
-        else return nodeBefore( n.getNext(), str );
+
+    public Node nodeBefore(Node n, String str) {
+        if (n == null || n.getNext() == null) {
+            return null;
+        }
+        if (n.getNext().getData().equals(str)) {
+            return n;
+        } else {
+            return nodeBefore(n.getNext(), str);
+        }
     }
 
     @Override
@@ -140,17 +142,18 @@ public class LinkedList implements LinkListInterface {
                 this.head = secondNode;
             }
         }
-            return removedValue;
+        return removedValue;
     }
 
     @Override
     public String toString() {
         Node before = this.head;
-        String outputString = "";
-        while(!before.getNext().equals(this.tail)) {
-            outputString += before.getData() + " ";
+        String outputString = "HEAD ---> ";
+        while (before != null) {
+            outputString += before.getData() + " ---> ";
             before = before.getNext();
         }
+        outputString += "TAIL";
         return outputString;
     }
 
@@ -175,6 +178,5 @@ public class LinkedList implements LinkListInterface {
         }
         return tailData;
     }
-
 
 }

@@ -25,11 +25,27 @@ public class LinkedListClient {
         list.addAtEnd("Hi");
         list.addAtEnd("5");
         assert(list.size() == 3);
+        list.addAtFront("Goodbye");
+        assert(list.toString().equals("HEAD ---> Goodbye ---> Hello ---> Hi ---> 5 ---> TAIL"));
         assert(list.removeFromEnd().equals("5"));
+        assert(list.removeFromFront().equals("Goodbye"));
+        assert(list.size() == 2);
         assert(list.removeFromFront().equals("Hello"));
-        assert(list.size() == 1);
-        System.out.println(list.head.getData());
+        assert(list.head().equals("Hi"));
+        assert(list.removeFromEnd().equals("Hi"));
+        assert(list.size() == 0);
+        assert(list.isEmpty());
+        assert(list.head().equals(""));
+        assert(list.toString().equals("HEAD ---> TAIL"));
         
+        // FILL WITH 20 VALUES
+        for (int i = 0; i < 10; i++) {
+            list.addAtFront("" + i);
+            list.addAtEnd("" + i);
+            assert(list.head().equals("" + i));
+            assert(list.tail().equals("" + i));
+            list.remove("" + i);
+        }
     }
     
 }
