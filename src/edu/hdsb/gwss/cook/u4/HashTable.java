@@ -9,13 +9,17 @@ package edu.hdsb.gwss.cook.u4;
  *
  * @author 1cookspe
  */
-public class HashTable {
+public class HashTable implements HashTableInterface {
+    
+    private static final int DEFAULT_SIZE = 13;
+    private Student[] students;
+    
     public HashTable() {
-        // New array, default size
+        this(DEFAULT_SIZE);
     }
     
     public HashTable(int capacity) {
-        // New array, the next prime number after capacity
+        this.students = new Student[capacity];
     } 
     
     public static int nextPrime(int x) {
@@ -33,13 +37,49 @@ public class HashTable {
         return 0;
     }
     
-    public Object get(int key) {
-        String returnString = "";
+    public Student get(int key) {
+       
         // Find it @ hash value
         // Is that the student you are looking for?
         // Yes! Done. Return:
         // No! Is the one below the one you're looking for? 
-        return returnString;
+        
+    }
+    
+    public double loadFactor() {
+        return 0;
+    }
+    
+    public void makeEmpty() {
+        
+    }
+    
+    public boolean isEmpty() {
+        return false;
+    }
+    
+    public void resize() {
+        
+    }
+    
+    public Student remove(int key) {
+        
+    }
+    
+    public void put(int key, Student value) {
+        
+    }
+    
+    public boolean contains(int key) {
+        return false;
+    }
+    
+    public boolean containsKey(int key) {
+        return false;
+    }
+    
+    public int hash(int key) {
+        
     }
 
 }
