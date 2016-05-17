@@ -15,7 +15,9 @@ public class HashTableClient {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        HashTable hashTable = new HashTable();
+        //System.out.println((int)Math.sqrt(7));
+        System.out.println(hashTable.nextPrime(6));
     }
     
 }

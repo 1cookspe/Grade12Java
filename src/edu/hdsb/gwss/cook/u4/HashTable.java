@@ -5,6 +5,8 @@
  */
 package edu.hdsb.gwss.cook.u4;
 
+import java.util.Arrays;
+
 /**
  *
  * @author 1cookspe
@@ -19,35 +21,45 @@ public class HashTable implements HashTableInterface {
     }
     
     public HashTable(int capacity) {
-        this.students = new Student[capacity];
+        int prime = nextPrime(capacity);
+        this.students = new Student[prime];
     } 
     
-    public static int nextPrime(int x) {
-        // Find next prime
+    public int nextPrime(int x) {
+        boolean isPrime = true;
+        for (int i = 2; isPrime && i < x; i++) {
+            if (x % i == 0) {
+                isPrime = false;
+            }
+        }
         return 0;
     }
     
     public int size() {
         // LOOP THROUGH ARRAY, count non-null items
         // Deleted items
-        return 0;
+        int size = 0;
+        for (int i = 0; i < this.students.length; i++) {
+//            if ()
+        }
+        return size;
     }
     
     public int capacity() {
-        return 0;
+        return this.students.length;
     }
     
     public Student get(int key) {
-       
+       Student student = new Student(234, "Jeff", "Jones");
         // Find it @ hash value
         // Is that the student you are looking for?
         // Yes! Done. Return:
         // No! Is the one below the one you're looking for? 
-        
+        return student;
     }
     
     public double loadFactor() {
-        return 0;
+        return 0.0;
     }
     
     public void makeEmpty() {
@@ -63,7 +75,8 @@ public class HashTable implements HashTableInterface {
     }
     
     public Student remove(int key) {
-        
+        Student student = new Student(123, "John", "Brown");
+        return student;
     }
     
     public void put(int key, Student value) {
@@ -79,7 +92,7 @@ public class HashTable implements HashTableInterface {
     }
     
     public int hash(int key) {
-        
+        return 0;
     }
 
 }
