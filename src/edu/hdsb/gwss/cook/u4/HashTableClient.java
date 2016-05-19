@@ -16,8 +16,10 @@ public class HashTableClient {
      */
     public static void main(String[] args) {
         HashTable hashTable = new HashTable();
-        //System.out.println((int)Math.sqrt(7));
         System.out.println(hashTable.nextPrime(6));
+        assert(hashTable.isEmpty());
+        Student bob = new Student(123, "Bob", "Jones");
+        //hashTable.put(123, bob);
     }
     
 }
