@@ -16,10 +16,12 @@ public class HashTableClient {
      */
     public static void main(String[] args) {
         HashTable hashTable = new HashTable();
-        System.out.println(hashTable.nextPrime(6));
         assert(hashTable.isEmpty());
         Student bob = new Student(123, "Bob", "Jones");
-        //hashTable.put(123, bob);
+        hashTable.put(123, bob);
+        assert(!hashTable.isEmpty());
+        assert(hashTable.size() == 1);
+        hashTable.resize();
     }
     
 }

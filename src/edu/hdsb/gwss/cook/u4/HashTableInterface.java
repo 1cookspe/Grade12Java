@@ -29,7 +29,7 @@ public interface HashTableInterface {
     
     public void put( int key, Student value);
     
-    public boolean contains( int key );
+    public boolean contains( Student value );
     
     public boolean containsKey( int key );
     

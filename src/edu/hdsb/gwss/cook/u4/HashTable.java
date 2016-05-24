@@ -28,16 +28,25 @@ public class HashTable implements HashTableInterface {
     public HashTable(int capacity) {
         int prime = nextPrime(capacity);
         this.students = new Student[prime];
+        this.status = new int[this.students.length];
     }
 
     public int nextPrime(int x) {
+        
+        
         boolean isPrime = true;
         
-        for (int i = 2; isPrime && i < x; i++) {
-            if (x % i == 0) {
-                isPrime = false;
+        do {
+            isPrime = true;
+            x++;
+            for (int i = 2; isPrime && i < x; i++) {
+                if (x % i == 0) {
+                    isPrime = false;
+                }
             }
-        }
+            
+        } while( !isPrime );
+        
         return x;
     }
 
@@ -85,7 +94,7 @@ public class HashTable implements HashTableInterface {
     }
 
     public double loadFactor() {
-        return 0.0;
+        return size() / capacity();
     }
 
     public void makeEmpty() {
@@ -104,7 +113,16 @@ public class HashTable implements HashTableInterface {
     }
 
     public void resize() {
-
+        if (loadFactor() > 0.75) {
+            int newCapacity = size() * 4;
+            Student[] oldStudents = this.students;
+            this.students = new Student[nextPrime(newCapacity)];
+            for (int i = 0; i < oldStudents.length; i++) {
+                if (oldStudents[i] != null) {
+                    this.students[i] = oldStudents[i];
+                }
+            }
+        }
     }
 
     public Student remove(int key) {
@@ -143,14 +161,29 @@ public class HashTable implements HashTableInterface {
                 index = (index + 1) % capacity();
             }
         }
+        
+        System.out.println("Number of collisions: " + collisions);
     }
 
-    public boolean contains(int key) {
-        return false;
+    public boolean contains( Student value ) {
+        boolean studentFound = false;
+        boolean empty = false;
+        while (!studentFound || !empty) {
+           
+        }
+        return studentFound;
     }
 
     public boolean containsKey(int key) {
-        return false;
+        boolean studentFound = false;
+        boolean empty = false;
+        int index = hash(key);
+        while (!studentFound || !empty) {
+            if (this.students[index].getKey() == key) {
+                studentFound = true;
+            }
+        }
+        return studentFound;
     }
 
     public int hash(int key) {
