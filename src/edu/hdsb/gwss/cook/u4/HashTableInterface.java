@@ -34,5 +34,7 @@ public interface HashTableInterface {
     public boolean containsKey( int key );
     
     public int hash( int key );
+    
+    public String toString();
 
 }

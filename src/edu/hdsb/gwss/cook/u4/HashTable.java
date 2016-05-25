@@ -32,22 +32,34 @@ public class HashTable implements HashTableInterface {
     }
 
     public int nextPrime(int x) {
-        
-        
+
         boolean isPrime = true;
         
+        if (isPrime(x)) {
+            return x;
+        }
+
         do {
             isPrime = true;
             x++;
+           
+            isPrime = isPrime(x);
+            
+
+        } while (!isPrime);
+
+        return x;
+    }
+    
+    public boolean isPrime(int x) {
+        boolean isPrime = true;
+            
             for (int i = 2; isPrime && i < x; i++) {
                 if (x % i == 0) {
                     isPrime = false;
                 }
             }
-            
-        } while( !isPrime );
-        
-        return x;
+            return isPrime;
     }
 
     public int size() {
@@ -94,7 +106,9 @@ public class HashTable implements HashTableInterface {
     }
 
     public double loadFactor() {
-        return size() / capacity();
+        System.out.println("SIZE: "+  size());
+        System.out.println("capacity: "+  capacity());
+        return (double) size() / capacity();
     }
 
     public void makeEmpty() {
@@ -161,15 +175,24 @@ public class HashTable implements HashTableInterface {
                 index = (index + 1) % capacity();
             }
         }
-        
+
         System.out.println("Number of collisions: " + collisions);
     }
 
-    public boolean contains( Student value ) {
+    public boolean contains(Student value) {
         boolean studentFound = false;
         boolean empty = false;
+        System.out.println((int) value.getKey());
+        int index = hash((int) value.getKey());
         while (!studentFound || !empty) {
-           
+            if (this.students[index] == value) {
+                studentFound = true;
+            } else {
+                if (this.students[index] == null) {
+                    empty = true;
+                }
+                index = (index + 1) % capacity();
+            }
         }
         return studentFound;
     }
@@ -181,6 +204,11 @@ public class HashTable implements HashTableInterface {
         while (!studentFound || !empty) {
             if (this.students[index].getKey() == key) {
                 studentFound = true;
+            } else {
+                if (this.students[index] == null) {
+                    empty = true;
+                }
+                index = (index + 1) % capacity();
             }
         }
         return studentFound;
@@ -188,6 +216,16 @@ public class HashTable implements HashTableInterface {
 
     public int hash(int key) {
         return key % capacity();
+    }
+    
+    public String toString() {
+        String outputString = "";
+        for (int i = 0; i < this.students.length; i++) {
+            if (this.students[i] != null) {
+                outputString += this.students[i].toString();
+            }
+        }
+        return outputString;
     }
 
 }
