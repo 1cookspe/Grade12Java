@@ -184,8 +184,11 @@ public class HashTable implements HashTableInterface {
         boolean empty = false;
         System.out.println((int) value.getKey());
         int index = hash((int) value.getKey());
-        while (!studentFound || !empty) {
-            if (this.students[index] == value) {
+        while (!studentFound && !empty) {
+            System.out.println("STUDENT KEY: " + this.students[index].getKey());
+            System.out.println("VALUE KEY: " + value.getKey());
+            System.out.println("INDEX: " + index);
+            if (this.students[index].getKey() == value.getKey()) {
                 studentFound = true;
             } else {
                 if (this.students[index] == null) {

@@ -23,10 +23,7 @@ public class Student {
     
     // TO DO
     public long getKey() {
-        // CHANGE THIS:
-        int key = (int) Math.random() * 10 + 1;
-        System.out.println("Key: " + key);
-        return key;
+        return this.studentID;
     }
 
     public long getStudentID() {
