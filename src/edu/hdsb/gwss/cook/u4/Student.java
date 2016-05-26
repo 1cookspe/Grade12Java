@@ -52,7 +52,7 @@ public class Student {
 
     @Override
     public String toString() {
-        return "Student{" + "studentID=" + studentID + ", name=" + name + ", lastName=" + lastName + '}';
+        return this.name + " " + this.lastName + " has a student ID of " + this.studentID;
     }
 
     

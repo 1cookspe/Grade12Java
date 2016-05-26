@@ -34,7 +34,7 @@ public class HashTable implements HashTableInterface {
     public int nextPrime(int x) {
 
         boolean isPrime = true;
-        
+
         if (isPrime(x)) {
             return x;
         }
@@ -42,24 +42,23 @@ public class HashTable implements HashTableInterface {
         do {
             isPrime = true;
             x++;
-           
+
             isPrime = isPrime(x);
-            
 
         } while (!isPrime);
 
         return x;
     }
-    
+
     public boolean isPrime(int x) {
         boolean isPrime = true;
-            
-            for (int i = 2; isPrime && i < x; i++) {
-                if (x % i == 0) {
-                    isPrime = false;
-                }
+
+        for (int i = 2; isPrime && i < x; i++) {
+            if (x % i == 0) {
+                isPrime = false;
             }
-            return isPrime;
+        }
+        return isPrime;
     }
 
     public int size() {
@@ -106,8 +105,8 @@ public class HashTable implements HashTableInterface {
     }
 
     public double loadFactor() {
-        System.out.println("SIZE: "+  size());
-        System.out.println("capacity: "+  capacity());
+        System.out.println("SIZE: " + size());
+        System.out.println("capacity: " + capacity());
         return (double) size() / capacity();
     }
 
@@ -136,26 +135,34 @@ public class HashTable implements HashTableInterface {
                     this.students[i] = oldStudents[i];
                 }
             }
+
         }
     }
 
     public Student remove(int key) {
+        System.out.println("KEY IN REMOVE: " + key);
         Student student = null;
+        System.out.println("CAPACITY IN REMOVE:" + capacity());
         int index = hash(key);
+        System.out.println("INDEX IN REMOVE: " + index);
         boolean studentFound = false;
         boolean empty = false;
 
-        while (!studentFound || !empty) {
-            if (students[index].getKey() == key) {
-                this.students[index] = null;
-                this.status[index] = -1;
-                studentFound = true;
-            } else {
-                if (students[index] == null) {
-                    empty = true;
+        while (!studentFound && !empty) {
+            if (this.students[index] != null) {
+                if ((int) this.students[index].getKey() == key) {
+                    this.students[index] = null;
+                    this.status[index] = -1;
+                    studentFound = true;
+                    System.out.println("Yeah!");
+                } else {
+                    index = (index + 1) % capacity();
                 }
-                index = (index + 1) % capacity();
+            } else {
+                System.out.println("It is empty!");
+                empty = true;
             }
+
         }
         return student;
     }
@@ -163,6 +170,10 @@ public class HashTable implements HashTableInterface {
     public void put(int key, Student value) {
         int collisions = 0;
         int index = hash(key);
+        if (key == 874) {
+            System.out.println("Joe's index " + index);
+            System.out.println("CAPACITY IN PUT: " + capacity());
+        }
         boolean spotFound = false;
 
         while (!spotFound) {
@@ -184,10 +195,8 @@ public class HashTable implements HashTableInterface {
         boolean empty = false;
         System.out.println((int) value.getKey());
         int index = hash((int) value.getKey());
+        //System.out.println("INDEX: " + index);
         while (!studentFound && !empty) {
-            System.out.println("STUDENT KEY: " + this.students[index].getKey());
-            System.out.println("VALUE KEY: " + value.getKey());
-            System.out.println("INDEX: " + index);
             if (this.students[index].getKey() == value.getKey()) {
                 studentFound = true;
             } else {
@@ -220,12 +229,14 @@ public class HashTable implements HashTableInterface {
     public int hash(int key) {
         return key % capacity();
     }
-    
+
     public String toString() {
         String outputString = "";
         for (int i = 0; i < this.students.length; i++) {
             if (this.students[i] != null) {
-                outputString += this.students[i].toString();
+                outputString += this.students[i].toString() + "\t" + hash((int) this.students[i].getKey()) + "\n";
+            } else {
+                outputString += "Empty" + "\n";
             }
         }
         return outputString;
