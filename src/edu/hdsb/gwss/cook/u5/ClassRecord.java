@@ -13,8 +13,8 @@ public class ClassRecord {
     private String teacherName;
     private String subjectName;
     private int classSize;
-    protected final int RECORD_SIZE = 58;
-    private final static int LENGTH = 15;
+    protected final static int RECORD_SIZE = 58;
+    protected final static int LENGTH = 15;
 
     public ClassRecord(String teacherName, String subjectName, int classSize) {
         setTeacherName(teacherName);

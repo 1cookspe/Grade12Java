@@ -127,12 +127,19 @@ public class HashTable implements HashTableInterface {
 
     public void resize() {
         if (loadFactor() > 0.75) {
-            int newCapacity = size() * 4;
+            int newCapacity = nextPrime( size() * 4 );
+            
+            // OLD
             Student[] oldStudents = this.students;
-            this.students = new Student[nextPrime(newCapacity)];
+            int[] status = this.status;
+            
+            // NEW
+            this.students = new Student[newCapacity];
+            this.status = new int[newCapacity];
+            
             for (int i = 0; i < oldStudents.length; i++) {
-                if (oldStudents[i] != null) {
-                    this.students[i] = oldStudents[i];
+                if (this.status[i] == OCCUPIED ) {                    
+                    this.put((int) oldStudents[i].getKey(), oldStudents[i]);
                 }
             }
 
@@ -188,6 +195,7 @@ public class HashTable implements HashTableInterface {
         }
 
         System.out.println("Number of collisions: " + collisions);
+        resize();
     }
 
     public boolean contains(Student value) {

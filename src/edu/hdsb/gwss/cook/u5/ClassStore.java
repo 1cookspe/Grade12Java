@@ -6,6 +6,7 @@
 package edu.hdsb.gwss.cook.u5;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
@@ -17,7 +18,7 @@ public class ClassStore {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         System.out.println("Creating 4 Class Records");
         ClassRecord c1 = new ClassRecord("Mr. Sanderson", "Chemistry", 31);
         ClassRecord c2 = new ClassRecord("Ms. Smallbone", "Biology", 32);
@@ -25,7 +26,10 @@ public class ClassStore {
         ClassRecord c4 = new ClassRecord("Mr. Muir", "Computer Science", 20);
         System.out.println("*********************");
 
-        RandomAccessFile recordFile = new RandomAccessFile("class_info.txt", "rw");
+        RandomAccessFile recordFile = new RandomAccessFile("class_info.dat", "rw");
+
+        recordFile.seek(0);
+        recordFile.writeChars(c1.getTeacherName());
 
     }
 
