@@ -84,7 +84,7 @@ public class HashTable implements HashTableInterface {
         // Find it @ hash value
         int index = hash(key);
 
-        while (!studentFound || !empty) {
+        while (!studentFound && !empty) {
         // STOP: 1. found student
             // or, till you hit an empty spot.
 
@@ -126,19 +126,21 @@ public class HashTable implements HashTableInterface {
     }
 
     public void resize() {
+
         if (loadFactor() > 0.75) {
-            int newCapacity = nextPrime( size() * 4 );
-            
+            System.out.println("It is resizing!");
+            int newCapacity = nextPrime(size() * 4);
+
             // OLD
             Student[] oldStudents = this.students;
-            int[] status = this.status;
-            
+            int[] newStatus = this.status;
+
             // NEW
             this.students = new Student[newCapacity];
             this.status = new int[newCapacity];
-            
+
             for (int i = 0; i < oldStudents.length; i++) {
-                if (this.status[i] == OCCUPIED ) {                    
+                if (newStatus[i] == OCCUPIED) {
                     this.put((int) oldStudents[i].getKey(), oldStudents[i]);
                 }
             }
@@ -177,10 +179,10 @@ public class HashTable implements HashTableInterface {
     public void put(int key, Student value) {
         int collisions = 0;
         int index = hash(key);
-        if (key == 874) {
-            System.out.println("Joe's index " + index);
-            System.out.println("CAPACITY IN PUT: " + capacity());
-        }
+//        if (key == 874) {
+//            System.out.println("Joe's index " + index);
+//            System.out.println("CAPACITY IN PUT: " + capacity());
+//        }
         boolean spotFound = false;
 
         while (!spotFound) {
@@ -201,17 +203,19 @@ public class HashTable implements HashTableInterface {
     public boolean contains(Student value) {
         boolean studentFound = false;
         boolean empty = false;
-        System.out.println((int) value.getKey());
+        //System.out.println((int) value.getKey());
         int index = hash((int) value.getKey());
         //System.out.println("INDEX: " + index);
         while (!studentFound && !empty) {
-            if (this.students[index].getKey() == value.getKey()) {
-                studentFound = true;
-            } else {
-                if (this.students[index] == null) {
-                    empty = true;
+            if (this.students[index] != null) {
+                if (this.students[index].getKey() == value.getKey()) {
+                    studentFound = true;
+                } else {
+                    index = (index + 1) % capacity();
                 }
-                index = (index + 1) % capacity();
+            } else {
+                System.out.println("It is empty!");
+                empty = true;
             }
         }
         return studentFound;
@@ -221,15 +225,17 @@ public class HashTable implements HashTableInterface {
         boolean studentFound = false;
         boolean empty = false;
         int index = hash(key);
-        while (!studentFound || !empty) {
-            if (this.students[index].getKey() == key) {
-                studentFound = true;
-            } else {
-                if (this.students[index] == null) {
-                    empty = true;
+        while (!studentFound && !empty) {
+            if (this.students[index] != null) {
+                if (this.students[index].getKey() == key) {
+                    studentFound = true;
+                } else {
+                    index = (index + 1) % capacity();
                 }
-                index = (index + 1) % capacity();
+            } else {
+                empty = true;
             }
+
         }
         return studentFound;
     }

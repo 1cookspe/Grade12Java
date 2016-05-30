@@ -37,26 +37,30 @@ public class HashTableClient {
             hashTable.put((int) newStudent.getKey(), newStudent);
             assert(hashTable.size() == i + 1);
             //hashTable.resize();
-            assert(hashTable.capacity() == initalCapacity); // CAPACITY DOES NOT CHANGE!
+            assert(hashTable.capacity() == initalCapacity);
+            assert(hashTable.contains(newStudent));
         }
 ////        
 ////        // AT LOAD FACTOR (10 STUDENTS)
         Student joe = new Student(874, "Joe", "Smith");
         hashTable.put((int) joe.getKey(), joe);
-        //assert(hashTable.size() == 10);
-        assert(hashTable.contains(joe));
+        assert(hashTable.size() == 10);
+        assert(hashTable.contains(joe)); 
+
+        
         hashTable.resize();
-        System.out.println("It's been resized!");
         assert(hashTable.capacity() == (hashTable.size() * 4) + 1);
         System.out.println(hashTable.toString());
-        
-        // BACK UNDER LOAD FACTOR (REMOVE ONE STUDENT)
-        System.out.println("JOE'S KEY: " + (int) joe.getKey());
+//        
         hashTable.remove((int) joe.getKey());
-        System.out.println(hashTable.toString());
-        //System.out.println(hashTable.toString());
-//        assert(hashTable.size() == 9);
-//        assert(!hashTable.contains(joe));
+        assert(hashTable.size() == 9);
+        assert(!hashTable.contains(joe));
+        assert(!hashTable.containsKey((int) joe.getKey()));
+        
+        Student george = new Student(555, "George", "Joseph");
+        hashTable.put((int) george.getKey(), george);
+        assert(hashTable.get((int) george.getKey()).equals(george));
+        assert(hashTable.size() == 10);
         
     }
     
