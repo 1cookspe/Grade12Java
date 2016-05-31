@@ -29,7 +29,7 @@ public class ClassStore {
         ClassRecord c4 = new ClassRecord("Mr. Muir", "Computer Science", 20);
         System.out.println("*********************");
 
-        RandomAccessFile recordFile = new RandomAccessFile("class_info.dat", "rw");
+        RandomAccessFile recordFile = new RandomAccessFile("class_info2.dat", "rw");
 
         // WRITE DATA
         recordFile.seek(0);
