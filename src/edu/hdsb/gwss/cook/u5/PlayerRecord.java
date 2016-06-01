@@ -13,9 +13,9 @@ public class PlayerRecord {
     private String playerName;
     private String countryName;
     private int ranking;
-    protected final int RECORD_SIZE = 58;
-    private final int PLAYER_LENGTH = 12;
-    private final int COUNTRY_LENGTH = 15;
+    protected final static int RECORD_SIZE = 60;
+    private final static int PLAYER_LENGTH = 16;
+    private final static int COUNTRY_LENGTH = 12;
 
     public PlayerRecord(String playerName, String countryName, int ranking) {
         setPlayerName(playerName);
