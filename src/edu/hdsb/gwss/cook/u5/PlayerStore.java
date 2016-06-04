@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
  * @author 1cookspe
  */
 public class PlayerStore extends javax.swing.JFrame {
+
     PlayerRecord newPlayer;
     RandomAccessFile recordFile;
     boolean changingRecord = false;
@@ -49,11 +50,15 @@ public class PlayerStore extends javax.swing.JFrame {
         recordArea = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         recordShowField = new javax.swing.JTextField();
+        eraseRecordsButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         nameField.setFont(new java.awt.Font("Swis721 BT", 0, 11)); // NOI18N
-        nameField.setText("Name");
         nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nameFieldActionPerformed(evt);
@@ -61,10 +66,8 @@ public class PlayerStore extends javax.swing.JFrame {
         });
 
         countryField.setFont(new java.awt.Font("Swis721 BT", 0, 11)); // NOI18N
-        countryField.setText("Country");
 
         rankingField.setFont(new java.awt.Font("Swis721 BT", 0, 11)); // NOI18N
-        rankingField.setText("Ranking");
 
         addPlayer.setFont(new java.awt.Font("Swis721 Blk BT", 0, 11)); // NOI18N
         addPlayer.setText("ADD");
@@ -83,7 +86,6 @@ public class PlayerStore extends javax.swing.JFrame {
         });
 
         recordNumberField.setFont(new java.awt.Font("Swis721 BT", 0, 11)); // NOI18N
-        recordNumberField.setText("Record #");
 
         showRecordButton.setFont(new java.awt.Font("Swis721 Blk BT", 0, 11)); // NOI18N
         showRecordButton.setText("SHOW RECORD");
@@ -100,6 +102,21 @@ public class PlayerStore extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Swis721 BT", 0, 11)); // NOI18N
         jLabel1.setText("Record #:");
 
+        eraseRecordsButton.setText("ERASE RECORDS!");
+        eraseRecordsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eraseRecordsButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Name:");
+
+        jLabel3.setText("Country:");
+
+        jLabel4.setText("Ranking:");
+
+        jLabel5.setText("Record #:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,20 +124,26 @@ public class PlayerStore extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nameField)
-                            .addComponent(countryField)
-                            .addComponent(rankingField, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(changeButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(recordNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(addPlayer))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(rankingField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addPlayer))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(changeButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(recordNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -133,6 +156,10 @@ public class PlayerStore extends javax.swing.JFrame {
                                 .addComponent(recordShowField))
                             .addComponent(showRecordButton))
                         .addGap(39, 39, 39))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(128, 128, 128)
+                .addComponent(eraseRecordsButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,17 +167,24 @@ public class PlayerStore extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(countryField, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rankingField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rankingField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(addPlayer)
-                        .addGap(11, 11, 11)
+                        .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(changeButton)
-                            .addComponent(recordNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(recordNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(showRecordButton)
@@ -160,7 +194,9 @@ public class PlayerStore extends javax.swing.JFrame {
                             .addComponent(recordShowField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(eraseRecordsButton)
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -171,51 +207,119 @@ public class PlayerStore extends javax.swing.JFrame {
     }//GEN-LAST:event_nameFieldActionPerformed
 
     private void addPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlayerActionPerformed
-
-        try {
-            writeToFile(0);
-        } catch (IOException ex) {
-            Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }//GEN-LAST:event_addPlayerActionPerformed
-
-    private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
-
-        if (!nameField.getText().equals("") && !nameField.getText().equals(null) && !countryField.getText().equals("") && !countryField.getText().equals(null) && !rankingField.getText().equals(null) && !rankingField.getText().equals("")) {
-            newPlayer.setPlayerName(nameField.getText());
-            newPlayer.setCountryName(countryField.getText());
-            newPlayer.setRanking(Integer.parseInt(rankingField.getText()));
-        } else {
-            JOptionPane.showMessageDialog(null, "Please input valid information.");
-        }
-        
-        if (!recordNumberField.getText().equals(null) && !recordNumberField.getText().equals("")) {
-            int recordNumber = Integer.parseInt(recordNumberField.getText());
-            int position = PlayerRecord.RECORD_SIZE * (recordNumber - 1);
+        if (!nameField.getText().equals("") && !nameField.getText().equals(null) && !countryField.getText().equals("") && !countryField.getText().equals(null) && !rankingField.getText().equals("") && !rankingField.getText().equals(null)) {
             try {
-                writeToFile(position);
+                newPlayer = new PlayerRecord((nameField.getText()), countryField.getText(), Integer.parseInt(rankingField.getText()));
+                int location = (int) recordFile.length();
+                recordFile.seek(location);
+                recordFile.writeChars(newPlayer.getPlayerName());
+                recordFile.writeChars(newPlayer.getCountryName());
+                recordFile.writeInt(newPlayer.getRanking());
             } catch (IOException ex) {
                 Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Input a record number to be changed.");
+            JOptionPane.showMessageDialog(null, "Please input valid data to all fields.");
         }
+    }//GEN-LAST:event_addPlayerActionPerformed
+
+    private void changeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeButtonActionPerformed
+        String country = "";
+        String name = "";
+        int ranking = 0;
+        PlayerRecord changePlayer = null;
+
+        if (!nameField.getText().equals("") && !nameField.getText().equals(null) && !countryField.getText().equals("") && !countryField.getText().equals(null) && !rankingField.getText().equals(null) && !rankingField.getText().equals("")) {
+            name = nameField.getText();
+            country = countryField.getText();
+            ranking = Integer.parseInt(rankingField.getText());
+            changePlayer = new PlayerRecord(name, country, ranking);
+        } else {
+            JOptionPane.showMessageDialog(null, "Please input valid information.");
+        }
+
+        if (changePlayer != null) {
+            if (!recordNumberField.getText().equals(null) && !recordNumberField.getText().equals("")) {
+                int recordNumber = Integer.parseInt(recordNumberField.getText());
+                int position = PlayerRecord.RECORD_SIZE * (recordNumber - 1);
+                try {
+                    //newPlayer = new PlayerRecord((nameField.getText()), countryField.getText(), Integer.parseInt(rankingField.getText()));
+                    recordFile.seek(position);
+                    recordFile.writeChars(changePlayer.getPlayerName());
+                    recordFile.writeChars(changePlayer.getCountryName());
+                    recordFile.writeInt(changePlayer.getRanking());
+                } catch (IOException ex) {
+                    Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Input a record number to be changed.");
+            }
+        }
+//        nameField.setText("");
+//        countryField.setText("");
+
     }//GEN-LAST:event_changeButtonActionPerformed
 
     private void showRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showRecordButtonActionPerformed
-        
+        try {
+            System.out.println("LENGTH: " + recordFile.length());
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if (recordShowField.getText() != "" && Integer.parseInt(recordShowField.getText()) > 0) {
+            try {
+                PlayerRecord playerRecord = new PlayerRecord("", "", 0);
+                int recordNumber = Integer.parseInt(recordShowField.getText());
+                long numRecords = recordFile.length() / playerRecord.RECORD_SIZE;
+                System.out.println("There are " + numRecords + " records currently in the file.");
+                int position = playerRecord.RECORD_SIZE * (recordNumber - 1);
+                if (position < recordFile.length()) {
+                    System.out.println("POSITION: " + position);
+                    recordFile.seek(position);
+
+                    char[] playerName = new char[playerRecord.PLAYER_LENGTH];
+                    for (int i = 0; i < playerRecord.PLAYER_LENGTH; i++) {
+                        playerName[i] = recordFile.readChar();
+                    }
+                    playerRecord.setPlayerName(new String(playerName));
+
+                    char[] countryName = new char[playerRecord.COUNTRY_LENGTH];
+                    for (int i = 0; i < playerRecord.COUNTRY_LENGTH; i++) {
+                        countryName[i] = recordFile.readChar();
+                    }
+                    playerRecord.setCountryName(new String(countryName));
+
+                    playerRecord.setRanking(recordFile.readInt());
+
+                    System.out.println(playerRecord.toString());
+                    if (playerRecord.getRanking() != 0) {
+                        recordArea.setText(playerRecord.getPlayerName() + "\n" + playerRecord.getCountryName() + "\n" + playerRecord.getRanking());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " does not exist.");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " does not exist. Please input a different record.");
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Please input a record number to be read.");
+        }
     }//GEN-LAST:event_showRecordButtonActionPerformed
 
-    private void writeToFile(int position) throws IOException {
-        newPlayer = new PlayerRecord((nameField.getText()), countryField.getText(), Integer.parseInt(rankingField.getText()));
-            recordFile.seek(position);
-            recordFile.writeChars(newPlayer.getPlayerName());
-            recordFile.writeChars(newPlayer.getCountryName());
-            recordFile.writeInt(newPlayer.getRanking());
-            recordFile.close();
-    }
-    
+    private void eraseRecordsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraseRecordsButtonActionPerformed
+        try {
+            recordFile.setLength(0);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_eraseRecordsButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -260,7 +364,12 @@ public class PlayerStore extends javax.swing.JFrame {
     private javax.swing.JButton addPlayer;
     private javax.swing.JButton changeButton;
     private javax.swing.JTextField countryField;
+    private javax.swing.JButton eraseRecordsButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField rankingField;

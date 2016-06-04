@@ -14,8 +14,8 @@ public class PlayerRecord {
     private String countryName;
     private int ranking;
     protected final static int RECORD_SIZE = 60;
-    private final static int PLAYER_LENGTH = 16;
-    private final static int COUNTRY_LENGTH = 12;
+    protected final static int PLAYER_LENGTH = 16;
+    protected final static int COUNTRY_LENGTH = 12;
 
     public PlayerRecord(String playerName, String countryName, int ranking) {
         setPlayerName(playerName);
@@ -61,6 +61,8 @@ public class PlayerRecord {
         this.ranking = ranking;
     }
     
-    
+    public String toString() {
+        return this.playerName + " is from " + this.countryName + " and has a ranking of " + this.ranking;
+    }
 
 }
