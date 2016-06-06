@@ -55,6 +55,7 @@ public class PlayerStore extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        exitButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,6 +118,13 @@ public class PlayerStore extends javax.swing.JFrame {
 
         jLabel5.setText("Record #:");
 
+        exitButton.setText("EXIT");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,7 +167,8 @@ public class PlayerStore extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(128, 128, 128)
                 .addComponent(eraseRecordsButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(exitButton))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,8 +204,11 @@ public class PlayerStore extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addComponent(eraseRecordsButton)
-                .addGap(16, 16, 16))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(eraseRecordsButton)
+                        .addGap(16, 16, 16))
+                    .addComponent(exitButton, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
         pack();
@@ -207,19 +219,23 @@ public class PlayerStore extends javax.swing.JFrame {
     }//GEN-LAST:event_nameFieldActionPerformed
 
     private void addPlayerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlayerActionPerformed
-        if (!nameField.getText().equals("") && !nameField.getText().equals(null) && !countryField.getText().equals("") && !countryField.getText().equals(null) && !rankingField.getText().equals("") && !rankingField.getText().equals(null)) {
-            try {
-                newPlayer = new PlayerRecord((nameField.getText()), countryField.getText(), Integer.parseInt(rankingField.getText()));
-                int location = (int) recordFile.length();
-                recordFile.seek(location);
-                recordFile.writeChars(newPlayer.getPlayerName());
-                recordFile.writeChars(newPlayer.getCountryName());
-                recordFile.writeInt(newPlayer.getRanking());
-            } catch (IOException ex) {
-                Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            if (!nameField.getText().equals("") && !nameField.getText().equals(null) && !countryField.getText().equals("") && !countryField.getText().equals(null) && !rankingField.getText().equals("") && !rankingField.getText().equals(null)) {
+                try {
+                    newPlayer = new PlayerRecord((nameField.getText()), countryField.getText(), Integer.parseInt(rankingField.getText()));
+                    int location = (int) recordFile.length();
+                    recordFile.seek(location);
+                    recordFile.writeChars(newPlayer.getPlayerName());
+                    recordFile.writeChars(newPlayer.getCountryName());
+                    recordFile.writeInt(newPlayer.getRanking());
+                } catch (IOException ex) {
+                    Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Please input valid data to all fields.");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Please input valid data to all fields.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please input a valid number in the \"Ranking\" field.");
         }
     }//GEN-LAST:event_addPlayerActionPerformed
 
@@ -229,31 +245,35 @@ public class PlayerStore extends javax.swing.JFrame {
         int ranking = 0;
         PlayerRecord changePlayer = null;
 
-        if (!nameField.getText().equals("") && !nameField.getText().equals(null) && !countryField.getText().equals("") && !countryField.getText().equals(null) && !rankingField.getText().equals(null) && !rankingField.getText().equals("")) {
-            name = nameField.getText();
-            country = countryField.getText();
-            ranking = Integer.parseInt(rankingField.getText());
-            changePlayer = new PlayerRecord(name, country, ranking);
-        } else {
-            JOptionPane.showMessageDialog(null, "Please input valid information.");
-        }
-
-        if (changePlayer != null) {
-            if (!recordNumberField.getText().equals(null) && !recordNumberField.getText().equals("")) {
-                int recordNumber = Integer.parseInt(recordNumberField.getText());
-                int position = PlayerRecord.RECORD_SIZE * (recordNumber - 1);
-                try {
-                    //newPlayer = new PlayerRecord((nameField.getText()), countryField.getText(), Integer.parseInt(rankingField.getText()));
-                    recordFile.seek(position);
-                    recordFile.writeChars(changePlayer.getPlayerName());
-                    recordFile.writeChars(changePlayer.getCountryName());
-                    recordFile.writeInt(changePlayer.getRanking());
-                } catch (IOException ex) {
-                    Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        try {
+            if (!nameField.getText().equals("") && !nameField.getText().equals(null) && !countryField.getText().equals("") && !countryField.getText().equals(null) && !rankingField.getText().equals(null) && !rankingField.getText().equals("")) {
+                name = nameField.getText();
+                country = countryField.getText();
+                ranking = Integer.parseInt(rankingField.getText());
+                changePlayer = new PlayerRecord(name, country, ranking);
             } else {
-                JOptionPane.showMessageDialog(null, "Input a record number to be changed.");
+                JOptionPane.showMessageDialog(null, "Please input valid information.");
             }
+
+            if (changePlayer != null) {
+                if (!recordNumberField.getText().equals(null) && !recordNumberField.getText().equals("")) {
+                    int recordNumber = Integer.parseInt(recordNumberField.getText());
+                    int position = PlayerRecord.RECORD_SIZE * (recordNumber - 1);
+                    try {
+                        //newPlayer = new PlayerRecord((nameField.getText()), countryField.getText(), Integer.parseInt(rankingField.getText()));
+                        recordFile.seek(position);
+                        recordFile.writeChars(changePlayer.getPlayerName());
+                        recordFile.writeChars(changePlayer.getCountryName());
+                        recordFile.writeInt(changePlayer.getRanking());
+                    } catch (IOException ex) {
+                        Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Input a record number to be changed.");
+                }
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please input a valid number in the \"Ranking\" and \"Record Number\" fields.");
         }
 //        nameField.setText("");
 //        countryField.setText("");
@@ -267,45 +287,49 @@ public class PlayerStore extends javax.swing.JFrame {
             Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        if (recordShowField.getText() != "" && Integer.parseInt(recordShowField.getText()) > 0) {
-            try {
-                PlayerRecord playerRecord = new PlayerRecord("", "", 0);
-                int recordNumber = Integer.parseInt(recordShowField.getText());
-                long numRecords = recordFile.length() / playerRecord.RECORD_SIZE;
-                System.out.println("There are " + numRecords + " records currently in the file.");
-                int position = playerRecord.RECORD_SIZE * (recordNumber - 1);
-                if (position < recordFile.length()) {
-                    System.out.println("POSITION: " + position);
-                    recordFile.seek(position);
+        try {
+            if (recordShowField.getText() != "" && Integer.parseInt(recordShowField.getText()) > 0) {
+                try {
+                    PlayerRecord playerRecord = new PlayerRecord("", "", 0);
+                    int recordNumber = Integer.parseInt(recordShowField.getText());
+                    long numRecords = recordFile.length() / playerRecord.RECORD_SIZE;
+                    System.out.println("There are " + numRecords + " records currently in the file.");
+                    int position = playerRecord.RECORD_SIZE * (recordNumber - 1);
+                    if (position < recordFile.length()) {
+                        System.out.println("POSITION: " + position);
+                        recordFile.seek(position);
 
-                    char[] playerName = new char[playerRecord.PLAYER_LENGTH];
-                    for (int i = 0; i < playerRecord.PLAYER_LENGTH; i++) {
-                        playerName[i] = recordFile.readChar();
-                    }
-                    playerRecord.setPlayerName(new String(playerName));
+                        char[] playerName = new char[playerRecord.PLAYER_LENGTH];
+                        for (int i = 0; i < playerRecord.PLAYER_LENGTH; i++) {
+                            playerName[i] = recordFile.readChar();
+                        }
+                        playerRecord.setPlayerName(new String(playerName));
 
-                    char[] countryName = new char[playerRecord.COUNTRY_LENGTH];
-                    for (int i = 0; i < playerRecord.COUNTRY_LENGTH; i++) {
-                        countryName[i] = recordFile.readChar();
-                    }
-                    playerRecord.setCountryName(new String(countryName));
+                        char[] countryName = new char[playerRecord.COUNTRY_LENGTH];
+                        for (int i = 0; i < playerRecord.COUNTRY_LENGTH; i++) {
+                            countryName[i] = recordFile.readChar();
+                        }
+                        playerRecord.setCountryName(new String(countryName));
 
-                    playerRecord.setRanking(recordFile.readInt());
+                        playerRecord.setRanking(recordFile.readInt());
 
-                    System.out.println(playerRecord.toString());
-                    if (playerRecord.getRanking() != 0) {
-                        recordArea.setText(playerRecord.getPlayerName() + "\n" + playerRecord.getCountryName() + "\n" + playerRecord.getRanking());
+                        System.out.println(playerRecord.toString());
+                        if (playerRecord.getRanking() != 0) {
+                            recordArea.setText(playerRecord.getPlayerName() + "\n" + playerRecord.getCountryName() + "\n" + playerRecord.getRanking());
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " does not exist.");
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " does not exist.");
+                        JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " does not exist. Please input a different record.");
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " does not exist. Please input a different record.");
+                } catch (IOException ex) {
+                    Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                JOptionPane.showMessageDialog(null, "Please input a record number to be read.");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Please input a record number to be read.");
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Please input a valid number to access the record.");
         }
     }//GEN-LAST:event_showRecordButtonActionPerformed
 
@@ -319,6 +343,15 @@ public class PlayerStore extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_eraseRecordsButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        try {
+            recordFile.close();
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.exit(0);
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -365,6 +398,7 @@ public class PlayerStore extends javax.swing.JFrame {
     private javax.swing.JButton changeButton;
     private javax.swing.JTextField countryField;
     private javax.swing.JButton eraseRecordsButton;
+    private javax.swing.JButton exitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

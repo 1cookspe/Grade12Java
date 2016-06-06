@@ -81,14 +81,18 @@ public class LinkedList implements LinkListInterface {
                 this.head = null;
                 this.tail = null;
             } else {
-                Node nodeBefore = nodeBefore(this.head, str);
-                if (nodeBefore == null) {
-                    // DNE
-                    System.out.println("This data does not exist in the linked list.");
+                if (!this.head.getData().equals(str)) {
+                    Node nodeBefore = nodeBefore(this.head, str);
+                    if (nodeBefore == null) {
+                        // DNE
+                        System.out.println("This data does not exist in the linked list.");
+                    } else {
+                        // REMOVE
+                        nodeBefore.setNext(nodeBefore.getNext().getNext());
+                        nodeBefore.getNext().setNext(null);
+                    }
                 } else {
-                    // REMOVE
-                    nodeBefore.setNext(nodeBefore.getNext().getNext());
-                    nodeBefore.getNext().setNext(null);
+                    String removed = removeFromFront();
                 }
             }
         }
@@ -117,9 +121,13 @@ public class LinkedList implements LinkListInterface {
     }
 
     public Node nodeBefore(Node n, String str) {
+        System.out.println("Testing testing ");
+        System.out.println("INFO AT: " + n.getData());
+
         if (n == null || n.getNext() == null) {
             return null;
         }
+
         if (n.getNext().getData().equals(str)) {
             return n;
         } else {
