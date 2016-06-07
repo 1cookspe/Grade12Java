@@ -60,27 +60,27 @@ public class LinkListTester {
         ll.addAtEnd( "XYZ" );
         System.out.println( "DATA: " + ll.toString() );
         assert ( ll.size() == 2 );
-//        ll.remove( "XYZ" ); // EXCEPTION HERE
-//        System.out.println( "DATA: " + ll.toString() );
-//        assert ( ll.size() == 1 );
-//        ll.remove( "ABC" );
-//        System.out.println( "DATA: " + ll.toString() );
+        ll.remove( "XYZ" ); // EXCEPTION HERE
+        System.out.println( "DATA: " + ll.toString() );
+        assert ( ll.size() == 1 );
+        ll.remove( "ABC" );
+        System.out.println( "DATA: " + ll.toString() );
 //
 //        // REMOVE; MIDDLE
-//        System.out.println( "CASE 6: REMOVE TWO ELEMENTS" );
-//        ll.addAtFront( "ABC" );
-//        ll.addAtFront( "123" );
-//        ll.addAtFront( "XYZ" );
-//        System.out.println( "DATA: " + ll.toString() );
-//        assert ( ll.size() == 3 );
-//        ll.remove( "123" );
-//        System.out.println( "DATA: " + ll.toString() );
-//        assert ( ll.size() == 2 );
-//        ll.remove( "XYZ" );
-//        System.out.println( "DATA: " + ll.toString() );
-//        assert ( ll.size() == 1 );
-//        ll.remove( "ABC" );
-//        System.out.println( "DATA: " + ll.toString() );
+        System.out.println( "CASE 6: REMOVE TWO ELEMENTS" );
+        ll.addAtFront( "ABC" );
+        ll.addAtFront( "123" );
+        ll.addAtFront( "XYZ" );
+        System.out.println( "DATA: " + ll.toString() );
+        assert ( ll.size() == 3 );
+        ll.remove( "123" );
+        System.out.println( "DATA: " + ll.toString() );
+        assert ( ll.size() == 2 );
+        ll.remove( "XYZ" );
+        System.out.println( "DATA: " + ll.toString() );
+        assert ( ll.size() == 1 );
+        ll.remove( "ABC" );
+        System.out.println( "DATA: " + ll.toString() );
 
     }
 

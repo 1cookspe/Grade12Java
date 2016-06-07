@@ -13,7 +13,7 @@ public class PlayerRecord {
     private String playerName;
     private String countryName;
     private int ranking;
-    protected final static int RECORD_SIZE = 60;
+    protected final static int RECORD_SIZE = 61;
     protected final static int PLAYER_LENGTH = 16;
     protected final static int COUNTRY_LENGTH = 12;
 

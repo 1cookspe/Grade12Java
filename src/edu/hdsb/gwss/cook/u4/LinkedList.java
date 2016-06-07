@@ -88,8 +88,10 @@ public class LinkedList implements LinkListInterface {
                         System.out.println("This data does not exist in the linked list.");
                     } else {
                         // REMOVE
-                        nodeBefore.setNext(nodeBefore.getNext().getNext());
+                        Node nextNode = nodeBefore.getNext().getNext();
                         nodeBefore.getNext().setNext(null);
+                        nodeBefore.setNext(nextNode);
+                        
                     }
                 } else {
                     String removed = removeFromFront();
