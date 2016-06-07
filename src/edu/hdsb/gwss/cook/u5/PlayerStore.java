@@ -5,6 +5,7 @@
  */
 package edu.hdsb.gwss.cook.u5;
 
+import java.io.EOFException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -21,6 +22,8 @@ public class PlayerStore extends javax.swing.JFrame {
     PlayerRecord newPlayer;
     RandomAccessFile recordFile;
     boolean changingRecord = false;
+    private final static boolean DELETED = true;
+    private final static boolean NOT_DELETED = false;
 
     /**
      * Creates new form PlayerStore
@@ -239,6 +242,7 @@ public class PlayerStore extends javax.swing.JFrame {
                     newPlayer = new PlayerRecord((nameField.getText()), countryField.getText(), Integer.parseInt(rankingField.getText()));
                     int location = (int) recordFile.length();
                     recordFile.seek(location);
+                    recordFile.writeBoolean(NOT_DELETED);
                     recordFile.writeChars(newPlayer.getPlayerName());
                     recordFile.writeChars(newPlayer.getCountryName());
                     recordFile.writeInt(newPlayer.getRanking());
@@ -276,6 +280,7 @@ public class PlayerStore extends javax.swing.JFrame {
                     try {
                         //newPlayer = new PlayerRecord((nameField.getText()), countryField.getText(), Integer.parseInt(rankingField.getText()));
                         recordFile.seek(position);
+                        recordFile.writeBoolean(NOT_DELETED);
                         recordFile.writeChars(changePlayer.getPlayerName());
                         recordFile.writeChars(changePlayer.getCountryName());
                         recordFile.writeInt(changePlayer.getRanking());
@@ -311,9 +316,12 @@ public class PlayerStore extends javax.swing.JFrame {
                     int position = playerRecord.RECORD_SIZE * (recordNumber - 1);
                     if (position < recordFile.length()) {
                         System.out.println("POSITION: " + position);
+                        System.out.println("FILE LENGTH: " + recordFile.length());
                         recordFile.seek(position);
 
-                        if (!recordFile.readBoolean()) {
+                        boolean deleted = recordFile.readBoolean();
+
+                        if (!deleted) {
                             char[] playerName = new char[playerRecord.PLAYER_LENGTH];
                             for (int i = 0; i < playerRecord.PLAYER_LENGTH; i++) {
                                 playerName[i] = recordFile.readChar();
@@ -329,19 +337,22 @@ public class PlayerStore extends javax.swing.JFrame {
                             playerRecord.setRanking(recordFile.readInt());
 
                             System.out.println(playerRecord.toString());
+//                            boolean trueOrFalse = recordFile.readBoolean();
+//                            System.out.println("TRUE OR FALSE: " + trueOrFalse);
                             if (playerRecord.getRanking() != 0) {
                                 recordArea.setText(playerRecord.getPlayerName() + "\n" + playerRecord.getCountryName() + "\n" + playerRecord.getRanking());
                             } else {
                                 JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " does not exist.");
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " has been deleted. Please try another record number.");
+                            JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " has been deleted. Please input a different record.");
                         }
+
                     } else {
                         JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " does not exist. Please input a different record.");
                     }
                 } catch (IOException ex) {
-                    Logger.getLogger(PlayerStore.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(null, "Could not read!");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Please input a record number to be read.");
@@ -362,7 +373,7 @@ public class PlayerStore extends javax.swing.JFrame {
                     int position = playerRecord.RECORD_SIZE * (recordNumber - 1);
                     if (position < recordFile.length()) {
                         recordFile.seek(position);
-                        recordFile.writeBoolean(false);
+                        recordFile.writeBoolean(DELETED);
                     } else {
                         JOptionPane.showMessageDialog(null, "Record #" + recordNumber + " does not exist. Please input a different record.");
                     }
