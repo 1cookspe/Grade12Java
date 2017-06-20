@@ -96,4 +96,6 @@ public class Fraction implements FractionInterface {
         }
     }
     
+
+    
 }

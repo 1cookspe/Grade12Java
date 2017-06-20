@@ -17,7 +17,8 @@ public class EasterComes {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // VARIABLES
+
+// VARIABLES
         int year;
         int a;
         int b;

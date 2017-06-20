@@ -5,6 +5,9 @@
  */
 package edu.hdsb.gwss.cook;
 
+import java.math.BigInteger;
+import java.util.StringTokenizer;
+
 /**
  *
  * @author 1cookspe
@@ -17,140 +20,163 @@ public class TypeConversion {
     public static void main(String[] args) {
         // LONG CONVERSIONS 
         long l = 94286;
-        
+
         System.out.println("A long cannot be converted to a boolean.");
-        
+
         // LONG TO CHAR
         char c = (char) l;
         System.out.println(l + " --> " + c);
-        
+
         // LONG TO INT
         int i = (int) l;
         System.out.println(l + " --> " + i);
-        
+
         // LONG TO DOUBLE
         double d = (double) l;
         System.out.println(l + " --> " + d);
-        
+
         // LONG TO STRING
         String s = "" + l;
         System.out.println(l + " --> " + s);
-        
+
         // ---------------------------------------------------------------------------
         // DOUBLE CONVERSIONS
         System.out.println("----------------------------------------------");
-        
+
         d = 2.6534;
-        
+
         System.out.println("A double cannot be converted to a string.");
-        
+
         // DOUBLE TO CHAR
         c = (char) d;
         System.out.println(d + " --> " + c);
-        
+
         // DOUBLE TO INT
         i = (int) d;
         System.out.println(d + " --> " + i);
-        
+
         // DOUBLE TO LONG
         l = (long) d;
         System.out.println(d + " --> " + l);
-        
+
         // DOUBLE TO STRING
         s = "" + d;
         System.out.println(d + " --> " + s);
-        
+
         // -------------------------------------------------------------------
         // STRING CONVERSIONS
-        
         s = "1234";
-        
+
         // STRING TO BOOLEAN
         System.out.println("A string cannot be converted to a boolean.");
-        
+
         // STRING TO CHAR
         System.out.println("A string cannot be converted to a char.");
-        
+
         // STRING TO INT
-        i = Integer.valueOf(s);
+        //i = Integer.valueOf(s);
+        i = Integer.parseInt(s);
         System.out.println(s + " --> " + i);
-        
+
         // STRING TO LONG
         l = Long.parseLong(s);
         System.out.println(s + " --> " + l);
-        
+
         // STRING TO DOUBLE
         d = Double.parseDouble(s);
         System.out.println(s + " --> " + d);
-        
+
         System.out.println("----------------------------------------------");
         // -------------------------------------------------------------------
         // BOOLEAN CONVERSIONS
         boolean b = true;
-        
+
         // BOOLEAN TO INT
         i = (b) ? 1 : 0;
         System.out.println(b + " --> " + i);
-        
+
         // BOOLEAN TO LONG
         l = (b) ? 1 : 0;
         System.out.println(b + " --> " + l);
-        
+
         // BOOLEAN TO DOUBLE
         d = (b) ? 1 : 0;
         System.out.println(b + " --> " + d);
-        
+
         // BOOLEAN TO STRING
         s = Boolean.toString(b);
         System.out.println(b + " --> " + s);
-        
+
         // -------------------------------------------------------------------
         // CHAR CONVERSIONS
         System.out.println("----------------------------------------------");
         c = 'R';
-        
+
         // CHAR TO BOOLEAN
         System.out.println("A char cannot be converted to a boolean");
-        
+
         // CHAR TO INT
         i = (int) c;
         System.out.println(c + " --> " + i);
-        
+
         // CHAR TO LONG
         l = (long) c;
         System.out.println(c + " --> " + l);
-        
+
         // CHAR TO DOUBLE
         d = (double) c;
         System.out.println(c + " --> " + d);
-        
+
         // CHAR TO STRING
         s = Character.toString(c);
         System.out.println(c + " --> " + s);
-        
+
         // -------------------------------------------------------------------
         // INT CONVERSIONS
         System.out.println("----------------------------------------------");
-        
+
         // INT TO BOOLEAN
         System.out.println("An int cannot be converted to a boolean.");
-        
+
         // INT TO CHAR
         c = (char) i;
         System.out.println(i + " --> " + c);
-        
+
         // INT TO LONG
         l = (long) i;
         System.out.println(i + " --> " + l);
-        
+
         // INT TO DOUBLE
         d = (double) i;
         System.out.println(i + " --> " + d);
-        
+
         // INT TO STRING
         s = Integer.toString(i);
         System.out.println(i + " --> " + s);
+
+        BigInteger a = new BigInteger("2432443");
+        BigInteger z = new BigInteger("343242");
+        System.out.println(a.multiply(z));
+        System.out.println(z.divide(a));
+
+        String country = "Canada";
+        String str = country.substring(3);
+        System.out.println(str); // prints “ada”
         
+        String sentence = "Th,e cow, jumped ove,r the mo,on.";
+        
+        StringTokenizer st = new StringTokenizer(sentence, ",", true);
+        while(st.hasMoreTokens()) {
+            System.out.println(st.nextToken());
+        }
+        
+        System.out.println("Niagara Falls".substring(8));
+
     }
     
+    int data[] = new int[3];
+    
+    
+    
+
 }
